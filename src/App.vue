@@ -7,6 +7,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { api } from './apis/api'
+import { debounce } from './utils/tools'
 
 export default {
   name: 'App',
@@ -19,15 +20,28 @@ export default {
     ...mapMutations({
       add: 'increment'
     }),
-    setHTMLFontSize () {
+    /**
+     * 更新 HTML 节点 font-size 属性
+     */
+    updateHTMLFontSize () {
       const documentElement = document.documentElement
       const fontSize = documentElement.getBoundingClientRect().width / 10.8
-      let style = documentElement.getAttribute('style') || ''
-      documentElement.setAttribute('style', `font-size: ${fontSize}px; ${style}`)
+      let style = documentElement.getAttribute('style')
+      if (style === null) {
+        documentElement.setAttribute('style', `font-size: ${fontSize}px`)
+      } else {
+        if (/font-size:/.test(style)) {
+          style = style.replace(/font-size:[ \d.]+px/, `font-size: ${fontSize}px`)
+          documentElement.setAttribute('style', style)
+        } else {
+          documentElement.setAttribute('style', `font-size: ${fontSize}px; ${style}`)
+        }
+      }
     }
   },
   mounted () {
-    this.setHTMLFontSize()
+    this.updateHTMLFontSize()
+    window.onresize = debounce(this, this.updateHTMLFontSize)
     this.add()
     document.onclick = async () => {
       this.add()
