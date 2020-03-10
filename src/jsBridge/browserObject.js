@@ -93,7 +93,7 @@
        * @param {defultUserConfig} userConfig 用户自定义设置
        * @returns {Boolean} 保存结果
        */
-      saveDeviceData (userConfig) {
+      saveUserConfig (userConfig) {
         localStorage.setItem(userConfigKey, JSON.stringify({...defultUserConfig, ...userConfig}))
         return true
       },
@@ -161,6 +161,8 @@
        */
       exitReaderMode () {
         console.log('[INFO] __browserObject exitReaderMode')
+        const store = require('./../stores/store.js').default
+        store.dispatch('saveUserConfig')
         return true
       }
     }

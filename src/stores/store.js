@@ -1,13 +1,13 @@
 import Vuex from 'vuex'
+import userConfig from './modules/userConfig'
 
 let store = new Vuex.Store({
-  state: {
-    count: 0
+  modules: {
+    userConfig
   },
-  mutations: {
-    increment (state) {
-      state.count++
-      console.log(state.count)
+  actions: {
+    setupStore ({ dispatch }) {
+      dispatch('setupUserConfig')
     }
   }
 })
