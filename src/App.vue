@@ -1,11 +1,11 @@
 <template>
   <div class="app" :class="{'night-mode': nightMode}">
     <MainBody />
-    <UserMenu />
-    <Catalog />
-    <MoreSetting />
-    <Loading />
-    <Error />
+    <UserMenu v-show="userMenuShow" />
+    <Catalog v-show="catalogShow" />
+    <MoreSetting v-show="moreSettingShow" />
+    <Loading v-show="loadingShow" />
+    <Error v-show="errorShow" />
   </div>
 </template>
 
@@ -31,7 +31,12 @@ export default {
   },
   computed: {
     ...mapState({
-      nightMode: state => state.userConfig.nightMode
+      nightMode: state => state.userConfig.nightMode,
+      userMenuShow: state => state.state.userMenuShow,
+      catalogShow: state => state.state.catalogShow,
+      moreSettingShow: state => state.state.moreSettingShow,
+      loadingShow: state => state.state.loadingShow,
+      errorShow: state => state.state.errorShow
     })
   },
   methods: {
@@ -64,5 +69,9 @@ export default {
 </script>
 
 <style lang="less">
-
+html, body, .app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
 </style>
