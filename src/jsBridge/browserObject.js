@@ -23,6 +23,7 @@
     const userConfigKey = '__browserObject-userConfig'
     const defultUserConfig = {
       volumeKeyOn: true,
+      nightMode: false,
       readerMode: 'upDown',
       fontSizeIndex: 1,
       rowSpaceIndex: 1,
@@ -35,10 +36,10 @@
        */
       getDeviceData () {
         let deviceDataStr = localStorage.getItem(deviceDataKey)
-        if (deviceDataStr === '') {
-          return defaultDeviceData
+        if (deviceDataStr) {
+          return JSON.parse(deviceDataStr)
         }
-        return JSON.parse(deviceDataStr)
+        return defaultDeviceData
       },
       /**
        * 设置移动端硬件亮度
@@ -50,10 +51,10 @@
 
         let deviceDataStr = localStorage.getItem(deviceDataKey)
         let newDeviceData
-        if (deviceDataStr === '') {
-          newDeviceData = {...defaultDeviceData}
-        } else {
+        if (deviceDataStr) {
           newDeviceData = JSON.parse(deviceDataStr)
+        } else {
+          newDeviceData = {...defaultDeviceData}
         }
         newDeviceData.brightness = brightness
         localStorage.setItem(deviceDataKey, JSON.stringify(newDeviceData))
@@ -82,10 +83,10 @@
        */
       getUserConfig () {
         let userConfigStr = localStorage.getItem(userConfigKey)
-        if (userConfigStr === '') {
-          return defultUserConfig
+        if (userConfigStr) {
+          return JSON.parse(userConfigStr)
         }
-        return JSON.parse(userConfigStr)
+        return defultUserConfig
       },
       /**
        * 保存用户自定义设置
@@ -149,10 +150,10 @@
       getBookMarks (domain, novelName, authorName) {
         const key = createBookMarkKey(domain, novelName, authorName)
         const bookMatksStr = localStorage.getItem(key)
-        if (bookMatksStr === '') {
-          return []
+        if (bookMatksStr) {
+          return JSON.parse(bookMatksStr)
         }
-        return JSON.parse(bookMatksStr)
+        return []
       },
       /**
        * 退出阅读模式
