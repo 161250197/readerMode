@@ -1,6 +1,6 @@
 <template>
   <div class="app" :class="{'night-mode': nightMode}">
-    <MainBody />
+    <MainBody v-show="!(loadingShow || errorShow)" />
     <UserMenu v-show="userMenuShow" />
     <Catalog v-show="catalogShow" />
     <MoreSetting v-show="moreSettingShow" />
@@ -73,5 +73,10 @@ html, body, .app {
   width: 100%;
   height: 100%;
   margin: 0;
+}
+.app {
+  position: fixed;
+  left: 0;
+  right: 0;
 }
 </style>
