@@ -159,11 +159,16 @@
        * 退出阅读模式
        * @returns {Boolean} 退出结果
        */
-      exitReaderMode () {
+      async exitReaderMode () {
         console.log('[INFO] __browserObject exitReaderMode')
         const store = require('./../stores/store.js').default
-        store.dispatch('saveUserConfig')
-        return true
+        try {
+          await store.dispatch('saveUserConfig')
+          return true
+        } catch (e) {
+          console.log('[ERROR] exitReaderMode ', e)
+          return false
+        }
       }
     }
   }

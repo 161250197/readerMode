@@ -32,11 +32,11 @@ export default {
   computed: {
     ...mapState({
       nightMode: state => state.userConfig.nightMode,
-      userMenuShow: state => state.state.userMenuShow,
-      catalogShow: state => state.state.catalogShow,
-      moreSettingShow: state => state.state.moreSettingShow,
-      loadingShow: state => state.state.loadingShow,
-      errorShow: state => state.state.errorShow
+      userMenuShow: state => state.showState.userMenuShow,
+      catalogShow: state => state.showState.catalogShow,
+      moreSettingShow: state => state.showState.moreSettingShow,
+      loadingShow: state => state.showState.loadingShow,
+      errorShow: state => state.showState.errorShow
     })
   },
   methods: {

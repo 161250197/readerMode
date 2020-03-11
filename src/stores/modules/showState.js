@@ -1,3 +1,6 @@
+/**
+ * 显示 state
+ */
 const store = {
   state: {
     errorShow: false,
