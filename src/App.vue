@@ -40,7 +40,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['setupStore']),
+    ...mapActions(['initStore']),
     /**
      * 更新 HTML 节点 font-size 属性
      */
@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted () {
-    this.setupStore()
+    this.initStore()
     this.updateHTMLFontSize()
     window.onresize = debounce(this, this.updateHTMLFontSize)
   }
