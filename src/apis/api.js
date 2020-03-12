@@ -18,7 +18,7 @@ const api = {
    * @returns {Promise}
    */
   getMainBodyText (domain, novelName, authorName, chapterIndex) {
-    return instance.post('/getNovelData', { domain, novelName, authorName, chapterIndex })
+    return instance.post('/getMainBodyText', { domain, novelName, authorName, chapterIndex })
   },
   /**
    * 获取网络小说章节数据
