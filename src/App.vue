@@ -45,7 +45,7 @@ export default {
      * 更新 HTML 节点 font-size 属性
      */
     updateHTMLFontSize () {
-      const documentElement = document.documentElement
+      const { documentElement } = document
       const fontSize = documentElement.getBoundingClientRect().width / 10.8
       let style = documentElement.getAttribute('style')
       if (style === null) {
