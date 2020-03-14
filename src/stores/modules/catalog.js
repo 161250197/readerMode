@@ -5,10 +5,10 @@ import { api } from './../../apis/api'
  */
 const store = {
   state: {
-    isLoadingCatalogChapters: false,
+    isLoadingCatalogChapters: true,
     loadingCatalogChaptersFail: false,
     catalogChapters: [],
-    isLoadingBookMarks: false,
+    isLoadingBookMarks: true,
     loadingBookMarksFail: false,
     bookMarks: []
   },
@@ -47,7 +47,7 @@ const store = {
      * @private
      */
     setIsLoadingBookMarks (state, value) {
-      state.isLoadingPrevChapter = !!value
+      state.isLoadingBookMarks = !!value
     },
     /**
      * 设置加载书签列表失败
@@ -82,6 +82,9 @@ const store = {
           authorName
         } = this.state
         const { data } = await api.getNovelChapterData(domain, novelName, authorName)
+        if (!data.length) {
+          throw Error('empty novel chapter')
+        }
         commit('setCatalogChapters', data)
       } catch (e) {
         console.log('[ERROR] initCatalogChapters', e)

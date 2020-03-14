@@ -69,14 +69,22 @@ export default {
 </script>
 
 <style lang="less">
-html, body, .app {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
+@import url('./style.less');
+
 .app {
   position: fixed;
   left: 0;
   right: 0;
+  .night-mode-item {
+    display: none;
+  }
+  &.night-mode {
+    .night-mode-item {
+      display: block;
+    }
+    .day-mode-item {
+      display: none;
+    }
+  }
 }
 </style>

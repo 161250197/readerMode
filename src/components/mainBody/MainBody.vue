@@ -1,5 +1,8 @@
 <template>
-  <div class="main-body-wrapper">
+  <div
+    class="main-body-wrapper"
+    @click.stop="showCatalog"
+  >
     <div
       class="chapter-wrapper"
       v-for="({ text, title, chapterIndex }) in chapters"
@@ -17,7 +20,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'mainBody',
@@ -25,6 +28,18 @@ export default {
     ...mapState({
       chapters: state => state.mainBody.chapters
     })
+  },
+  methods: {
+    ...mapMutations([
+      'setCatalogShow'
+    ]),
+    /**
+     * 显示目录栏
+     * TODO 需要之后修改为显示菜单栏
+     */
+    showCatalog () {
+      this.setCatalogShow(true)
+    }
   }
 }
 </script>

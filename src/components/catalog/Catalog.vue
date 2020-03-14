@@ -1,10 +1,13 @@
 <template>
-  <div class="catalog-wrapper">
+  <div
+    class="catalog-wrapper"
+    @click.stop="hideCatalog"
+  >
     <div class="novel-info-wrapper">
-      <div class="novel-name-wrapper">
+      <div class="novel-name-wrapper text-ellipsis">
         {{novelName}}
       </div>
-      <div class="author-name-wrapper">
+      <div class="author-name-wrapper text-ellipsis">
         {{authorName}}
       </div>
     </div>
@@ -26,7 +29,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import BookMarks from './components/BookMarks'
 import CatalogChapters from './components/CatalogChapters'
 
@@ -49,8 +52,21 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setCatalogShow'
+    ]),
+    /**
+     * 更新 tab 索引
+     * @param {Number} tabIndex tab 索引
+     */
     updateTabIndex (tabIndex) {
       this.tabIndex = tabIndex
+    },
+    /**
+     * 隐藏目录栏
+     */
+    hideCatalog () {
+      this.setCatalogShow(false)
     }
   }
 }
