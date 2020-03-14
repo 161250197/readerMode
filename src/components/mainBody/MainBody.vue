@@ -28,3 +28,13 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.main-body-wrapper {
+  height: 100%;
+  overflow-y: scroll;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+</style>

@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import catalog from './modules/catalog'
 import mainBody from './modules/mainBody'
 import showState from './modules/showState'
 import userConfig from './modules/userConfig'
@@ -6,6 +7,7 @@ import { api } from './../apis/api'
 
 let store = new Vuex.Store({
   modules: {
+    catalog,
     mainBody,
     showState,
     userConfig
@@ -105,12 +107,12 @@ let store = new Vuex.Store({
      * 初始化小说内容
      */
     initNovelContents ({ commit, dispatch }) {
-      Promise.all([
-        // // 初始化小说目录内容
-        // dispatch(''),
-        // 初始化小说正文内容
-        dispatch('initMainBodyContent')
-      ])
+      // 加载小说章节目录
+      dispatch('loadingCatalogChapters')
+      // 加载小说书签列表
+      dispatch('loadingBookMarks')
+      // 初始化小说正文内容
+      dispatch('initMainBodyContent')
         .then(() => {
           commit('setLoadingShow', false)
         })

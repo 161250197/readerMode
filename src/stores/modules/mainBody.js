@@ -1,5 +1,8 @@
 import { api } from './../../apis/api'
 
+/**
+ * 正文 state
+ */
 const store = {
   state: {
     isLoadingPrevChapter: false,
