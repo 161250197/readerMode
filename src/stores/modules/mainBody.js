@@ -34,7 +34,7 @@ const store = {
      * @private
      */
     setIsLoadingNextChapter (state, value) {
-      state.isLoadingPrevChapter = !!value
+      state.isLoadingNextChapter = !!value
     },
     /**
      * 设置加载下一章失败
