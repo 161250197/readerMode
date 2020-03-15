@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { debounce } from './utils/tools'
 import MainBody from './components/mainBody/MainBody'
 import UserMenu from './components/userMenu/UserMenu'
@@ -40,13 +40,24 @@ export default {
     })
   },
   methods: {
+    ...mapMutations(['setDeviceSize']),
     ...mapActions(['initStore']),
     /**
-     * 更新 HTML 节点 font-size 属性
+     * 更新设备尺寸
      */
-    updateHTMLFontSize () {
+    updateDeviceSize () {
       const { documentElement } = document
-      const fontSize = documentElement.getBoundingClientRect().width / 10.8
+      const boundingClientRect = documentElement.getBoundingClientRect()
+      this.setDeviceSize(boundingClientRect)
+      const fontSize = boundingClientRect.width / 10.8
+      this.updateHTMLFontSize(fontSize)
+    },
+    /**
+     * 更新 HTML 节点 font-size 属性
+     * @param {Number} fontSize 字体大小属性
+     */
+    updateHTMLFontSize (fontSize) {
+      const { documentElement } = document
       let style = documentElement.getAttribute('style')
       if (style === null) {
         documentElement.setAttribute('style', `font-size: ${fontSize}px`)
@@ -62,8 +73,8 @@ export default {
   },
   mounted () {
     this.initStore()
-    this.updateHTMLFontSize()
-    window.onresize = debounce(this, this.updateHTMLFontSize)
+    this.updateDeviceSize()
+    window.onresize = debounce(this, this.updateDeviceSize)
   }
 }
 </script>

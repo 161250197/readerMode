@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import catalog from './modules/catalog'
+import deviceData from './modules/deviceData'
 import mainBody from './modules/mainBody'
 import showState from './modules/showState'
 import userConfig from './modules/userConfig'
@@ -8,6 +9,7 @@ import { api } from './../apis/api'
 let store = new Vuex.Store({
   modules: {
     catalog,
+    deviceData,
     mainBody,
     showState,
     userConfig
@@ -60,6 +62,8 @@ let store = new Vuex.Store({
       commit('setLoadingShow', true)
       commit('setErrorShow', false)
       Promise.all([
+        // 初始化设备数据
+        dispatch('initDeviceData'),
         // 初始化用户设置
         dispatch('setupUserConfig'),
         // 更新域名信息
