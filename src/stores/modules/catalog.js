@@ -1,7 +1,7 @@
 import { api } from './../../apis/api'
 
 /**
- * 目录 state
+ * 目录 store
  */
 const store = {
   state: {
@@ -15,7 +15,7 @@ const store = {
   mutations: {
     /**
      * 设置正在加载章节目录
-     * @param {Object} state catalogState
+     * @param {Object} state catalog.state
      * @param {Boolean} value 值
      * @private
      */
@@ -24,7 +24,7 @@ const store = {
     },
     /**
      * 设置加载章节目录失败
-     * @param {Object} state catalogState
+     * @param {Object} state catalog.state
      * @param {Boolean} value 值
      * @private
      */
@@ -33,7 +33,7 @@ const store = {
     },
     /**
      * 设置章节目录
-     * @param {Object} state catalogState
+     * @param {Object} state catalog.state
      * @param {Array<String>} catalogChapters 章节目录
      * @private
      */
@@ -42,7 +42,7 @@ const store = {
     },
     /**
      * 设置正在加载书签列表
-     * @param {Object} state catalogState
+     * @param {Object} state catalog.state
      * @param {Boolean} value 值
      * @private
      */
@@ -51,7 +51,7 @@ const store = {
     },
     /**
      * 设置加载书签列表失败
-     * @param {Object} state catalogState
+     * @param {Object} state catalog.state
      * @param {Boolean} value 值
      * @private
      */
@@ -60,7 +60,7 @@ const store = {
     },
     /**
      * 设置书签列表
-     * @param {Object} state catalogState
+     * @param {Object} state catalog.state
      * @param {Array<{chapterIndex: Number, chapterTitle: String}>} bookMarks 书签列表
      * @private
      */

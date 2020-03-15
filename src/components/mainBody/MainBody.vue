@@ -1,44 +1,68 @@
 <template>
   <div
     class="main-body-wrapper"
-    @click.stop="showCatalog"
+    @click.stop="onMainBodyClick"
   >
-    <div
-      class="chapter-wrapper"
-      v-for="({ text, title, chapterIndex }) in chapters"
-      :key="chapterIndex"
-    >
-      <div class="title-wrapper">
-        {{title}}
-      </div>
-      <div
-        class="text-wrapper"
-        v-html="text"
-      ></div>
-    </div>
+    <UpDown v-if="readerMode === readerModeUpDown" />
+    <LeftRight v-else-if="readerMode === readerModeLeftRight" />
+    <ErrorDiv
+      v-else
+      :retryCallback="resetReaderMode"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import UpDown from './components/UpDown'
+import LeftRight from './components/LeftRight'
+import ErrorDiv from './../utils/ErrorDiv'
+
+const { readerModeUpDown, readerModeLeftRight } = require('./../../utils/consts.js').default
 
 export default {
-  name: 'mainBody',
+  name: 'MainBody',
+  components: {
+    UpDown,
+    LeftRight,
+    ErrorDiv
+  },
   computed: {
     ...mapState({
-      chapters: state => state.mainBody.chapters
+      readerMode: state => state.userConfig.readerMode
     })
+  },
+  data () {
+    return {
+      readerModeUpDown,
+      readerModeLeftRight
+    }
   },
   methods: {
     ...mapMutations([
+      'setReaderMode',
       'setCatalogShow'
     ]),
     /**
+     * 响应主页点击
+     * @param {MouseEvent} e
+     */
+    onMainBodyClick (e) {
+      // TODO 具体响应处理
+      console.log(e)
+      this.showCatalog()
+    },
+    /**
      * 显示目录栏
-     * TODO 需要之后修改为显示菜单栏
      */
     showCatalog () {
       this.setCatalogShow(true)
+    },
+    /**
+     * 重置阅读模式
+     */
+    resetReaderMode () {
+      this.setReaderMode(readerModeUpDown)
     }
   }
 }

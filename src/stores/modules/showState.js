@@ -1,5 +1,5 @@
 /**
- * 显示 state
+ * 显示 store
  */
 const store = {
   state: {
@@ -12,7 +12,7 @@ const store = {
   mutations: {
     /**
      * 设置错误页显示
-     * @param {Object} state stateState
+     * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setErrorShow (state, value) {
@@ -20,7 +20,7 @@ const store = {
     },
     /**
      * 设置 Loading 页显示
-     * @param {Object} state stateState
+     * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setLoadingShow (state, value) {
@@ -28,7 +28,7 @@ const store = {
     },
     /**
      * 设置菜单项显示
-     * @param {Object} state stateState
+     * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setUserMenuShow (state, value) {
@@ -36,7 +36,7 @@ const store = {
     },
     /**
      * 设置目录页显示
-     * @param {Object} state stateState
+     * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setCatalogShow (state, value) {
@@ -44,7 +44,7 @@ const store = {
     },
     /**
      * 设置更多设置页显示
-     * @param {Object} state stateState
+     * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setMoreSettingShow (state, value) {

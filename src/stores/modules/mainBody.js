@@ -1,7 +1,7 @@
 import { api } from './../../apis/api'
 
 /**
- * 正文 state
+ * 正文 store
  */
 const store = {
   state: {
@@ -16,7 +16,7 @@ const store = {
   mutations: {
     /**
      * 设置正在加载正文
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Boolean} value 值
      * @private
      */
@@ -25,7 +25,7 @@ const store = {
     },
     /**
      * 设置加载正文失败
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Boolean} value 值
      * @private
      */
@@ -34,7 +34,7 @@ const store = {
     },
     /**
      * 设置正在加载上一章
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Boolean} value 值
      * @private
      */
@@ -43,7 +43,7 @@ const store = {
     },
     /**
      * 设置加载上一章失败
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Boolean} value 值
      * @private
      */
@@ -52,7 +52,7 @@ const store = {
     },
     /**
      * 设置正在加载下一章
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Boolean} value 值
      * @private
      */
@@ -61,7 +61,7 @@ const store = {
     },
     /**
      * 设置加载下一章失败
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Boolean} value 值
      * @private
      */
@@ -70,7 +70,7 @@ const store = {
     },
     /**
      * 设置章节数组
-     * @param {Object} state mainBodyState
+     * @param {Object} state mainBody.state
      * @param {Array<{text: String, title: String, chapterIndex: Number}>} chapters 章节数组
      * @private
      */

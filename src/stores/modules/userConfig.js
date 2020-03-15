@@ -1,10 +1,12 @@
-const readerModeUpDown = 'upDown'
-const readerModeLeftRight = 'LeftRight'
-const fontSizeCount = 4
-const rowSpaceCount = 3
+const {
+  readerModeUpDown,
+  readerModeLeftRight,
+  fontSizeCount,
+  rowSpaceCount
+} = require('./../../utils/consts.js').default
 
 /**
- * 用户设置 state
+ * 用户设置 store
  */
 const store = {
   state: {
@@ -18,7 +20,7 @@ const store = {
   mutations: {
     /**
      * 设置音量键翻页功能开启
-     * @param {Object} state userConfigState
+     * @param {Object} state userConfig.state
      * @param {Boolean} value 值
      */
     setVolumeKeyOn (state, value) {
@@ -26,7 +28,7 @@ const store = {
     },
     /**
      * 设置夜间模式开启
-     * @param {Object} state userConfigState
+     * @param {Object} state userConfig.state
      * @param {Boolean} value 值
      */
     setNightMode (state, value) {
@@ -34,7 +36,7 @@ const store = {
     },
     /**
      * 设置阅读模式
-     * @param {Object} state userConfigState
+     * @param {Object} state userConfig.state
      * @param {String} value 阅读模式
      * @throws {Error} 阅读模式值非法
      */
@@ -47,7 +49,7 @@ const store = {
     },
     /**
      * 设置正文字体大小索引
-     * @param {Object} state userConfigState
+     * @param {Object} state userConfig.state
      * @param {Number} value 正文字体大小索引
      * @throws {Error} 正文字体大小索引值非法
      */
@@ -60,7 +62,7 @@ const store = {
     },
     /**
      * 设置正文内容行间距大小索引
-     * @param {Object} state userConfigState
+     * @param {Object} state userConfig.state
      * @param {Number} value 正文内容行间距大小索引
      * @throws {Error} 正文内容行间距大小索引值非法
      */
@@ -73,7 +75,7 @@ const store = {
     },
     /**
      * 设置正文内容页面背景色
-     * @param {Object} state userConfigState
+     * @param {Object} state userConfig.state
      * @param {String} value 正文内容页面背景色
      * @throws {Error} 正文内容页面背景色值非法
      */
