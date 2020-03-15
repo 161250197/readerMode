@@ -1,3 +1,7 @@
+const {
+  updateTimeAndBatteryIntervalTime
+} = require('./../../utils/consts.js').default
+
 /**
  * 设备数据 store
  */
@@ -7,6 +11,8 @@ const store = {
       width: undefined,
       height: undefined
     },
+    updateTimeAndBatteryIntervalId: undefined,
+    timeStr: '',
     battery: 100,
     brightness: 100,
     browserVersion: 1,
@@ -28,14 +34,6 @@ const store = {
       }
     },
     /**
-     * 设置电量信息
-     * @param {Object} state deviceData.state
-     * @param {Number} value 值
-     */
-    setBattery (state, value) {
-      state.battery = value
-    },
-    /**
      * 设置亮度信息
      * @param {Object} state deviceData.state
      * @param {Number} value 值
@@ -48,9 +46,38 @@ const store = {
       state.brightness = value
     },
     /**
+     * 设置更新时间和电量信息的 interval id
+     * @param {Object} state deviceData.state
+     * @param {Number} value 值
+     * @private
+     */
+    setUpdateTimeAndBatteryIntervalId (state, value) {
+      clearInterval(state.updateTimeAndBatteryIntervalId)
+      state.updateTimeAndBatteryIntervalId = value
+    },
+    /**
+     * 刷新当前时间
+     * @param {Object} state deviceData.state
+     * @private
+     */
+    updateTimeStr (state) {
+      const now = new Date()
+      state.timeStr = `${now.getHours()}:${now.getMinutes()}`
+    },
+    /**
+     * 设置电量信息
+     * @param {Object} state deviceData.state
+     * @param {Number} value 值
+     * @private
+     */
+    setBattery (state, value) {
+      state.battery = value
+    },
+    /**
      * 设置浏览器版本
      * @param {Object} state deviceData.state
      * @param {Number} value 值
+     * @private
      */
     setBrowserVersion (state, value) {
       state.browserVersion = value
@@ -59,6 +86,7 @@ const store = {
      * 设置是否支持音量键翻页
      * @param {Object} state deviceData.state
      * @param {Boolean} value 值
+     * @private
      */
     setVolumeKeySupport (state, value) {
       state.volumeKeySupport = !!value
@@ -68,17 +96,45 @@ const store = {
     /**
      * 初始化设备数据
      */
-    initDeviceData ({ commit }) {
+    initDeviceData ({ commit, dispatch }) {
       const {
         battery,
         brightness,
         browserVersion,
         volumeKeySupport
       } = window.__browserObject.getDeviceData()
+      dispatch('startUpdateBatteryAndTimeInterval')
+      commit('updateTimeStr')
       commit('setBattery', battery)
       commit('setBrightness', brightness)
       commit('setBrowserVersion', browserVersion)
       commit('setVolumeKeySupport', volumeKeySupport)
+    },
+    /**
+     * 开始自动更新电量和当前时间信息
+     */
+    startUpdateBatteryAndTimeInterval ({ commit, dispatch }) {
+      const id = setInterval(() => {
+        dispatch('updateTimeAndBattery')
+      }, updateTimeAndBatteryIntervalTime)
+      commit('setUpdateTimeAndBatteryIntervalId', id)
+    },
+    /**
+     * 停止自动更新电量和当前时间信息
+     */
+    stopUpdateBatteryAndTimeInterval ({ commit }) {
+      commit('setUpdateTimeAndBatteryIntervalId', undefined)
+    },
+    /**
+     * 刷新电量和时间
+     * @private
+     */
+    updateTimeAndBattery ({ commit }) {
+      const {
+        battery
+      } = window.__browserObject.getDeviceData()
+      commit('updateTimeStr')
+      commit('setBattery', battery)
     }
   }
 }

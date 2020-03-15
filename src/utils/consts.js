@@ -1,4 +1,6 @@
 const consts = {
+  updateTimeAndBatteryIntervalTime: 60 * 1000,
+
   readerModeUpDown: 'upDown',
   readerModeLeftRight: 'LeftRight',
   fontSizeCount: 4,

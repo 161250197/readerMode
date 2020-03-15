@@ -11,9 +11,18 @@ const store = {
     loadingPrevChapterFail: false,
     isLoadingNextChapter: false,
     loadingNextChapterFail: false,
+    readingChapterTitle: '',
     chapters: []
   },
   mutations: {
+    /**
+     * 设置章节标题
+     * @param {Object} state mainBody.state
+     * @param {String} value 值
+     */
+    setReadingChapterTitle (state, value) {
+      state.readingChapterTitle = value
+    },
     /**
      * 设置正在加载正文
      * @param {Object} state mainBody.state
@@ -98,6 +107,7 @@ const store = {
           chapterIndex
         }
         commit('setChapters', [chapter])
+        commit('setReadingChapterTitle', chapter.title)
       } catch (e) {
         console.log('[ERROR] loadMainBodyContent ', e)
         commit('setLoadingMainBodyContentFail', true)
