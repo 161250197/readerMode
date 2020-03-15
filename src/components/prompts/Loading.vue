@@ -3,17 +3,19 @@
     class="loading-wrapper"
     :style="{ 'background-color': backgroundColor }"
   >
-    <div>
-      Loading...
-    </div>
+    <LoadingDiv />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import LoadingDiv from './../utils/LoadingDiv'
 
 export default {
   name: 'Loading',
+  components: {
+    LoadingDiv
+  },
   computed: {
     ...mapState({
       backgroundColor: state => state.userConfig.backgroundColor

@@ -10,12 +10,21 @@
       src="./../../assets/loading-night.png"
       alt="night mode loading icon"
     />
+    <div class="prompt-wrapper">
+      {{prompt}}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LoadingDiv'
+  name: 'LoadingDiv',
+  props: {
+    prompt: {
+      type: String,
+      default: '加载中……'
+    }
+  }
 }
 </script>
 
@@ -24,11 +33,17 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   img {
-    width: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     animation: rotate 1.5s ease infinite;
+  }
+  .prompt-wrapper {
+    margin: 0.5rem 0;
+    text-align: center;
   }
 }
 </style>

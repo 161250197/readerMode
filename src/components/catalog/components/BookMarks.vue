@@ -3,7 +3,7 @@
     <LoadingDiv v-show="isLoadingBookMarks" />
     <ErrorDiv
       v-show="loadingBookMarksFail"
-      :retryCallback="loadingBookMarks"
+      :retryCallback="loadBookMarks"
     />
     <div v-if="!(isLoadingBookMarks || loadingBookMarksFail)">
       <div
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'loadingBookMarks'
+      'loadBookMarks'
     ])
   }
 }

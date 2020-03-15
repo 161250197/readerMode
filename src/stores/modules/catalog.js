@@ -72,7 +72,7 @@ const store = {
     /**
      * 加载小说章节目录
      */
-    async loadingCatalogChapters ({ commit }) {
+    async loadCatalogChapters ({ commit }) {
       commit('setIsLoadingCatalogChapters', true)
       commit('setLoadingCatalogChaptersFail', false)
       try {
@@ -95,7 +95,7 @@ const store = {
     /**
      * 加载书签列表
      */
-    loadingBookMarks ({ commit }) {
+    loadBookMarks ({ commit }) {
       commit('setIsLoadingBookMarks', true)
       commit('setLoadingBookMarksFail', false)
       try {
@@ -107,7 +107,7 @@ const store = {
         const bookMarks = window.__browserObject.getBookMarks(domain, novelName, authorName)
         commit('setBookMarks', bookMarks)
       } catch (e) {
-        console.log('[ERROR] loadingBookMarks', e)
+        console.log('[ERROR] loadBookMarks', e)
         commit('setLoadingBookMarksFail', true)
       }
       commit('setIsLoadingBookMarks', false)

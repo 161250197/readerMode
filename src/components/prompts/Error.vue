@@ -3,21 +3,28 @@
     class="error-wrapper"
     :style="{ 'background-color': backgroundColor }"
   >
-    <div>
-      Error...
-    </div>
+    <ErrorDiv :retryCallback="initStore" />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import ErrorDiv from './../utils/ErrorDiv'
 
 export default {
   name: 'Error',
+  components: {
+    ErrorDiv
+  },
   computed: {
     ...mapState({
       backgroundColor: state => state.userConfig.backgroundColor
     })
+  },
+  methods: {
+    ...mapActions([
+      'initStore'
+    ])
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <LoadingDiv v-show="isLoadingCatalogChapters" />
     <ErrorDiv
       v-show="loadingCatalogChaptersFail"
-      :retryCallback="loadingCatalogChapters"
+      :retryCallback="loadCatalogChapters"
     />
     <div v-if="!(isLoadingCatalogChapters || loadingCatalogChaptersFail)">
       <div class="catalog-chapter-wrapper">
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'loadingCatalogChapters'
+      'loadCatalogChapters'
     ])
   }
 }

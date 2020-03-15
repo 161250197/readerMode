@@ -1,5 +1,8 @@
 <template>
-  <div class="error-div-wrapper" @click.stop="retryCallback">
+  <div
+    class="error-div-wrapper"
+    @click.stop="retryCallback"
+  >
     <img
       class="day-mode-item"
       src="./../../assets/error.png"
@@ -10,6 +13,12 @@
       src="./../../assets/error-night.png"
       alt="night mode error icon"
     />
+    <div class="prompt-wrapper">
+      {{prompt}}
+    </div>
+    <div class="retry-prompt-wrapper">
+      {{retryPrompt}}
+    </div>
   </div>
 </template>
 
@@ -17,9 +26,18 @@
 export default {
   name: 'ErrorDiv',
   props: {
+    prompt: {
+      type: String,
+      default: '对不起 出错了'
+    },
     retryCallback: {
       type: Function,
       required: true
+    }
+  },
+  data () {
+    return {
+      retryPrompt: '点击空白区域重试'
     }
   }
 }
@@ -30,10 +48,19 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   img {
-    width: 2.5rem;
+    width: 2rem;
+    height: 2rem;
+  }
+  .prompt-wrapper {
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+  .retry-prompt-wrapper {
+    font-size: small;
   }
 }
 </style>

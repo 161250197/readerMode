@@ -5,6 +5,8 @@ import { api } from './../../apis/api'
  */
 const store = {
   state: {
+    isLoadingMainBodyContent: true,
+    loadingMainBodyContentFail: false,
     isLoadingPrevChapter: false,
     loadingPrevChapterFail: false,
     isLoadingNextChapter: false,
@@ -12,6 +14,24 @@ const store = {
     chapters: []
   },
   mutations: {
+    /**
+     * 设置正在加载正文
+     * @param {Object} state mainBodyState
+     * @param {Boolean} value 值
+     * @private
+     */
+    setIsLoadingMainBodyContent (state, value) {
+      state.isLoadingMainBodyContent = !!value
+    },
+    /**
+     * 设置加载正文失败
+     * @param {Object} state mainBodyState
+     * @param {Boolean} value 值
+     * @private
+     */
+    setLoadingMainBodyContentFail (state, value) {
+      state.loadingMainBodyContentFail = !!value
+    },
     /**
      * 设置正在加载上一章
      * @param {Object} state mainBodyState
@@ -61,27 +81,34 @@ const store = {
   actions: {
     /**
      * 初始化小说正文内容
-     * @throws {Error} 请求失败
      */
-    async initMainBodyContent ({ commit }) {
-      const {
-        domain,
-        novelName,
-        authorName,
-        chapterIndex
-      } = this.state
-      const { data } = await api.getMainBodyText(domain, novelName, authorName, chapterIndex)
-      const chapter = {
-        ...data,
-        chapterIndex
+    async loadMainBodyContent ({ commit }) {
+      commit('setIsLoadingMainBodyContent', true)
+      commit('setLoadingMainBodyContentFail', false)
+      try {
+        const {
+          domain,
+          novelName,
+          authorName,
+          chapterIndex
+        } = this.state
+        const { data } = await api.getMainBodyText(domain, novelName, authorName, chapterIndex)
+        const chapter = {
+          ...data,
+          chapterIndex
+        }
+        commit('setChapters', [chapter])
+      } catch (e) {
+        console.log('[ERROR] loadMainBodyContent ', e)
+        commit('setLoadingMainBodyContentFail', true)
       }
-      commit('setChapters', [chapter])
+      commit('setIsLoadingMainBodyContent', false)
     },
     /**
      * 加载小说上一章
      * @throws {Error} 请求失败
      */
-    async loadingPrevChapter ({ commit, state }) {
+    async loadPrevChapter ({ commit, state }) {
       commit('setIsLoadingPrevChapter', true)
       commit('setLoadingPrevChapterFail', false)
       try {
@@ -98,7 +125,7 @@ const store = {
         }
         commit('setChapters', [chapter])
       } catch (e) {
-        console.log('[ERROR] loadingPrevChapter ', e)
+        console.log('[ERROR] loadPrevChapter ', e)
         commit('setLoadingPrevChapterFail', true)
       }
       commit('setIsLoadingPrevChapter', false)
@@ -106,7 +133,7 @@ const store = {
     /**
      * 加载小说下一章
      */
-    async loadingNextChapter ({ commit, state }) {
+    async loadNextChapter ({ commit, state }) {
       commit('setIsLoadingNextChapter', true)
       commit('setLoadingNextChapterFail', false)
       try {
@@ -124,7 +151,7 @@ const store = {
         }
         commit('setChapters', [...chapters, chapter])
       } catch (e) {
-        console.log('[ERROR] loadingNextChapter ', e)
+        console.log('[ERROR] loadNextChapter ', e)
         commit('setLoadingNextChapterFail', true)
       }
       commit('setIsLoadingNextChapter', false)

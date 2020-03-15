@@ -57,6 +57,8 @@ let store = new Vuex.Store({
      * 初始化 store
      */
     initStore ({ dispatch, commit }) {
+      commit('setLoadingShow', true)
+      commit('setErrorShow', false)
       Promise.all([
         // 初始化用户设置
         dispatch('setupUserConfig'),
@@ -66,12 +68,18 @@ let store = new Vuex.Store({
         dispatch('initNovelData')
       ])
         .then(() => {
-          // 初始化小说内容
-          dispatch('initNovelContents')
+          // 加载小说章节目录
+          dispatch('loadCatalogChapters')
+          // 加载小说书签列表
+          dispatch('loadBookMarks')
+          // 初始化小说正文内容
+          dispatch('loadMainBodyContent')
         })
         .catch(e => {
           console.log('[ERROR] initStore ', e)
           commit('setErrorShow', true)
+        })
+        .finally(() => {
           commit('setLoadingShow', false)
         })
     },
@@ -102,25 +110,6 @@ let store = new Vuex.Store({
       commit('setNovelName', novelName)
       commit('setAuthorName', authorName)
       commit('setChapterIndex', chapterIndex)
-    },
-    /**
-     * 初始化小说内容
-     */
-    initNovelContents ({ commit, dispatch }) {
-      // 加载小说章节目录
-      dispatch('loadingCatalogChapters')
-      // 加载小说书签列表
-      dispatch('loadingBookMarks')
-      // 初始化小说正文内容
-      dispatch('initMainBodyContent')
-        .then(() => {
-          commit('setLoadingShow', false)
-        })
-        .catch(e => {
-          console.log('[ERROR] initNovelContents ', e)
-          commit('setErrorShow', true)
-          commit('setLoadingShow', false)
-        })
     }
   }
 })
