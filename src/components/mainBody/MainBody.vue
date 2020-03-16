@@ -3,9 +3,7 @@
     class="main-body-wrapper"
     @click.stop="onMainBodyClick"
   >
-    <div class="device-info-wrapper">
-      <DeviceInfo />
-    </div>
+    <DeviceInfo />
     <div class="content-wrapper">
       <UpDown v-if="readerMode === readerModeUpDown" />
       <LeftRight v-else-if="readerMode === readerModeLeftRight" />
@@ -84,10 +82,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  .device-info-wrapper {
-    width: 100%;
-    height: 1rem;
-  }
   .content-wrapper {
     width: 100%;
     flex: 1;

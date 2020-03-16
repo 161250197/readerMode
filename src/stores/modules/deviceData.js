@@ -62,7 +62,15 @@ const store = {
      */
     updateTimeStr (state) {
       const now = new Date()
-      state.timeStr = `${now.getHours()}:${now.getMinutes()}`
+      let hours = `${now.getHours()}`
+      if (hours.length === 1) {
+        hours = '0' + hours
+      }
+      let minutes = `${now.getMinutes()}`
+      if (minutes.length === 1) {
+        minutes = '0' + minutes
+      }
+      state.timeStr = `${hours}:${minutes}`
     },
     /**
      * 设置电量信息
