@@ -80,7 +80,7 @@ const store = {
     /**
      * 设置章节数组
      * @param {Object} state mainBody.state
-     * @param {Array<{text: String, title: String, chapterIndex: Number}>} chapters 章节数组
+     * @param {Array<{text: String, title: String, chapterIndex: Number, hasNext: Boolean}>} chapters 章节数组
      * @private
      */
     setChapters (state, chapters) {
@@ -121,13 +121,17 @@ const store = {
     async loadPrevChapter ({ commit, state }) {
       commit('setIsLoadingPrevChapter', true)
       commit('setLoadingPrevChapterFail', false)
+      const prevChapterIndex = state.chapters[0].chapterIndex - 1
+      if (prevChapterIndex < 0) {
+        console.log('[INFO] loadPrevChapter no prev chapter')
+        return
+      }
       try {
         const {
           domain,
           novelName,
           authorName
         } = this.state
-        let prevChapterIndex = state.chapters[0].chapterIndex - 1
         const { data } = await api.getMainBodyText(domain, novelName, authorName, prevChapterIndex)
         const chapter = {
           ...data,
@@ -146,14 +150,19 @@ const store = {
     async loadNextChapter ({ commit, state }) {
       commit('setIsLoadingNextChapter', true)
       commit('setLoadingNextChapterFail', false)
+      let { chapters } = state
+      const lastChapter = chapters[chapters.length - 1]
+      if (!lastChapter.hasNext) {
+        console.log('[INFO] loadNextChapter no next chapter')
+        return
+      }
+      const nextChapterIndex = lastChapter.chapterIndex + 1
       try {
         const {
           domain,
           novelName,
           authorName
         } = this.state
-        let { chapters } = state
-        let nextChapterIndex = chapters[chapters.length - 1].chapterIndex + 1
         const { data } = await api.getMainBodyText(domain, novelName, authorName, nextChapterIndex)
         const chapter = {
           ...data,

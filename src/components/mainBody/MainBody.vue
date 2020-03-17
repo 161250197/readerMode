@@ -5,7 +5,12 @@
   >
     <DeviceInfo />
     <div class="content-wrapper">
-      <UpDown v-if="readerMode === readerModeUpDown" />
+      <ErrorDiv
+        v-if="loadingMainBodyContentFail"
+        :retryCallback="loadMainBodyContent"
+      />
+      <LoadingDiv v-else-if="isLoadingMainBodyContent" />
+      <UpDown v-else-if="readerMode === readerModeUpDown" />
       <LeftRight v-else-if="readerMode === readerModeLeftRight" />
       <ErrorDiv
         v-else
@@ -20,6 +25,7 @@ import { mapState, mapMutations } from 'vuex'
 import DeviceInfo from './components/DeviceInfo'
 import LeftRight from './components/LeftRight'
 import UpDown from './components/UpDown'
+import LoadingDiv from './../utils/LoadingDiv'
 import ErrorDiv from './../utils/ErrorDiv'
 
 const { readerModeUpDown, readerModeLeftRight } = require('./../../utils/consts.js').default
@@ -30,10 +36,13 @@ export default {
     DeviceInfo,
     LeftRight,
     UpDown,
+    LoadingDiv,
     ErrorDiv
   },
   computed: {
     ...mapState({
+      isLoadingMainBodyContent: state => state.mainBody.isLoadingMainBodyContent,
+      loadingMainBodyContentFail: state => state.mainBody.loadingMainBodyContentFail,
       readerMode: state => state.userConfig.readerMode
     })
   },
@@ -45,6 +54,7 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'loadMainBodyContent',
       'setReaderMode',
       'setCatalogShow'
     ]),

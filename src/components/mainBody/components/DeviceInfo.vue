@@ -62,7 +62,7 @@ export default {
     .battery-info-icon {
       position: fixed;
       top: 0.3rem;
-      right: calc(0.1rem + 3px);
+      right: 0.16rem;
       width: 1rem;
       height: 0.4rem;
       box-sizing: border-box;
@@ -72,7 +72,7 @@ export default {
       position: fixed;
       top:0.35rem;
       right: 0.1rem;
-      width: 2px;
+      width: 0.04rem;
       height: 0.3rem;
       background: black;
     }
