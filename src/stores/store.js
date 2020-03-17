@@ -89,13 +89,13 @@ let store = new Vuex.Store({
     },
     /**
      * 更新域名信息
-     * @throws {Error} 域名未匹配
+     * @throws 域名未匹配
      */
     updateDomain ({ commit }) {
       let href = document.location.href
       let domainMatch = href.match(/:\/\/([^/]+)/)
       if (!domainMatch) {
-        throw Error(`domain not match href: ${href}`)
+        return Promise.reject(Error(`domain not match href: ${href}`))
       }
       commit('setDomain', domainMatch[1])
     },

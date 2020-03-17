@@ -109,10 +109,14 @@ const store = {
         browserVersion,
         volumeKeySupport
       } = window.__browserObject.getDeviceData()
+      try {
+        commit('setBrightness', brightness)
+      } catch (e) {
+        return Promise.reject(e)
+      }
       dispatch('startUpdateBatteryAndTimeInterval')
       commit('updateTimeStr')
       commit('setBattery', battery)
-      commit('setBrightness', brightness)
       commit('setBrowserVersion', browserVersion)
       commit('setVolumeKeySupport', volumeKeySupport)
     },

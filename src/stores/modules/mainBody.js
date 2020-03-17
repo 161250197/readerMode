@@ -116,7 +116,6 @@ const store = {
     },
     /**
      * 加载小说上一章
-     * @throws {Error} 请求失败
      */
     async loadPrevChapter ({ commit, state }) {
       commit('setIsLoadingPrevChapter', true)

@@ -97,12 +97,16 @@ const store = {
         rowSpaceIndex,
         backgroundColor
       } = userConfig
+      try {
+        commit('setReaderMode', readerMode)
+        commit('setFontSizeIndex', fontSizeIndex)
+        commit('setRowSpaceIndex', rowSpaceIndex)
+        commit('setBackgroundColor', backgroundColor)
+      } catch (e) {
+        return Promise.reject(e)
+      }
       commit('setVolumeKeyOn', volumeKeyOn)
       commit('setNightMode', nightMode)
-      commit('setReaderMode', readerMode)
-      commit('setFontSizeIndex', fontSizeIndex)
-      commit('setRowSpaceIndex', rowSpaceIndex)
-      commit('setBackgroundColor', backgroundColor)
     },
     /**
      * 保存用户设置
@@ -126,7 +130,7 @@ const store = {
         backgroundColor
       })
       if (!saveSuccess) {
-        throw Error('save user config fail')
+        return Promise.reject(Error('save user config fail'))
       }
     }
   }

@@ -7,7 +7,7 @@ const updateTimeAndBatteryIntervalTime = 60 * 1000
 /** 上下翻页 */
 const readerModeUpDown = 'upDown'
 /** 左右翻页 */
-const readerModeLeftRight = 'LeftRight'
+const readerModeLeftRight = 'leftRight'
 /** 字体大小设定类型数量 */
 const fontSizeCount = 4
 /** 行间距设定类型数量 */
