@@ -18,8 +18,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-
-const { preloadPageCount } = require('./../../../utils/consts.js').default
+import { preloadPageCount } from './../../../utils/consts.js'
 
 export default {
   name: 'MainBody.UpDown',

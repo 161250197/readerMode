@@ -60,7 +60,8 @@ export default {
     text-align: center;
   }
   .retry-prompt-wrapper {
-    font-size: small;
+    font-size: 0.5rem;
+    font-weight: lighter;
   }
 }
 </style>

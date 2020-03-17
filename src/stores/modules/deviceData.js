@@ -1,6 +1,4 @@
-const {
-  updateTimeAndBatteryIntervalTime
-} = require('./../../utils/consts.js').default
+import { updateTimeAndBatteryIntervalTime } from './../../utils/consts.js'
 
 /**
  * 设备数据 store

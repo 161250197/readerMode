@@ -1,9 +1,4 @@
-const {
-  readerModeUpDown,
-  readerModeLeftRight,
-  fontSizeCount,
-  rowSpaceCount
-} = require('./../../utils/consts.js').default
+import { readerModeUpDown, readerModeLeftRight, fontSizeCount, rowSpaceCount } from './../../utils/consts.js'
 
 /**
  * 用户设置 store

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="title-wrapper text-ellipsis">
-      {{readingChapterTitle}}{{readingChapterTitle}}{{readingChapterTitle}}{{readingChapterTitle}}
+      {{readingChapterTitle}}
     </div>
     <div class="time-wrapper">
       {{timeStr}}

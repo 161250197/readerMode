@@ -27,8 +27,7 @@ import LeftRight from './components/LeftRight'
 import UpDown from './components/UpDown'
 import LoadingDiv from './../utils/LoadingDiv'
 import ErrorDiv from './../utils/ErrorDiv'
-
-const { readerModeUpDown, readerModeLeftRight } = require('./../../utils/consts.js').default
+import {readerModeUpDown, readerModeLeftRight} from './../../utils/consts.js'
 
 export default {
   name: 'MainBody',
@@ -79,6 +78,9 @@ export default {
     resetReaderMode () {
       this.setReaderMode(readerModeUpDown)
     }
+  },
+  mounted () {
+
   }
 }
 </script>
