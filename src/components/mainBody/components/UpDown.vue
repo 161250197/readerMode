@@ -1,5 +1,8 @@
 <template>
-  <div class="up-down-wrapper">
+  <div
+    ref="wrapper"
+    class="up-down-wrapper"
+  >
     <div
       class="chapter-wrapper"
       v-for="({ text, title, chapterIndex }) in chapters"
@@ -19,6 +22,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
+import { debounce } from './../../../utils/tools'
 
 export default {
   name: 'MainBody.UpDown',
@@ -45,8 +49,7 @@ export default {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
         return
       }
-      const contentWrapper = document.getElementsByClassName('content-wrapper')[0]
-      const { scrollHeight, scrollTop } = contentWrapper
+      const { scrollHeight, scrollTop } = this.$refs.wrapper
       const height = scrollHeight - scrollTop
       const preloadHeight = this.deviceHeight * preloadPageCount
       if (height < preloadHeight) {
@@ -55,9 +58,16 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      this.checkPreloadNextChapter()
-    })
+    this.checkPreloadNextChapter()
+    this.$refs.wrapper.addEventListener('scroll', debounce(this, this.checkPreloadNextChapter))
   }
 }
 </script>
+
+<style lang="less" scoped>
+.up-down-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+</style>
