@@ -10,8 +10,14 @@
         :retryCallback="loadMainBodyContent"
       />
       <LoadingDiv v-else-if="isLoadingMainBodyContent" />
-      <UpDown v-else-if="readerMode === readerModeUpDown" />
-      <LeftRight v-else-if="readerMode === readerModeLeftRight" />
+      <UpDown
+        :ref="readerModeUpDown"
+        v-else-if="readerMode === readerModeUpDown"
+      />
+      <LeftRight
+        :ref="readerModeLeftRight"
+        v-else-if="readerMode === readerModeLeftRight"
+      />
       <ErrorDiv
         v-else
         :retryCallback="resetReaderMode"
@@ -28,6 +34,7 @@ import UpDown from './components/UpDown'
 import LoadingDiv from './../utils/LoadingDiv'
 import ErrorDiv from './../utils/ErrorDiv'
 import {readerModeUpDown, readerModeLeftRight} from './../../utils/consts.js'
+import { debounce } from './../../utils/tools'
 
 export default {
   name: 'MainBody',
@@ -77,10 +84,25 @@ export default {
      */
     resetReaderMode () {
       this.setReaderMode(readerModeUpDown)
+    },
+    /**
+     * 正文滚动响应
+     */
+    onContentWrapperScroll () {
+      if (this.isLoadingMainBodyContent || this.loadingMainBodyContentFail) {
+        return
+      }
+      const readerModeRef = this.$refs[this.readerMode]
+      if (!(readerModeRef && readerModeRef.checkPreloadNextChapter)) {
+        console.log('[ERROR] onContentWrapperScroll readerModeRef illegal')
+        return
+      }
+      readerModeRef.checkPreloadNextChapter()
     }
   },
   mounted () {
-
+    const contentWrapper = document.getElementsByClassName('content-wrapper')[0]
+    contentWrapper.addEventListener('scroll', debounce(this, this.onContentWrapperScroll))
   }
 }
 </script>
