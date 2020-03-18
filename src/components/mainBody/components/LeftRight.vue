@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
 
 export default {
@@ -50,13 +50,23 @@ export default {
   },
   data () {
     return {
+      chapterIndex: 0,
       pageCount: 0,
+      chapterCountArr: [],
       touchstartX: 0,
       pageIndex: 0,
       moving: 0
     }
   },
+  watch: {
+    chapters () {
+      this.$nextTick(this.updateChapterCountArr)
+    }
+  },
   methods: {
+    ...mapMutations([
+      'setReadingChapterTitle'
+    ]),
     ...mapActions([
       'loadPrevChapter',
       'loadNextChapter'
@@ -67,6 +77,7 @@ export default {
     goNextPage () {
       if (this.pageIndex < this.pageCount) {
         this.pageIndex++
+        this.checkUpdateReadingChapterTitle()
       }
       if (this.pageCount - this.pageIndex < preloadPageCount) {
         this.checkPreloadNextChapter()
@@ -78,7 +89,31 @@ export default {
     goPrevPage () {
       if (this.pageIndex > 0) {
         this.pageIndex--
+        this.checkUpdateReadingChapterTitle()
       }
+    },
+    /**
+     * 更新章节页数数组
+     */
+    updateChapterCountArr () {
+      const chapters = [...document.querySelectorAll('.left-right-wrapper > .content-wrapper > .chapter-wrapper')]
+      this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / this.deviceWidth))
+    },
+    /**
+     * 检查并更新章节标题
+     */
+    checkUpdateReadingChapterTitle () {
+      let pageSum = 0
+      const chapterCount = this.chapterCountArr.length
+      let chapterIndex = 0
+      for (; chapterIndex < chapterCount; chapterIndex++) {
+        pageSum = pageSum + this.chapterCountArr[chapterIndex]
+        if (this.pageIndex < pageSum) {
+          break
+        }
+      }
+      const readingChapterTitle = this.chapters[chapterIndex].title
+      this.setReadingChapterTitle(readingChapterTitle)
     },
     /**
      * 检查并预加载下一章
