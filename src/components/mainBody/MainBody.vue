@@ -10,8 +10,14 @@
         :retryCallback="loadMainBodyContent"
       />
       <LoadingDiv v-else-if="isLoadingMainBodyContent" />
-      <UpDown v-else-if="readerMode === readerModeUpDown" />
-      <LeftRight v-else-if="readerMode === readerModeLeftRight" />
+      <UpDown
+        :ref="readerModeUpDown"
+        v-else-if="readerMode === readerModeUpDown"
+      />
+      <LeftRight
+        :ref="readerModeLeftRight"
+        v-else-if="readerMode === readerModeLeftRight"
+      />
       <ErrorDiv
         v-else
         :retryCallback="resetReaderMode"
@@ -58,6 +64,26 @@ export default {
       'setCatalogShow'
     ]),
     /**
+     * 翻至下一页
+     */
+    goNextPage () {
+      if (!this.$refs[this.readerMode]) {
+        console.log('[INFO] goNextPage not ready return')
+        return
+      }
+      this.$refs[this.readerMode].goNextPage()
+    },
+    /**
+     * 翻至上一页
+     */
+    goPrevPage () {
+      if (!this.$refs[this.readerMode]) {
+        console.log('[INFO] goPrevPage not ready return')
+        return
+      }
+      this.$refs[this.readerMode].goPrevPage()
+    },
+    /**
      * 响应主页点击
      * @param {MouseEvent} e
      */
@@ -77,6 +103,13 @@ export default {
      */
     resetReaderMode () {
       this.setReaderMode(readerModeUpDown)
+    }
+  },
+  mounted () {
+    window.__readerModeObject = {
+      ...window.__readerModeObject,
+      goNextPage: this.goNextPage,
+      goPrevPage: this.goPrevPage
     }
   }
 }

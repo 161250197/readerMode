@@ -62,6 +62,25 @@ export default {
       'loadNextChapter'
     ]),
     /**
+     * 翻至下一页
+     */
+    goNextPage () {
+      if (this.pageIndex < this.pageCount) {
+        this.pageIndex++
+      }
+      if (this.pageCount - this.pageIndex < preloadPageCount) {
+        this.checkPreloadNextChapter()
+      }
+    },
+    /**
+     * 翻至上一页
+     */
+    goPrevPage () {
+      if (this.pageIndex > 0) {
+        this.pageIndex--
+      }
+    },
+    /**
      * 检查并预加载下一章
      */
     checkPreloadNextChapter () {
@@ -101,12 +120,9 @@ export default {
     onWrapperTouchend (e) {
       if (this.moving) {
         if (this.moving < 0) {
-          this.pageIndex++
-          if (this.pageCount - this.pageIndex < preloadPageCount) {
-            this.checkPreloadNextChapter()
-          }
-        } else if (this.pageIndex > 0) {
-          this.pageIndex--
+          this.goNextPage()
+        } else {
+          this.goPrevPage()
         }
         this.moving = 0
       }

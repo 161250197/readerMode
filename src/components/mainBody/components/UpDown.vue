@@ -28,7 +28,6 @@ export default {
   name: 'MainBody.UpDown',
   computed: {
     ...mapState({
-      deviceHeight: state => state.deviceData.deviceSize.height,
       isLoadingPrevChapter: state => state.mainBody.isLoadingPrevChapter,
       loadingPrevChapterFail: state => state.mainBody.loadingPrevChapterFail,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
@@ -36,11 +35,33 @@ export default {
       chapters: state => state.mainBody.chapters
     })
   },
+  data () {
+    return {
+      contentHeight: 0
+    }
+  },
   methods: {
     ...mapActions([
       'loadPrevChapter',
       'loadNextChapter'
     ]),
+    /**
+     * 翻至下一页
+     */
+    goNextPage () {
+      let scrollTop = this.$refs.wrapper.scrollTop + this.visibleHeight
+      this.$refs.wrapper.scrollTop = scrollTop
+      if (this.contentHeight - scrollTop < this.preloadHeight) {
+        this.checkPreloadNextChapter()
+      }
+    },
+    /**
+     * 翻至上一页
+     */
+    goPrevPage () {
+      const { scrollTop } = this.$refs.wrapper
+      this.$refs.wrapper.scrollTop = scrollTop - this.visibleHeight
+    },
     /**
      * 检查并预加载下一章
      */
@@ -50,16 +71,18 @@ export default {
         return
       }
       const { scrollHeight, scrollTop } = this.$refs.wrapper
-      const height = scrollHeight - scrollTop
-      const preloadHeight = this.deviceHeight * preloadPageCount
-      if (height < preloadHeight) {
+      this.contentHeight = scrollHeight
+      if (this.contentHeight - scrollTop < this.preloadHeight) {
         this.loadNextChapter()
       }
     }
   },
   mounted () {
+    const { wrapper } = this.$refs
+    this.visibleHeight = wrapper.getBoundingClientRect().height
+    this.preloadHeight = this.visibleHeight * preloadPageCount
     this.checkPreloadNextChapter()
-    this.$refs.wrapper.addEventListener('scroll', debounce(this, this.checkPreloadNextChapter))
+    wrapper.addEventListener('scroll', debounce(this, this.checkPreloadNextChapter))
   }
 }
 </script>
