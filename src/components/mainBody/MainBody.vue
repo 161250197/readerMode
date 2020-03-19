@@ -33,7 +33,7 @@ import LeftRight from './components/LeftRight'
 import UpDown from './components/UpDown'
 import LoadingDiv from './../utils/LoadingDiv'
 import ErrorDiv from './../utils/ErrorDiv'
-import {readerModeUpDown, readerModeLeftRight} from './../../utils/consts.js'
+import { readerModeUpDown, readerModeLeftRight } from './../../utils/consts.js'
 
 export default {
   name: 'MainBody',
@@ -46,6 +46,8 @@ export default {
   },
   computed: {
     ...mapState({
+      deviceHeight: state => state.deviceData.deviceSize.height,
+      deviceWidth: state => state.deviceData.deviceSize.width,
       isLoadingMainBodyContent: state => state.mainBody.isLoadingMainBodyContent,
       loadingMainBodyContentFail: state => state.mainBody.loadingMainBodyContentFail,
       readerMode: state => state.userConfig.readerMode
@@ -61,7 +63,7 @@ export default {
     ...mapMutations([
       'loadMainBodyContent',
       'setReaderMode',
-      'setCatalogShow'
+      'setUserMenuShow'
     ]),
     /**
      * 翻至下一页
@@ -88,15 +90,18 @@ export default {
      * @param {MouseEvent} e
      */
     onMainBodyClick (e) {
-      // TODO 具体响应处理
-      console.log(e)
-      this.showCatalog()
-    },
-    /**
-     * 显示目录栏
-     */
-    showCatalog () {
-      this.setCatalogShow(true)
+      const { clientX, clientY } = e
+      const oneThirdWidth = this.deviceWidth / 3
+      const twoThirdsWidth = oneThirdWidth * 2
+      const oneSixthHeight = this.deviceHeight / 6
+      const fiveSixthsHeight = oneSixthHeight * 5
+      if ((clientX < oneThirdWidth && clientY < fiveSixthsHeight) || (clientX < twoThirdsWidth && clientY < oneSixthHeight)) {
+        this.goPrevPage()
+      } else if ((clientX >= oneThirdWidth && clientY >= fiveSixthsHeight) || (clientX >= twoThirdsWidth && clientY >= oneSixthHeight)) {
+        this.goNextPage()
+      } else {
+        this.setUserMenuShow(true)
+      }
     },
     /**
      * 重置阅读模式

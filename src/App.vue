@@ -1,5 +1,5 @@
 <template>
-  <div class="app" :class="{'night-mode': nightMode}">
+  <div class="app" :class="{ 'night-mode': nightMode }">
     <MainBody v-show="!(loadingShow || errorShow)" />
     <UserMenu v-show="userMenuShow" />
     <Catalog v-show="catalogShow" />
