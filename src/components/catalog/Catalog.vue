@@ -3,26 +3,28 @@
     class="catalog"
     @click.stop="hideCatalog"
   >
-    <div class="novel-info">
-      <div class="novel-name text-ellipsis">
-        {{ novelName }}
+    <div class="page">
+      <div class="novel-info">
+        <div class="novel-name text-ellipsis">
+          {{ novelName }}
+        </div>
+        <div class="author-name text-ellipsis">
+          {{ authorName }}
+        </div>
       </div>
-      <div class="author-name text-ellipsis">
-        {{ authorName }}
+      <div class="content">
+        <CatalogChapters v-show="tabIndex === 0" />
+        <BookMarks v-show="tabIndex === 1" />
       </div>
-    </div>
-    <div class="content">
-      <CatalogChapters v-show="tabIndex === 0" />
-      <BookMarks v-show="tabIndex === 1" />
-    </div>
-    <div class="tabs">
-      <div
-        class="tab"
-        v-for="(tab, index) in tabs"
-        :key="index"
-        @click.stop="() => updateTabIndex(index)"
-      >
-        {{ tab }}
+      <div class="tabs">
+        <div
+          class="tab"
+          v-for="(tab, index) in tabs"
+          :key="index"
+          @click.stop="() => updateTabIndex(index)"
+        >
+          {{ tab }}
+        </div>
       </div>
     </div>
   </div>
@@ -76,21 +78,29 @@ export default {
 .catalog {
   height: 100%;
   width: 100%;
-  background: white;
   position: fixed;
   left: 0;
   top: 0;
-  display: flex;
-  flex-direction: column;
-  .content {
-    flex: 1;
-    overflow-y: scroll;
-  }
-  .tabs {
+  background: rgba(0, 0, 0, 0.6);
+  .page {
+    height: 100%;
+    width: 80%;
+    position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
-    .tab {
+    flex-direction: column;
+    background: white;
+    .content {
       flex: 1;
-      text-align: center;
+      overflow-y: scroll;
+    }
+    .tabs {
+      display: flex;
+      .tab {
+        flex: 1;
+        text-align: center;
+      }
     }
   }
 }

@@ -75,13 +75,11 @@ export default {
      * 翻至下一页
      */
     goNextPage () {
-      if (this.pageIndex < this.pageCount) {
+      if (this.pageIndex + 1 < this.pageCount) {
         this.pageIndex++
         this.checkUpdateReadingChapterTitle()
       }
-      if (this.pageCount - this.pageIndex < preloadPageCount) {
-        this.checkPreloadNextChapter()
-      }
+      this.checkPreloadNextChapter()
     },
     /**
      * 翻至上一页
@@ -98,6 +96,7 @@ export default {
     updateChapterCountArr () {
       const chapters = [...document.querySelectorAll('.left-right > .content > .chapter')]
       this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / this.deviceWidth))
+      this.pageCount = this.chapterCountArr.reduce((n1, n2) => n1 + n2)
     },
     /**
      * 检查并更新章节标题
@@ -123,8 +122,6 @@ export default {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
         return
       }
-      const { scrollWidth } = this.$refs.wrapper
-      this.pageCount = Math.round(scrollWidth / this.deviceWidth)
       if (this.pageCount - this.pageIndex < preloadPageCount) {
         this.loadNextChapter()
       }
@@ -164,6 +161,7 @@ export default {
     }
   },
   mounted () {
+    this.updateChapterCountArr()
     this.checkPreloadNextChapter()
   }
 }

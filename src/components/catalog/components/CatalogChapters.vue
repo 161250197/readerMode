@@ -5,22 +5,24 @@
       v-show="loadingCatalogChaptersFail"
       :retryCallback="loadCatalogChapters"
     />
-    <div v-if="!(isLoadingCatalogChapters || loadingCatalogChaptersFail)">
-      <div class="catalog-chapter">
-        <div
-          class="title text-ellipsis"
-          v-for="(title, index) in catalogChapters"
-          :key="index"
-        >
-          {{ title }}
-        </div>
+    <div
+      v-if="!(isLoadingCatalogChapters || loadingCatalogChaptersFail)"
+      class="catalog-chapter"
+    >
+      <div
+        class="title text-ellipsis"
+        v-for="(title, index) in catalogChapters"
+        :key="index"
+        @click.stop="() => jumpChapters(index)"
+      >
+        {{ title }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import LoadingDiv from './../../utils/LoadingDiv'
 import ErrorDiv from './../../utils/ErrorDiv'
 
@@ -38,9 +40,23 @@ export default {
     })
   },
   methods: {
+    ...mapMutations([
+      'setCatalogShow',
+      'setChapterIndex'
+    ]),
     ...mapActions([
+      'loadMainBodyContent',
       'loadCatalogChapters'
-    ])
+    ]),
+    /**
+     * 跳转章节
+     * @param {Number} chapterIndex
+     */
+    jumpChapters (chapterIndex) {
+      this.setCatalogShow(false)
+      this.setChapterIndex(chapterIndex)
+      this.loadMainBodyContent()
+    }
   }
 }
 </script>

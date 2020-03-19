@@ -123,6 +123,7 @@ const store = {
       const prevChapterIndex = state.chapters[0].chapterIndex - 1
       if (prevChapterIndex < 0) {
         console.log('[INFO] loadPrevChapter no prev chapter')
+        commit('setIsLoadingPrevChapter', false)
         return
       }
       try {
@@ -153,6 +154,7 @@ const store = {
       const lastChapter = chapters[chapters.length - 1]
       if (!lastChapter.hasNext) {
         console.log('[INFO] loadNextChapter no next chapter')
+        commit('setIsLoadingNextChapter', false)
         return
       }
       const nextChapterIndex = lastChapter.chapterIndex + 1
