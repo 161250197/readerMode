@@ -7,6 +7,7 @@ const store = {
     loadingShow: true,
     userMenuShow: false,
     catalogShow: false,
+    settingShow: false,
     moreSettingShow: false
   },
   mutations: {
@@ -33,6 +34,9 @@ const store = {
      */
     setUserMenuShow (state, value) {
       state.userMenuShow = !!value
+      if (!value) {
+        this.commit('setSettingShow', false)
+      }
     },
     /**
      * 设置目录页显示
@@ -43,12 +47,23 @@ const store = {
       state.catalogShow = !!value
     },
     /**
+     * 设置设置页显示
+     * @param {Object} state showState.state
+     * @param {Boolean} value 值
+     */
+    setSettingShow (state, value) {
+      state.settingShow = !!value
+    },
+    /**
      * 设置更多设置页显示
      * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setMoreSettingShow (state, value) {
       state.moreSettingShow = !!value
+      if (value) {
+        this.commit('setUserMenuShow', false)
+      }
     }
   }
 }
