@@ -17,7 +17,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setErrorShow (state, value) {
-      state.errorShow = !!value
+      state.errorShow = value
     },
     /**
      * 设置 Loading 页显示
@@ -25,7 +25,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setLoadingShow (state, value) {
-      state.loadingShow = !!value
+      state.loadingShow = value
     },
     /**
      * 设置菜单项显示
@@ -33,7 +33,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setUserMenuShow (state, value) {
-      state.userMenuShow = !!value
+      state.userMenuShow = value
       if (!value) {
         this.commit('setSettingShow', false)
       }
@@ -44,7 +44,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setCatalogShow (state, value) {
-      state.catalogShow = !!value
+      state.catalogShow = value
     },
     /**
      * 设置设置页显示
@@ -52,7 +52,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setSettingShow (state, value) {
-      state.settingShow = !!value
+      state.settingShow = value
     },
     /**
      * 设置更多设置页显示
@@ -60,7 +60,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setMoreSettingShow (state, value) {
-      state.moreSettingShow = !!value
+      state.moreSettingShow = value
       if (value) {
         this.commit('setUserMenuShow', false)
       }

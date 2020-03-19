@@ -1,18 +1,18 @@
 <template>
-  <div class="catalog-chapters-wrapper">
+  <div class="catalog-chapters">
     <LoadingDiv v-show="isLoadingCatalogChapters" />
     <ErrorDiv
       v-show="loadingCatalogChaptersFail"
       :retryCallback="loadCatalogChapters"
     />
     <div v-if="!(isLoadingCatalogChapters || loadingCatalogChaptersFail)">
-      <div class="catalog-chapter-wrapper">
+      <div class="catalog-chapter">
         <div
-          class="title-wrapper text-ellipsis"
+          class="title text-ellipsis"
           v-for="(title, index) in catalogChapters"
           :key="index"
         >
-          {{title}}
+          {{ title }}
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.catalog-chapters-wrapper {
+.catalog-chapters {
   width: 100%;
   height: 100%;
 }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="error-wrapper"
+    class="error"
     :style="{ 'background-color': backgroundColor }"
   >
     <ErrorDiv :retryCallback="initStore" />
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.error-wrapper {
+.error {
   width: 100%;
   height: 100%;
   display: flex;

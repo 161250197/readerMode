@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
-    <div class="title-wrapper text-ellipsis">
-      {{readingChapterTitle}}
+    <div class="title text-ellipsis">
+      {{ readingChapterTitle }}
     </div>
-    <div class="time-wrapper">
-      {{timeStr}}
+    <div class="time">
+      {{ timeStr }}
     </div>
-    <div class="battery-wrapper">
+    <div class="battery">
       <div class="battery-border-icon"></div>
       <div
         class="battery-info-icon"
@@ -39,18 +39,18 @@ export default {
   height: 1rem;
   font-size: 0.6rem;
   line-height: 0.6rem;
-  .title-wrapper {
+  .title {
     position: fixed;
     top: 0.2rem;
     left: 0.2rem;
     max-width: 6rem;
   }
-  .time-wrapper {
+  .time {
     position: fixed;
     top: 0.2rem;
     right: 1.4rem;
   }
-  .battery-wrapper {
+  .battery {
     position: fixed;
     top: 0;
     right: 0;

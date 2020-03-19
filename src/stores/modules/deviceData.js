@@ -95,7 +95,7 @@ const store = {
      * @private
      */
     setVolumeKeySupport (state, value) {
-      state.volumeKeySupport = !!value
+      state.volumeKeySupport = value
     }
   },
   actions: {

@@ -19,7 +19,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setVolumeKeyOn (state, value) {
-      state.volumeKeyOn = !!value
+      state.volumeKeyOn = value
     },
     /**
      * 设置夜间模式开启
@@ -27,7 +27,7 @@ const store = {
      * @param {Boolean} value 值
      */
     setNightMode (state, value) {
-      state.nightMode = !!value
+      state.nightMode = value
     },
     /**
      * 设置阅读模式

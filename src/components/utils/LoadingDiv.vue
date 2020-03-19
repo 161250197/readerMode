@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-div-wrapper">
+  <div class="loading-div">
     <img
       class="day-mode-item"
       src="./../../assets/loading.png"
@@ -10,8 +10,8 @@
       src="./../../assets/loading-night.png"
       alt="night mode loading icon"
     />
-    <div class="prompt-wrapper">
-      {{prompt}}
+    <div class="prompt">
+      {{ prompt }}
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.loading-div-wrapper {
+.loading-div {
   width: 100%;
   height: 100%;
   display: flex;
@@ -41,7 +41,7 @@ export default {
     height: 2rem;
     animation: rotate 1.5s ease infinite;
   }
-  .prompt-wrapper {
+  .prompt {
     margin: 0.5rem 0;
     text-align: center;
   }

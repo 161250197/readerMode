@@ -1,5 +1,5 @@
 <template>
-  <div class="book-marks-wrapper">
+  <div class="book-marks">
     <LoadingDiv v-show="isLoadingBookMarks" />
     <ErrorDiv
       v-show="loadingBookMarksFail"
@@ -7,15 +7,15 @@
     />
     <div v-if="!(isLoadingBookMarks || loadingBookMarksFail)">
       <div
-        class="book-mark-wrapper"
+        class="book-mark"
         v-if="bookMarks.length"
       >
         <div
-          class="title-wrapper text-ellipsis"
+          class="title text-ellipsis"
           v-for="({ chapterTitle, chapterIndex }) in bookMarks"
           :key="chapterIndex"
         >
-          {{chapterTitle}}
+          {{ chapterTitle }}
         </div>
       </div>
       <div v-else>
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.book-marks-wrapper {
+.book-marks {
   width: 100%;
   height: 100%;
 }

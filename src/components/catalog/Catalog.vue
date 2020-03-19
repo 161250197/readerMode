@@ -1,28 +1,28 @@
 <template>
   <div
-    class="catalog-wrapper"
+    class="catalog"
     @click.stop="hideCatalog"
   >
-    <div class="novel-info-wrapper">
-      <div class="novel-name-wrapper text-ellipsis">
-        {{novelName}}
+    <div class="novel-info">
+      <div class="novel-name text-ellipsis">
+        {{ novelName }}
       </div>
-      <div class="author-name-wrapper text-ellipsis">
-        {{authorName}}
+      <div class="author-name text-ellipsis">
+        {{ authorName }}
       </div>
     </div>
-    <div class="content-wrapper">
+    <div class="content">
       <CatalogChapters v-show="tabIndex === 0" />
       <BookMarks v-show="tabIndex === 1" />
     </div>
-    <div class="tabs-wrapper">
+    <div class="tabs">
       <div
         class="tab"
         v-for="(tab, index) in tabs"
         :key="index"
         @click.stop="() => updateTabIndex(index)"
       >
-        {{tab}}
+        {{ tab }}
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.catalog-wrapper {
+.catalog {
   height: 100%;
   width: 100%;
   background: white;
@@ -82,11 +82,11 @@ export default {
   top: 0;
   display: flex;
   flex-direction: column;
-  .content-wrapper {
+  .content {
     flex: 1;
     overflow-y: scroll;
   }
-  .tabs-wrapper {
+  .tabs {
     display: flex;
     .tab {
       flex: 1;

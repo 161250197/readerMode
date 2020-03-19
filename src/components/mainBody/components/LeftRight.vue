@@ -1,7 +1,7 @@
 <template>
   <div
     ref="wrapper"
-    class="left-right-wrapper"
+    class="left-right"
     @touchstart="onWrapperTouchstart"
     @touchmove.prevent="onWrapperTouchmove"
     @touchend="onWrapperTouchend"
@@ -9,21 +9,21 @@
     @mousewheel.prevent
   >
     <div
-      class="content-wrapper"
+      class="content"
       :class="{ 'moving': moving }"
       :style="{ transform: `translateX(${moving - pageIndex * deviceWidth}px)` }"
     >
       <div
-        class="chapter-wrapper"
+        class="chapter"
         :style="{marginBottom: `${deviceHeight}px`}"
         v-for="({ text, title, chapterIndex }) in chapters"
         :key="chapterIndex"
       >
-        <div class="title-wrapper">
-          {{title}}
+        <div class="title">
+          {{ title }}
         </div>
         <div
-          class="text-wrapper"
+          class="text"
           v-html="text"
         ></div>
       </div>
@@ -96,7 +96,7 @@ export default {
      * 更新章节页数数组
      */
     updateChapterCountArr () {
-      const chapters = [...document.querySelectorAll('.left-right-wrapper > .content-wrapper > .chapter-wrapper')]
+      const chapters = [...document.querySelectorAll('.left-right > .content > .chapter')]
       this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / this.deviceWidth))
     },
     /**
@@ -170,10 +170,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.left-right-wrapper {
+.left-right {
   width: 100%;
   height: 100%;
-  .content-wrapper {
+  .content {
     height: 100%;
     column-width: 10.8rem;
     column-gap: 0;
@@ -181,7 +181,7 @@ export default {
     &.moving {
       transition: none;
     }
-    .chapter-wrapper {
+    .chapter {
       padding: 0 0.4rem;
       &:last-child {
         margin-bottom: 0 !important;

@@ -20,7 +20,7 @@ const store = {
      * @private
      */
     setIsLoadingCatalogChapters (state, value) {
-      state.isLoadingCatalogChapters = !!value
+      state.isLoadingCatalogChapters = value
     },
     /**
      * 设置加载章节目录失败
@@ -29,7 +29,7 @@ const store = {
      * @private
      */
     setLoadingCatalogChaptersFail (state, value) {
-      state.loadingCatalogChaptersFail = !!value
+      state.loadingCatalogChaptersFail = value
     },
     /**
      * 设置章节目录
@@ -47,7 +47,7 @@ const store = {
      * @private
      */
     setIsLoadingBookMarks (state, value) {
-      state.isLoadingBookMarks = !!value
+      state.isLoadingBookMarks = value
     },
     /**
      * 设置加载书签列表失败
@@ -56,7 +56,7 @@ const store = {
      * @private
      */
     setLoadingBookMarksFail (state, value) {
-      state.loadingBookMarksFail = !!value
+      state.loadingBookMarksFail = value
     },
     /**
      * 设置书签列表

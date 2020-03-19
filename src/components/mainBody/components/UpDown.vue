@@ -1,18 +1,18 @@
 <template>
   <div
     ref="wrapper"
-    class="up-down-wrapper"
+    class="up-down"
   >
     <div
-      class="chapter-wrapper"
+      class="chapter"
       v-for="({ text, title, chapterIndex }) in chapters"
       :key="chapterIndex"
     >
-      <div class="title-wrapper">
-        {{title}}
+      <div class="title">
+        {{ title }}
       </div>
       <div
-        class="text-wrapper"
+        class="text"
         v-html="text"
       ></div>
     </div>
@@ -83,7 +83,7 @@ export default {
      * 检查并更新章节标题
      */
     checkUpdateReadingChapterTitle () {
-      const chapterTitles = [...document.querySelectorAll('.up-down-wrapper > .chapter-wrapper > .title-wrapper')]
+      const chapterTitles = [...document.querySelectorAll('.up-down > .chapter > .title')]
       const chapterIndex = this.getReadingChapterTitleIndex(chapterTitles, this.chapterIndex, this.isReading)
       if (chapterIndex !== this.chapterIndex) {
         this.chapterIndex = chapterIndex
@@ -159,11 +159,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.up-down-wrapper {
+.up-down {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  .chapter-wrapper {
+  .chapter {
     padding: 0 0.4rem;
   }
 }

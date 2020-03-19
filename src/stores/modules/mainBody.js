@@ -30,7 +30,7 @@ const store = {
      * @private
      */
     setIsLoadingMainBodyContent (state, value) {
-      state.isLoadingMainBodyContent = !!value
+      state.isLoadingMainBodyContent = value
     },
     /**
      * 设置加载正文失败
@@ -39,7 +39,7 @@ const store = {
      * @private
      */
     setLoadingMainBodyContentFail (state, value) {
-      state.loadingMainBodyContentFail = !!value
+      state.loadingMainBodyContentFail = value
     },
     /**
      * 设置正在加载上一章
@@ -48,7 +48,7 @@ const store = {
      * @private
      */
     setIsLoadingPrevChapter (state, value) {
-      state.isLoadingPrevChapter = !!value
+      state.isLoadingPrevChapter = value
     },
     /**
      * 设置加载上一章失败
@@ -57,7 +57,7 @@ const store = {
      * @private
      */
     setLoadingPrevChapterFail (state, value) {
-      state.loadingPrevChapterFail = !!value
+      state.loadingPrevChapterFail = value
     },
     /**
      * 设置正在加载下一章
@@ -66,7 +66,7 @@ const store = {
      * @private
      */
     setIsLoadingNextChapter (state, value) {
-      state.isLoadingNextChapter = !!value
+      state.isLoadingNextChapter = value
     },
     /**
      * 设置加载下一章失败
@@ -75,7 +75,7 @@ const store = {
      * @private
      */
     setLoadingNextChapterFail (state, value) {
-      state.loadingNextChapterFail = !!value
+      state.loadingNextChapterFail = value
     },
     /**
      * 设置章节数组

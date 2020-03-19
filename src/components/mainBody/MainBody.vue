@@ -1,10 +1,10 @@
 <template>
   <div
-    class="main-body-wrapper"
+    class="main-body"
     @click.stop="onMainBodyClick"
   >
     <DeviceInfo />
-    <div class="content-wrapper">
+    <div class="content">
       <ErrorDiv
         v-if="loadingMainBodyContentFail"
         :retryCallback="loadMainBodyContent"
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.main-body-wrapper {
+.main-body {
   position: fixed;
   left: 0;
   top: 0;
@@ -129,7 +129,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  .content-wrapper {
+  .content {
     width: 100%;
     flex: 1;
     overflow-y: hidden;

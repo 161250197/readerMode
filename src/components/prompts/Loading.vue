@@ -1,6 +1,6 @@
 <template>
   <div
-    class="loading-wrapper"
+    class="loading"
     :style="{ 'background-color': backgroundColor }"
   >
     <LoadingDiv />
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.loading-wrapper {
+.loading {
   width: 100%;
   height: 100%;
   display: flex;

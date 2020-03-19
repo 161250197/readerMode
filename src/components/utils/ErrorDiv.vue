@@ -1,6 +1,6 @@
 <template>
   <div
-    class="error-div-wrapper"
+    class="error-div"
     @click.stop="retryCallback"
   >
     <img
@@ -13,11 +13,11 @@
       src="./../../assets/error-night.png"
       alt="night mode error icon"
     />
-    <div class="prompt-wrapper">
-      {{prompt}}
+    <div class="prompt">
+      {{ prompt }}
     </div>
-    <div class="retry-prompt-wrapper">
-      {{retryPrompt}}
+    <div class="retry-prompt">
+      {{ retryPrompt }}
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.error-div-wrapper {
+.error-div {
   width: 100%;
   height: 100%;
   display: flex;
@@ -55,11 +55,11 @@ export default {
     width: 2rem;
     height: 2rem;
   }
-  .prompt-wrapper {
+  .prompt {
     margin: 0.5rem 0;
     text-align: center;
   }
-  .retry-prompt-wrapper {
+  .retry-prompt {
     font-size: 0.5rem;
     font-weight: lighter;
   }
