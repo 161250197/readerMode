@@ -16,6 +16,27 @@
         v-html="text"
       ></div>
     </div>
+    <div
+      v-show="loadingNextChapterFail"
+      class="loading-next-fail"
+    >
+      <ErrorDiv
+        prompt="加载下一章失败了"
+        :retryCallback="loadNextChapter"
+      />
+    </div>
+    <div
+      v-show="!loadingNextChapterFail && isLoadingNextChapter"
+      class="loading-next"
+    >
+      <LoadingDiv prompt="正在加载下一章" />
+    </div>
+    <div
+      v-show="!(isLoadingNextChapter || loadingNextChapterFail)"
+      class="see-more"
+    >
+      TODO
+    </div>
   </div>
 </template>
 
@@ -23,9 +44,15 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
 import { debounce } from './../../../utils/tools.js'
+import ErrorDiv from './../../utils/ErrorDiv'
+import LoadingDiv from './../../utils/LoadingDiv'
 
 export default {
   name: 'MainBody.UpDown',
+  components: {
+    ErrorDiv,
+    LoadingDiv
+  },
   computed: {
     ...mapState({
       deviceHeight: state => state.deviceData.deviceSize.height,
@@ -139,6 +166,11 @@ export default {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
         return
       }
+      const lastChapter = this.chapters[this.chapters.length - 1]
+      if (!lastChapter.hasNext) {
+        console.log('[INFO] checkPreloadNextChapter no next chapter')
+        return
+      }
       const { scrollHeight, scrollTop } = this.$refs.wrapper
       this.contentHeight = scrollHeight
       if (this.contentHeight - scrollTop < this.preloadHeight) {
@@ -165,6 +197,12 @@ export default {
   overflow-y: scroll;
   .chapter {
     padding: 0 0.4rem;
+  }
+  .see-more,
+  .loading-next,
+  .loading-next-fail {
+    width: 100%;
+    height: 50%;
   }
 }
 </style>

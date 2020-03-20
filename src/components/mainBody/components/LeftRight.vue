@@ -27,6 +27,27 @@
           v-html="text"
         ></div>
       </div>
+      <div
+        v-show="loadingNextChapterFail"
+        class="loading-next-fail"
+      >
+        <ErrorDiv
+          prompt="加载下一章失败了"
+          :retryCallback="loadNextChapter"
+        />
+      </div>
+      <div
+        v-show="!loadingNextChapterFail && isLoadingNextChapter"
+        class="loading-next"
+      >
+        <LoadingDiv prompt="正在加载下一章" />
+      </div>
+      <div
+        v-show="!(isLoadingNextChapter || loadingNextChapterFail)"
+        class="see-more"
+      >
+        TODO
+      </div>
     </div>
   </div>
 </template>
@@ -34,9 +55,15 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
+import ErrorDiv from './../../utils/ErrorDiv'
+import LoadingDiv from './../../utils/LoadingDiv'
 
 export default {
   name: 'MainBody.LeftRight',
+  components: {
+    ErrorDiv,
+    LoadingDiv
+  },
   computed: {
     ...mapState({
       deviceHeight: state => state.deviceData.deviceSize.height,
@@ -96,7 +123,8 @@ export default {
     updateChapterCountArr () {
       const chapters = [...document.querySelectorAll('.left-right > .content > .chapter')]
       this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / this.deviceWidth))
-      this.pageCount = this.chapterCountArr.reduce((n1, n2) => n1 + n2)
+      // 最后还有一页
+      this.pageCount = this.chapterCountArr.reduce((n1, n2) => n1 + n2) + 1
     },
     /**
      * 检查并更新章节标题
@@ -111,6 +139,9 @@ export default {
           break
         }
       }
+      if (chapterIndex === chapterCount) {
+        chapterIndex = chapterCount - 1
+      }
       const readingChapterTitle = this.chapters[chapterIndex].title
       this.setReadingChapterTitle(readingChapterTitle)
     },
@@ -120,6 +151,11 @@ export default {
     checkPreloadNextChapter () {
       if (this.isLoadingNextChapter || this.loadingNextChapterFail) {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
+        return
+      }
+      const lastChapter = this.chapters[this.chapters.length - 1]
+      if (!lastChapter.hasNext) {
+        console.log('[INFO] checkPreloadNextChapter no next chapter')
         return
       }
       if (this.pageCount - this.pageIndex < preloadPageCount) {
@@ -184,6 +220,12 @@ export default {
       &:last-child {
         margin-bottom: 0 !important;
       }
+    }
+    .see-more,
+    .loading-next,
+    .loading-next-fail {
+      width: 10.8rem;
+      height: 100%;
     }
   }
 }
