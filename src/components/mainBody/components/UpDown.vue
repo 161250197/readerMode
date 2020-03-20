@@ -10,7 +10,7 @@
     <div
       class="content"
       :class="{ 'moving': moving }"
-      :style="{ transform: `translateY(${moving - visibleHeight / 2}px)` }"
+      :style="{ transform: `translateY(${moving - loadingPrevHeight}px)` }"
     >
       <div class="loading-prev">
         {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
@@ -69,6 +69,7 @@ export default {
   computed: {
     ...mapState({
       deviceHeight: state => state.deviceData.deviceSize.height,
+      readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
       loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
       chapters: state => state.mainBody.chapters
@@ -81,8 +82,9 @@ export default {
       touchstartY: 0,
       // 初始值设定最小负数，防止初次打开时的滚动动画
       moving: -Number.MIN_VALUE,
-      chapterIndex: 0,
       chapterTitleCheckTop: 0,
+      loadingPrevHeight: 0,
+      visibleTop: 0,
       visibleHeight: 0,
       preloadHeight: 0,
       contentHeight: 0
@@ -95,7 +97,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setReadingChapterTitle'
+      'setReadingChapterIndex'
     ]),
     ...mapActions([
       'loadPrevChapter',
@@ -151,11 +153,9 @@ export default {
      */
     checkUpdateReadingChapterTitle () {
       const chapterTitles = [...document.querySelectorAll('.up-down > .content > .chapter > .title')]
-      const chapterIndex = this.getReadingChapterTitleIndex(chapterTitles, this.chapterIndex, this.isReading)
-      if (chapterIndex !== this.chapterIndex) {
-        this.chapterIndex = chapterIndex
-        const readingChapterTitle = this.chapters[chapterIndex].title
-        this.setReadingChapterTitle(readingChapterTitle)
+      const chapterIndex = this.getReadingChapterTitleIndex(chapterTitles, this.readingChapterIndex, this.isReading)
+      if (chapterIndex !== this.readingChapterIndex) {
+        this.setReadingChapterIndex(chapterIndex)
       }
     },
     /**
@@ -249,17 +249,34 @@ export default {
         }
         this.moving = 0
       }
+    },
+    /**
+     * 滑动到正在阅读的章节首
+     */
+    scrollToReadingChapterTop () {
+      if (this.readingChapterIndex === 0) {
+        this.$refs.wrapper.scrollTop = 0
+        return
+      }
+      // 开头还有一个 .loading-prev
+      const title = document.querySelector(`.up-down > .content > .chapter:nth-child(${this.readingChapterIndex + 2}) > .title`)
+      // 高度需要减去 .loading-prev 和 DeviceInfo 的高度
+      const scrollTop = title.getBoundingClientRect().top - this.loadingPrevHeight - this.visibleTop
+      this.$refs.wrapper.scrollTop = scrollTop
     }
   },
   mounted () {
     const { wrapper } = this.$refs
     const { top, height } = wrapper.getBoundingClientRect()
     this.visibleHeight = height
-    this.chapterTitleCheckTop = 3 * top
+    this.loadingPrevHeight = this.visibleHeight / 2
+    this.visibleTop = top
+    this.chapterTitleCheckTop = 3 * this.visibleTop
     this.preloadHeight = this.visibleHeight * preloadPageCount
     this.updateChapterInfo()
     this.checkPreloadNextChapter()
     wrapper.addEventListener('scroll', debounce(this, this.onWrapperScroll))
+    this.scrollToReadingChapterTop()
   }
 }
 </script>

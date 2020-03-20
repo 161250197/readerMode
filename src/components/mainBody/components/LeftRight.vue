@@ -70,6 +70,7 @@ export default {
     ...mapState({
       deviceHeight: state => state.deviceData.deviceSize.height,
       deviceWidth: state => state.deviceData.deviceSize.width,
+      readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
       loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
       chapters: state => state.mainBody.chapters
@@ -78,12 +79,12 @@ export default {
   data () {
     return {
       hasPrev: true,
-      chapterIndex: 0,
       pageCount: 0,
       chapterCountArr: [],
       touchstartX: 0,
       pageIndex: 0,
-      moving: 0
+      // 初始值设定最小负数，防止初次打开时的滚动动画
+      moving: -Number.MIN_VALUE
     }
   },
   watch: {
@@ -93,7 +94,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setReadingChapterTitle'
+      'setReadingChapterIndex'
     ]),
     ...mapActions([
       'loadPrevChapter',
@@ -160,8 +161,7 @@ export default {
       if (chapterIndex === chapterCount) {
         chapterIndex = chapterCount - 1
       }
-      const readingChapterTitle = this.chapters[chapterIndex].title
-      this.setReadingChapterTitle(readingChapterTitle)
+      this.setReadingChapterIndex(chapterIndex)
     },
     /**
      * 检查并预加载下一章
@@ -205,18 +205,33 @@ export default {
      */
     onWrapperTouchend (e) {
       if (this.moving) {
-        if (this.moving < 0) {
+        if (this.moving < -Number.MIN_VALUE) {
           this.goNextPage()
-        } else {
+        } else if (this.moving > 0) {
           this.goPrevPage(true)
         }
         this.moving = 0
       }
+    },
+    /**
+     * 滑动到正在阅读的章节首
+     */
+    scrollToReadingChapterTop () {
+      if (this.readingChapterIndex === 0) {
+        this.pageIndex = 0
+        return
+      }
+      let pageIndex = 0
+      for (let chapterIndex = 0; chapterIndex < this.readingChapterIndex; chapterIndex++) {
+        pageIndex = pageIndex + this.chapterCountArr[chapterIndex]
+      }
+      this.pageIndex = pageIndex
     }
   },
   mounted () {
     this.updateChapterInfo()
     this.checkPreloadNextChapter()
+    this.scrollToReadingChapterTop()
   }
 }
 </script>
