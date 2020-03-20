@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="wrapper"
     class="left-right"
     @touchstart="onWrapperTouchstart"
     @touchmove.prevent="onWrapperTouchmove"
@@ -11,8 +10,11 @@
     <div
       class="content"
       :class="{ 'moving': moving }"
-      :style="{ transform: `translateX(${moving - pageIndex * deviceWidth}px)` }"
+      :style="{ transform: `translateX(${moving - (pageIndex + 1) * deviceWidth}px)` }"
     >
+      <div class="loading-prev">
+        {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
+      </div>
       <div
         class="chapter"
         :style="{marginBottom: `${deviceHeight}px`}"
@@ -68,8 +70,6 @@ export default {
     ...mapState({
       deviceHeight: state => state.deviceData.deviceSize.height,
       deviceWidth: state => state.deviceData.deviceSize.width,
-      isLoadingPrevChapter: state => state.mainBody.isLoadingPrevChapter,
-      loadingPrevChapterFail: state => state.mainBody.loadingPrevChapterFail,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
       loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
       chapters: state => state.mainBody.chapters
@@ -77,6 +77,7 @@ export default {
   },
   data () {
     return {
+      hasPrev: true,
       chapterIndex: 0,
       pageCount: 0,
       chapterCountArr: [],
@@ -87,7 +88,7 @@ export default {
   },
   watch: {
     chapters () {
-      this.$nextTick(this.updateChapterCountArr)
+      this.$nextTick(this.updateChapterInfo)
     }
   },
   methods: {
@@ -110,12 +111,29 @@ export default {
     },
     /**
      * 翻至上一页
+     * @param {Boolean} isMoving 是否由滑动触发
      */
-    goPrevPage () {
+    goPrevPage (isMoving) {
       if (this.pageIndex > 0) {
         this.pageIndex--
         this.checkUpdateReadingChapterTitle()
+      } else if (isMoving && this.hasPrev) {
+        this.loadPrevChapter()
       }
+    },
+    /**
+     * 更新章节相关数据
+     */
+    updateChapterInfo () {
+      this.updateHasPrev()
+      this.updateChapterCountArr()
+    },
+    /**
+     * 更新是否有上一章
+     */
+    updateHasPrev () {
+      const prevChapterIndex = this.chapters[0].chapterIndex - 1
+      this.hasPrev = prevChapterIndex >= 0
     },
     /**
      * 更新章节页数数组
@@ -190,14 +208,14 @@ export default {
         if (this.moving < 0) {
           this.goNextPage()
         } else {
-          this.goPrevPage()
+          this.goPrevPage(true)
         }
         this.moving = 0
       }
     }
   },
   mounted () {
-    this.updateChapterCountArr()
+    this.updateChapterInfo()
     this.checkPreloadNextChapter()
   }
 }
@@ -221,6 +239,7 @@ export default {
         margin-bottom: 0 !important;
       }
     }
+    .loading-prev,
     .see-more,
     .loading-next,
     .loading-next-fail {

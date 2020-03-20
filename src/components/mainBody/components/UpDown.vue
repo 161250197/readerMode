@@ -2,40 +2,53 @@
   <div
     ref="wrapper"
     class="up-down"
+    @touchstart="onWrapperTouchstart"
+    @touchmove="onWrapperTouchmove"
+    @touchend="onWrapperTouchend"
+    @touchcancel="onWrapperTouchend"
   >
     <div
-      class="chapter"
-      v-for="({ text, title, chapterIndex }) in chapters"
-      :key="chapterIndex"
+      class="content"
+      :class="{ 'moving': moving }"
+      :style="{ transform: `translateY(${moving - visibleHeight / 2}px)` }"
     >
-      <div class="title">
-        {{ title }}
+      <div class="loading-prev">
+        {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
       </div>
       <div
-        class="text"
-        v-html="text"
-      ></div>
-    </div>
-    <div
-      v-show="loadingNextChapterFail"
-      class="loading-next-fail"
-    >
-      <ErrorDiv
-        prompt="加载下一章失败了"
-        :retryCallback="loadNextChapter"
-      />
-    </div>
-    <div
-      v-show="!loadingNextChapterFail && isLoadingNextChapter"
-      class="loading-next"
-    >
-      <LoadingDiv prompt="正在加载下一章" />
-    </div>
-    <div
-      v-show="!(isLoadingNextChapter || loadingNextChapterFail)"
-      class="see-more"
-    >
-      TODO
+        class="chapter"
+        v-for="({ text, title, chapterIndex }) in chapters"
+        :key="chapterIndex"
+      >
+        <div class="title">
+          {{ title }}
+        </div>
+        <div
+          class="text"
+          v-html="text"
+        ></div>
+      </div>
+      <div
+        v-show="loadingNextChapterFail"
+        class="loading-next-fail"
+      >
+        <ErrorDiv
+          prompt="加载下一章失败了"
+          :retryCallback="loadNextChapter"
+        />
+      </div>
+      <div
+        v-show="!loadingNextChapterFail && isLoadingNextChapter"
+        class="loading-next"
+      >
+        <LoadingDiv prompt="正在加载下一章" />
+      </div>
+      <div
+        v-show="!(isLoadingNextChapter || loadingNextChapterFail)"
+        class="see-more"
+      >
+        TODO
+      </div>
     </div>
   </div>
 </template>
@@ -56,8 +69,6 @@ export default {
   computed: {
     ...mapState({
       deviceHeight: state => state.deviceData.deviceSize.height,
-      isLoadingPrevChapter: state => state.mainBody.isLoadingPrevChapter,
-      loadingPrevChapterFail: state => state.mainBody.loadingPrevChapterFail,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
       loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
       chapters: state => state.mainBody.chapters
@@ -65,11 +76,21 @@ export default {
   },
   data () {
     return {
+      isTop: true,
+      hasPrev: true,
+      touchstartY: 0,
+      // 初始值设定最小负数，防止初次打开时的滚动动画
+      moving: -Number.MIN_VALUE,
       chapterIndex: 0,
       chapterTitleCheckTop: 0,
       visibleHeight: 0,
       preloadHeight: 0,
       contentHeight: 0
+    }
+  },
+  watch: {
+    chapters () {
+      this.$nextTick(this.updateChapterInfo)
     }
   },
   methods: {
@@ -93,11 +114,30 @@ export default {
     },
     /**
      * 翻至上一页
+     * @param {Boolean} isMoving 是否由滑动触发
      */
-    goPrevPage () {
-      let scrollTop = this.$refs.wrapper.scrollTop - this.visibleHeight
-      this.$refs.wrapper.scrollTop = scrollTop
-      this.checkUpdateReadingChapterTitle()
+    goPrevPage (isMoving) {
+      let scrollTop = this.$refs.wrapper.scrollTop
+      if (scrollTop > 0) {
+        scrollTop = scrollTop - this.visibleHeight
+        this.$refs.wrapper.scrollTop = scrollTop
+        this.checkUpdateReadingChapterTitle()
+      } else if (isMoving && this.hasPrev) {
+        this.loadPrevChapter()
+      }
+    },
+    /**
+     * 更新章节相关数据
+     */
+    updateChapterInfo () {
+      this.updateHasPrev()
+    },
+    /**
+     * 更新是否有上一章
+     */
+    updateHasPrev () {
+      const prevChapterIndex = this.chapters[0].chapterIndex - 1
+      this.hasPrev = prevChapterIndex >= 0
     },
     /**
      * scroll 事件处理
@@ -110,7 +150,7 @@ export default {
      * 检查并更新章节标题
      */
     checkUpdateReadingChapterTitle () {
-      const chapterTitles = [...document.querySelectorAll('.up-down > .chapter > .title')]
+      const chapterTitles = [...document.querySelectorAll('.up-down > .content > .chapter > .title')]
       const chapterIndex = this.getReadingChapterTitleIndex(chapterTitles, this.chapterIndex, this.isReading)
       if (chapterIndex !== this.chapterIndex) {
         this.chapterIndex = chapterIndex
@@ -176,6 +216,39 @@ export default {
       if (this.contentHeight - scrollTop < this.preloadHeight) {
         this.loadNextChapter()
       }
+    },
+    /**
+     * touchstart 事件处理
+     * @param {TouchEvent} e
+     */
+    onWrapperTouchstart (e) {
+      this.isTop = this.$refs.wrapper.scrollTop === 0
+      this.touchstartY = e.touches[0].clientY
+    },
+    /**
+     * touchmove 事件处理
+     * @param {TouchEvent} e
+     */
+    onWrapperTouchmove (e) {
+      if (!this.isTop) {
+        return
+      }
+      let moving = e.touches[0].clientY - this.touchstartY
+      if (moving >= 0) {
+        this.moving = Math.min(moving, this.visibleHeight / 2)
+      }
+    },
+    /**
+     * touchend 事件处理
+     * @param {TouchEvent} e
+     */
+    onWrapperTouchend (e) {
+      if (this.moving) {
+        if (this.moving > 0) {
+          this.goPrevPage(true)
+        }
+        this.moving = 0
+      }
     }
   },
   mounted () {
@@ -184,6 +257,7 @@ export default {
     this.visibleHeight = height
     this.chapterTitleCheckTop = 3 * top
     this.preloadHeight = this.visibleHeight * preloadPageCount
+    this.updateChapterInfo()
     this.checkPreloadNextChapter()
     wrapper.addEventListener('scroll', debounce(this, this.onWrapperScroll))
   }
@@ -195,14 +269,23 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  .chapter {
-    padding: 0 0.4rem;
-  }
-  .see-more,
-  .loading-next,
-  .loading-next-fail {
+  .content {
     width: 100%;
-    height: 50%;
+    height: 100%;
+    transition: transform 0.5s;
+    &.moving {
+      transition: none;
+    }
+    .chapter {
+      padding: 0 0.4rem;
+    }
+    .loading-prev,
+    .see-more,
+    .loading-next,
+    .loading-next-fail {
+      width: 100%;
+      height: 50%;
+    }
   }
 }
 </style>

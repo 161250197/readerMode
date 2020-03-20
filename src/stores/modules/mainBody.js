@@ -7,8 +7,6 @@ const store = {
   state: {
     isLoadingMainBodyContent: true,
     loadingMainBodyContentFail: false,
-    isLoadingPrevChapter: false,
-    loadingPrevChapterFail: false,
     isLoadingNextChapter: false,
     loadingNextChapterFail: false,
     readingChapterTitle: '',
@@ -40,24 +38,6 @@ const store = {
      */
     setLoadingMainBodyContentFail (state, value) {
       state.loadingMainBodyContentFail = value
-    },
-    /**
-     * 设置正在加载上一章
-     * @param {Object} state mainBody.state
-     * @param {Boolean} value 值
-     * @private
-     */
-    setIsLoadingPrevChapter (state, value) {
-      state.isLoadingPrevChapter = value
-    },
-    /**
-     * 设置加载上一章失败
-     * @param {Object} state mainBody.state
-     * @param {Boolean} value 值
-     * @private
-     */
-    setLoadingPrevChapterFail (state, value) {
-      state.loadingPrevChapterFail = value
     },
     /**
      * 设置正在加载下一章
@@ -117,32 +97,15 @@ const store = {
     /**
      * 加载小说上一章
      */
-    async loadPrevChapter ({ commit, state }) {
-      commit('setIsLoadingPrevChapter', true)
-      commit('setLoadingPrevChapterFail', false)
+    async loadPrevChapter ({ dispatch, commit, state }) {
       const prevChapterIndex = state.chapters[0].chapterIndex - 1
       if (prevChapterIndex < 0) {
         console.log('[INFO] loadPrevChapter no prev chapter')
         commit('setIsLoadingPrevChapter', false)
         return
       }
-      try {
-        const {
-          domain,
-          novelName,
-          authorName
-        } = this.state
-        const { data } = await api.getMainBodyText(domain, novelName, authorName, prevChapterIndex)
-        const chapter = {
-          ...data,
-          chapterIndex: prevChapterIndex
-        }
-        commit('setChapters', [chapter])
-      } catch (e) {
-        console.log('[ERROR] loadPrevChapter ', e)
-        commit('setLoadingPrevChapterFail', true)
-      }
-      commit('setIsLoadingPrevChapter', false)
+      commit('setChapterIndex', prevChapterIndex)
+      dispatch('loadMainBodyContent')
     },
     /**
      * 加载小说下一章
