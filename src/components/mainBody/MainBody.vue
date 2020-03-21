@@ -46,6 +46,8 @@ export default {
   },
   computed: {
     ...mapState({
+      volumeKeyOn: state => state.userConfig.volumeKeyOn,
+      volumeKeySupport: state => state.deviceData.volumeKeySupport,
       deviceSize: state => state.deviceData.deviceSize,
       isLoadingMainBodyContent: state => state.mainBody.isLoadingMainBodyContent,
       loadingMainBodyContentFail: state => state.mainBody.loadingMainBodyContentFail,
@@ -76,6 +78,28 @@ export default {
       'setReaderMode',
       'setUserMenuShow'
     ]),
+    /**
+     * 音量键翻页功能是否开启
+     */
+    isVolumeKeyOn () {
+      return this.volumeKeySupport && this.volumeKeyOn
+    },
+    /**
+     * 音量键翻至下一页
+     */
+    volumeKeyGoNextPage () {
+      if (this.isVolumeKeyOn()) {
+        this.goNextPage()
+      }
+    },
+    /**
+     * 音量键翻至上一页
+     */
+    volumeKeyGoPrevPage () {
+      if (this.isVolumeKeyOn()) {
+        this.goPrevPage()
+      }
+    },
     /**
      * 翻至下一页
      */
@@ -136,8 +160,8 @@ export default {
     this.updateDeviceSizeData()
     window.__readerModeObject = {
       ...window.__readerModeObject,
-      goNextPage: this.goNextPage,
-      goPrevPage: this.goPrevPage
+      goNextPage: this.volumeKeyGoNextPage,
+      goPrevPage: this.volumeKeyGoPrevPage
     }
   }
 }

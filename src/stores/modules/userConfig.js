@@ -5,7 +5,7 @@ import { readerModeUpDown, readerModeLeftRight, fontSizeCount, rowSpaceCount } f
  */
 const store = {
   state: {
-    volumeKeyOn: true,
+    volumeKeyOn: false,
     nightMode: false,
     readerMode: 'upDown',
     fontSizeIndex: 1,

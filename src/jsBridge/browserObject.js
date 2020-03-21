@@ -21,7 +21,7 @@
   }
   const userConfigKey = '__browserObject-userConfig'
   const defultUserConfig = {
-    volumeKeyOn: true,
+    volumeKeyOn: false,
     nightMode: false,
     readerMode: 'upDown',
     fontSizeIndex: 1,
