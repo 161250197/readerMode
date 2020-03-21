@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     ...mapState({
-      deviceHeight: state => state.deviceData.deviceSize.height,
+      deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
       loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
@@ -91,8 +91,22 @@ export default {
     }
   },
   watch: {
+    /**
+     * 章节数据更新时需要更新章节相关数据
+     */
     chapters () {
       this.$nextTick(this.updateChapterInfo)
+    },
+    /**
+     * 设备尺寸更新时需要更新章节相关数据
+     * - 页面重新定位至章节首部
+     */
+    deviceSize () {
+      this.updateDeviceSizeData()
+      this.$nextTick(() => {
+        this.updateChapterInfo()
+        this.scrollToReadingChapterTop()
+      })
     }
   },
   methods: {
@@ -252,31 +266,40 @@ export default {
     },
     /**
      * 滑动到正在阅读的章节首
+     * @param {Boolean} isfirstUpdate 是否为第一次展示
      */
-    scrollToReadingChapterTop () {
-      if (this.readingChapterIndex === 0) {
-        this.$refs.wrapper.scrollTop = 0
-        return
-      }
+    scrollToReadingChapterTop (isfirstUpdate) {
+      // 不使用滑动特效
+      this.moving = -Number.MIN_VALUE
       // 开头还有一个 .loading-prev
       const title = document.querySelector(`.up-down > .content > .chapter:nth-child(${this.readingChapterIndex + 2}) > .title`)
       // 高度需要减去 .loading-prev 和 DeviceInfo 的高度
-      const scrollTop = title.getBoundingClientRect().top - this.loadingPrevHeight - this.visibleTop
+      let scrollTop = this.$refs.wrapper.scrollTop
+      const titleTop = title.getBoundingClientRect().top
+      scrollTop = scrollTop + titleTop - this.visibleTop
+      if (isfirstUpdate) {
+        scrollTop = scrollTop - this.visibleHeight / 2
+      }
       this.$refs.wrapper.scrollTop = scrollTop
+    },
+    /**
+     * 更新尺寸数据
+     */
+    updateDeviceSizeData () {
+      const { top, height } = this.$refs.wrapper.getBoundingClientRect()
+      this.visibleHeight = height
+      this.loadingPrevHeight = this.visibleHeight / 2
+      this.visibleTop = top
+      this.chapterTitleCheckTop = 3 * this.visibleTop
+      this.preloadHeight = this.visibleHeight * preloadPageCount
     }
   },
   mounted () {
-    const { wrapper } = this.$refs
-    const { top, height } = wrapper.getBoundingClientRect()
-    this.visibleHeight = height
-    this.loadingPrevHeight = this.visibleHeight / 2
-    this.visibleTop = top
-    this.chapterTitleCheckTop = 3 * this.visibleTop
-    this.preloadHeight = this.visibleHeight * preloadPageCount
+    this.updateDeviceSizeData()
     this.updateChapterInfo()
     this.checkPreloadNextChapter()
-    wrapper.addEventListener('scroll', debounce(this, this.onWrapperScroll))
-    this.scrollToReadingChapterTop()
+    this.$refs.wrapper.addEventListener('scroll', debounce(this, this.onWrapperScroll))
+    this.scrollToReadingChapterTop(true)
   }
 }
 </script>

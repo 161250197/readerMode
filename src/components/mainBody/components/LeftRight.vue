@@ -10,14 +10,14 @@
     <div
       class="content"
       :class="{ 'moving': moving }"
-      :style="{ transform: `translateX(${moving - (pageIndex + 1) * deviceWidth}px)` }"
+      :style="{ transform: `translateX(${moving - (pageIndex + 1) * deviceSize.width}px)` }"
     >
       <div class="loading-prev">
         {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
       </div>
       <div
         class="chapter"
-        :style="{marginBottom: `${deviceHeight}px`}"
+        :style="{marginBottom: `${deviceSize.height}px`}"
         v-for="({ text, title, chapterIndex }) in chapters"
         :key="chapterIndex"
       >
@@ -68,8 +68,7 @@ export default {
   },
   computed: {
     ...mapState({
-      deviceHeight: state => state.deviceData.deviceSize.height,
-      deviceWidth: state => state.deviceData.deviceSize.width,
+      deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
       loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
@@ -88,8 +87,21 @@ export default {
     }
   },
   watch: {
+    /**
+     * 章节数据更新时需要更新章节相关数据
+     */
     chapters () {
       this.$nextTick(this.updateChapterInfo)
+    },
+    /**
+     * 设备尺寸更新时需要更新章节相关数据
+     * - 页面重新定位至章节首部
+     */
+    deviceSize () {
+      this.$nextTick(() => {
+        this.updateChapterInfo()
+        this.scrollToReadingChapterTop()
+      })
     }
   },
   methods: {
@@ -141,7 +153,8 @@ export default {
      */
     updateChapterCountArr () {
       const chapters = [...document.querySelectorAll('.left-right > .content > .chapter')]
-      this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / this.deviceWidth))
+      const deviceWidth = this.deviceSize.width
+      this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / deviceWidth))
       // 最后还有一页
       this.pageCount = this.chapterCountArr.reduce((n1, n2) => n1 + n2) + 1
     },
@@ -193,10 +206,11 @@ export default {
      */
     onWrapperTouchmove (e) {
       let moving = e.touches[0].clientX - this.touchstartX
+      const deviceWidth = this.deviceSize.width
       if (moving < 0) {
-        this.moving = Math.max(moving, -this.deviceWidth)
+        this.moving = Math.max(moving, -deviceWidth)
       } else {
-        this.moving = Math.min(moving, this.deviceWidth)
+        this.moving = Math.min(moving, deviceWidth)
       }
     },
     /**
@@ -205,6 +219,7 @@ export default {
      */
     onWrapperTouchend (e) {
       if (this.moving) {
+        // 避免第一次使用时点击呼出菜单栏触发翻至下一页
         if (this.moving < -Number.MIN_VALUE) {
           this.goNextPage()
         } else if (this.moving > 0) {
@@ -217,6 +232,8 @@ export default {
      * 滑动到正在阅读的章节首
      */
     scrollToReadingChapterTop () {
+      // 不使用滑动特效
+      this.moving = -Number.MIN_VALUE
       if (this.readingChapterIndex === 0) {
         this.pageIndex = 0
         return

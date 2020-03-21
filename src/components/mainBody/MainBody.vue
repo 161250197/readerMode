@@ -46,8 +46,7 @@ export default {
   },
   computed: {
     ...mapState({
-      deviceHeight: state => state.deviceData.deviceSize.height,
-      deviceWidth: state => state.deviceData.deviceSize.width,
+      deviceSize: state => state.deviceData.deviceSize,
       isLoadingMainBodyContent: state => state.mainBody.isLoadingMainBodyContent,
       loadingMainBodyContentFail: state => state.mainBody.loadingMainBodyContentFail,
       readerMode: state => state.userConfig.readerMode
@@ -55,8 +54,20 @@ export default {
   },
   data () {
     return {
+      oneThirdWidth: 0,
+      twoThirdsWidth: 0,
+      oneSixthHeight: 0,
+      fiveSixthsHeight: 0,
       readerModeUpDown,
       readerModeLeftRight
+    }
+  },
+  watch: {
+    /**
+     * 设备尺寸更新时需要更新尺寸数据
+     */
+    deviceSize () {
+      this.updateDeviceSizeData()
     }
   },
   methods: {
@@ -91,13 +102,15 @@ export default {
      */
     onMainBodyClick (e) {
       const { clientX, clientY } = e
-      const oneThirdWidth = this.deviceWidth / 3
-      const twoThirdsWidth = oneThirdWidth * 2
-      const oneSixthHeight = this.deviceHeight / 6
-      const fiveSixthsHeight = oneSixthHeight * 5
-      if ((clientX < oneThirdWidth && clientY < fiveSixthsHeight) || (clientX < twoThirdsWidth && clientY < oneSixthHeight)) {
+      if (
+        (clientX < this.oneThirdWidth && clientY < this.fiveSixthsHeight) ||
+        (clientX < this.twoThirdsWidth && clientY < this.oneSixthHeight)
+      ) {
         this.goPrevPage()
-      } else if ((clientX >= oneThirdWidth && clientY >= fiveSixthsHeight) || (clientX >= twoThirdsWidth && clientY >= oneSixthHeight)) {
+      } else if (
+        (clientX >= this.oneThirdWidth && clientY >= this.fiveSixthsHeight) ||
+        (clientX >= this.twoThirdsWidth && clientY >= this.oneSixthHeight)
+      ) {
         this.goNextPage()
       } else {
         this.setUserMenuShow(true)
@@ -108,9 +121,19 @@ export default {
      */
     resetReaderMode () {
       this.setReaderMode(readerModeUpDown)
+    },
+    /**
+     * 更新尺寸数据
+     */
+    updateDeviceSizeData () {
+      this.oneThirdWidth = this.deviceSize.width / 3
+      this.twoThirdsWidth = this.oneThirdWidth * 2
+      this.oneSixthHeight = this.deviceSize.height / 6
+      this.fiveSixthsHeight = this.oneSixthHeight * 5
     }
   },
   mounted () {
+    this.updateDeviceSizeData()
     window.__readerModeObject = {
       ...window.__readerModeObject,
       goNextPage: this.goNextPage,
