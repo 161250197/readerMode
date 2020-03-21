@@ -24,8 +24,8 @@
     volumeKeyOn: false,
     nightMode: false,
     readerMode: 'upDown',
-    fontSizeIndex: 1,
-    rowSpaceIndex: 1,
+    fontSize: '0.8rem',
+    rowSpace: '135%',
     backgroundColor: '#fff6e6'
   }
   window.__browserObject = {

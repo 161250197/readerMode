@@ -37,23 +37,18 @@ export default {
 .device-info {
   width: 100%;
   height: 1rem;
-  font-size: 0.6rem;
-  line-height: 0.6rem;
+  line-height: 1rem;
+  font-size: 0.5rem;
   .title {
     position: fixed;
-    top: 0.2rem;
-    left: 0.2rem;
+    left: 0.4rem;
     max-width: 6rem;
   }
   .time {
     position: fixed;
-    top: 0.2rem;
-    right: 1.4rem;
+    right: 1.8rem;
   }
   .battery {
-    position: fixed;
-    top: 0;
-    right: 0;
     .battery-info-icon {
       background: #333333;
       transform-origin: left;
@@ -62,7 +57,7 @@ export default {
     .battery-info-icon {
       position: fixed;
       top: 0.3rem;
-      right: 0.16rem;
+      right: 0.56rem;
       width: 1rem;
       height: 0.4rem;
       box-sizing: border-box;
@@ -70,8 +65,8 @@ export default {
     }
     .battery-right-icon {
       position: fixed;
-      top:0.35rem;
-      right: 0.1rem;
+      top: 0.35rem;
+      right: 0.5rem;
       width: 0.04rem;
       height: 0.3rem;
       background: #333333;

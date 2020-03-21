@@ -1,4 +1,9 @@
-import { readerModeUpDown, readerModeLeftRight, fontSizeCount, rowSpaceCount } from './../../utils/consts.js'
+import {
+  readerModeUpDown,
+  readerModeLeftRight,
+  fontSizes,
+  rowSpaces
+} from './../../utils/consts.js'
 
 /**
  * 用户设置 store
@@ -8,8 +13,8 @@ const store = {
     volumeKeyOn: false,
     nightMode: false,
     readerMode: 'upDown',
-    fontSizeIndex: 1,
-    rowSpaceIndex: 1,
+    fontSize: '0.8rem',
+    rowSpace: '135%',
     backgroundColor: '#fff6e6'
   },
   mutations: {
@@ -43,29 +48,29 @@ const store = {
       }
     },
     /**
-     * 设置正文字体大小索引
+     * 设置正文字体大小
      * @param {Object} state userConfig.state
-     * @param {Number} value 正文字体大小索引
-     * @throws {Error} 正文字体大小索引值非法
+     * @param {String} value 正文字体大小
+     * @throws {Error} 正文字体大小值非法
      */
-    setFontSizeIndex (state, value) {
-      if (value >= 0 && value < fontSizeCount) {
-        state.fontSizeIndex = value
+    setFontSize (state, value) {
+      if (fontSizes.indexOf(value) >= 0) {
+        state.fontSize = value
       } else {
-        throw Error(`setFontSizeIndex wrongValue: ${value}`)
+        throw Error(`setFontSize wrongValue: ${value}`)
       }
     },
     /**
-     * 设置正文内容行间距大小索引
+     * 设置正文内容行间距大小
      * @param {Object} state userConfig.state
-     * @param {Number} value 正文内容行间距大小索引
-     * @throws {Error} 正文内容行间距大小索引值非法
+     * @param {String} value 正文内容行间距大小
+     * @throws {Error} 正文内容行间距大小值非法
      */
-    setRowSpaceIndex (state, value) {
-      if (value >= 0 && value < rowSpaceCount) {
-        state.rowSpaceIndex = value
+    setRowSpace (state, value) {
+      if (rowSpaces.indexOf(value) >= 0) {
+        state.rowSpace = value
       } else {
-        throw Error(`setRowSpaceIndex wrongValue: ${value}`)
+        throw Error(`setRowSpace wrongValue: ${value}`)
       }
     },
     /**
@@ -93,14 +98,14 @@ const store = {
         volumeKeyOn,
         nightMode,
         readerMode,
-        fontSizeIndex,
-        rowSpaceIndex,
+        fontSize,
+        rowSpace,
         backgroundColor
       } = userConfig
       try {
         commit('setReaderMode', readerMode)
-        commit('setFontSizeIndex', fontSizeIndex)
-        commit('setRowSpaceIndex', rowSpaceIndex)
+        commit('setFontSize', fontSize)
+        commit('setRowSpace', rowSpace)
         commit('setBackgroundColor', backgroundColor)
       } catch (e) {
         return Promise.reject(e)
@@ -117,16 +122,16 @@ const store = {
         volumeKeyOn,
         nightMode,
         readerMode,
-        fontSizeIndex,
-        rowSpaceIndex,
+        fontSize,
+        rowSpace,
         backgroundColor
       } = state
       const saveSuccess = window.__browserObject.saveUserConfig({
         volumeKeyOn,
         nightMode,
         readerMode,
-        fontSizeIndex,
-        rowSpaceIndex,
+        fontSize,
+        rowSpace,
         backgroundColor
       })
       if (!saveSuccess) {

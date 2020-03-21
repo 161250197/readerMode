@@ -15,10 +15,19 @@ const updateTimeAndBatteryIntervalTime = 60 * 1000
 const readerModeUpDown = 'upDown'
 /** 左右翻页 */
 const readerModeLeftRight = 'leftRight'
-/** 字体大小设定类型数量 */
-const fontSizeCount = 4
-/** 行间距设定类型数量 */
-const rowSpaceCount = 3
+/** 字体大小设定类型 */
+const fontSizes = [
+  '0.6rem',
+  '0.8rem',
+  '1rem',
+  '1.2rem'
+]
+/** 行间距设定类型 */
+const rowSpaces = [
+  '100%',
+  '135%',
+  '170%'
+]
 
 export {
   nightModeBackgroundColor,
@@ -28,6 +37,6 @@ export {
   updateTimeAndBatteryIntervalTime,
   readerModeUpDown,
   readerModeLeftRight,
-  fontSizeCount,
-  rowSpaceCount
+  fontSizes,
+  rowSpaces
 }
