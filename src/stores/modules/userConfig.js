@@ -10,7 +10,7 @@ const store = {
     readerMode: 'upDown',
     fontSizeIndex: 1,
     rowSpaceIndex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#fff6e6'
   },
   mutations: {
     /**

@@ -22,4 +22,9 @@ export default {
   width: 100%;
   background: white;
 }
+.night-mode {
+  .top-user-menu {
+    background: black;
+  }
+}
 </style>

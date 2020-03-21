@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="device-info">
     <div class="title text-ellipsis">
       {{ readingChapterTitle }}
     </div>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.wrapper {
+.device-info {
   width: 100%;
   height: 1rem;
   font-size: 0.6rem;
@@ -55,7 +55,7 @@ export default {
     top: 0;
     right: 0;
     .battery-info-icon {
-      background: black;
+      background: #333333;
       transform-origin: left;
     }
     .battery-border-icon,
@@ -66,7 +66,7 @@ export default {
       width: 1rem;
       height: 0.4rem;
       box-sizing: border-box;
-      border: thin solid black;
+      border: thin solid #333333;
     }
     .battery-right-icon {
       position: fixed;
@@ -74,7 +74,20 @@ export default {
       right: 0.1rem;
       width: 0.04rem;
       height: 0.3rem;
-      background: black;
+      background: #333333;
+    }
+  }
+}
+.night-mode {
+  .device-info {
+    .battery {
+      .battery-info-icon,
+      .battery-right-icon {
+        background: #666666;
+      }
+      .battery-info-icon {
+        border-color: #666666;
+      }
     }
   }
 }

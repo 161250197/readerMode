@@ -1,3 +1,10 @@
+/** 夜间模式背景色 */
+const nightModeBackgroundColor = '#1a1a18'
+/** 夜间模式字体色 */
+const nightModeFontColor = '#666666'
+/** 日间模式字体色 */
+const dayModeFontColor = '#333333'
+
 /** 预加载页数 */
 const preloadPageCount = 5
 
@@ -14,6 +21,9 @@ const fontSizeCount = 4
 const rowSpaceCount = 3
 
 export {
+  nightModeBackgroundColor,
+  nightModeFontColor,
+  dayModeFontColor,
   preloadPageCount,
   updateTimeAndBatteryIntervalTime,
   readerModeUpDown,

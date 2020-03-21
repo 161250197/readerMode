@@ -79,4 +79,9 @@ export default {
     flex: 1;
   }
 }
+.night-mode {
+  .bottom-user-menu {
+    background: black;
+  }
+}
 </style>

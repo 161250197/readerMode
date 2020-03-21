@@ -56,4 +56,9 @@ export default {
   height: 100%;
   background: white;
 }
+.night-mode {
+  .more-setting {
+    background: black;
+  }
+}
 </style>

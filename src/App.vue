@@ -1,5 +1,12 @@
 <template>
-  <div class="app" :class="{ 'night-mode': nightMode }">
+  <div
+    class="app"
+    :class="{ 'night-mode': nightMode }"
+    :style="{
+        background: nightMode ? nightModeBackgroundColor : backgroundColor,
+        color: nightMode ? nightModeFontColor : dayModeFontColor
+      }"
+  >
     <MainBody v-show="!(loadingShow || errorShow)" />
     <UserMenu v-show="userMenuShow" />
     <Catalog v-show="catalogShow" />
@@ -12,6 +19,11 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { debounce } from './utils/tools'
+import {
+  nightModeBackgroundColor,
+  nightModeFontColor,
+  dayModeFontColor
+} from './utils/consts'
 import MainBody from './components/mainBody/MainBody'
 import UserMenu from './components/userMenu/UserMenu'
 import Catalog from './components/catalog/Catalog'
@@ -31,6 +43,7 @@ export default {
   },
   computed: {
     ...mapState({
+      backgroundColor: state => state.userConfig.backgroundColor,
       nightMode: state => state.userConfig.nightMode,
       userMenuShow: state => state.showState.userMenuShow,
       catalogShow: state => state.showState.catalogShow,
@@ -38,6 +51,13 @@ export default {
       loadingShow: state => state.showState.loadingShow,
       errorShow: state => state.showState.errorShow
     })
+  },
+  data () {
+    return {
+      nightModeBackgroundColor,
+      nightModeFontColor,
+      dayModeFontColor
+    }
   },
   methods: {
     ...mapMutations(['setDeviceSize']),

@@ -104,4 +104,11 @@ export default {
     }
   }
 }
+.night-mode {
+  .catalog {
+    .page {
+      background: black;
+    }
+  }
+}
 </style>
