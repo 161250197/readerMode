@@ -125,13 +125,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../style/variables.less');
+
 .more-setting {
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: @secondBackground;
   line-height: 100%;
   .header {
     height: 1.4rem;
@@ -154,7 +156,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 0 0.4rem;
-    border-top: thin solid rgba(0, 0, 0, 0.6);
+    border-top: thin solid @borderColor;
     .title {
       font-size: 0.6rem;
     }
@@ -179,7 +181,10 @@ export default {
 }
 .night-mode {
   .more-setting {
-    background: #1a1a18;
+    background: @backgroundNight;
+    .item {
+      border-top-color: @borderColorNight;
+    }
   }
 }
 </style>

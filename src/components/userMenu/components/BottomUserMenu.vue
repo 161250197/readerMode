@@ -96,13 +96,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .bottom-user-menu {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 3rem;
-  background: white;
+  background: @secondBackground;
   display: flex;
   line-height: 100%;
   .user-menu {
@@ -121,7 +123,7 @@ export default {
 }
 .night-mode {
   .bottom-user-menu {
-    background: black;
+    background: @secondBackgroundNight;
   }
 }
 </style>

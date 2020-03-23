@@ -34,6 +34,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .device-info {
   width: 100%;
   height: 1rem;
@@ -50,7 +52,7 @@ export default {
   }
   .battery {
     .battery-info-icon {
-      background: #333333;
+      background: @fontColor;
       transform-origin: left;
     }
     .battery-border-icon,
@@ -61,7 +63,7 @@ export default {
       width: 1rem;
       height: 0.4rem;
       box-sizing: border-box;
-      border: thin solid #333333;
+      border: thin solid @fontColor;
     }
     .battery-right-icon {
       position: fixed;
@@ -69,7 +71,7 @@ export default {
       right: 0.5rem;
       width: 0.04rem;
       height: 0.3rem;
-      background: #333333;
+      background: @fontColor;
     }
   }
 }
@@ -78,10 +80,10 @@ export default {
     .battery {
       .battery-info-icon,
       .battery-right-icon {
-        background: #666666;
+        background: @fontColorNight;
       }
       .battery-info-icon {
-        border-color: #666666;
+        border-color: @fontColorNight;
       }
     }
   }

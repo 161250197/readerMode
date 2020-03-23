@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="less">
-@import url('./style.less');
+@import url('./style/style.less');
 
 .app {
   position: fixed;

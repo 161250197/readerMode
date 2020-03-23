@@ -74,13 +74,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .row-height-prompt {
   height: 100%;
   width: 100%;
   position: fixed;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: @coverBackground;
   .content {
     width: 100%;
     padding: 0 0.4rem;
@@ -91,7 +93,7 @@ export default {
     display: flex;
     flex-direction: column;
     .wrapper {
-      background: white;
+      background: @secondBackground;
       border-radius: 0.4rem;
       line-height: 100%;
       .prompt {
@@ -101,7 +103,7 @@ export default {
         height: 1.5rem;
         font-size: 0.5rem;
         padding: 0 0.6rem;
-        border-bottom: thin solid rgba(0, 0, 0, 0.6);
+        border-bottom: thin solid @borderColor;
         &:last-child {
           border-bottom: none;
         }
@@ -116,7 +118,10 @@ export default {
   .row-height-prompt {
     .content {
       .wrapper {
-        background: #1a1a18;
+        background: @backgroundNight;
+        .prompt {
+          border-bottom-color: @borderColorNight;
+        }
       }
     }
   }

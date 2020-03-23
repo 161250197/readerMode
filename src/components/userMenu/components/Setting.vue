@@ -68,16 +68,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .setting {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  background: white;
+  background: @secondBackground;
 }
 .night-mode {
   .setting {
-    background: black;
+    background: @secondBackgroundNight;
   }
 }
 </style>

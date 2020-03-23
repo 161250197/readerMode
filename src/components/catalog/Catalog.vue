@@ -98,13 +98,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../style/variables.less');
+
 .catalog {
   height: 100%;
   width: 100%;
   position: fixed;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: @coverBackground;
   .page {
     height: 100%;
     width: 80%;
@@ -113,7 +115,6 @@ export default {
     top: 0;
     display: flex;
     flex-direction: column;
-    background: white;
     .content {
       flex: 1;
       overflow-y: scroll;
@@ -124,13 +125,6 @@ export default {
         flex: 1;
         text-align: center;
       }
-    }
-  }
-}
-.night-mode {
-  .catalog {
-    .page {
-      background: black;
     }
   }
 }
