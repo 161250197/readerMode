@@ -11,7 +11,7 @@
   >
     <MainBody v-show="!(loadingShow || errorShow)" />
     <UserMenu v-show="userMenuShow" />
-    <Catalog v-show="catalogShow" />
+    <Catalog v-show="catalogChaptersShow || catalogBookmarksShow" />
     <MoreSetting v-show="moreSettingShow" />
     <Loading v-show="loadingShow" />
     <Error v-show="errorShow" />
@@ -50,7 +50,8 @@ export default {
       fontSize: state => state.userConfig.fontSize,
       rowSpace: state => state.userConfig.rowSpace,
       userMenuShow: state => state.showState.userMenuShow,
-      catalogShow: state => state.showState.catalogShow,
+      catalogChaptersShow: state => state.showState.catalogChaptersShow,
+      catalogBookmarksShow: state => state.showState.catalogBookmarksShow,
       moreSettingShow: state => state.showState.moreSettingShow,
       loadingShow: state => state.showState.loadingShow,
       errorShow: state => state.showState.errorShow

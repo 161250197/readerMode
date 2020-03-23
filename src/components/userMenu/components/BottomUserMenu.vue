@@ -68,14 +68,14 @@ export default {
     ...mapMutations([
       'setNightMode',
       'setUserMenuShow',
-      'setCatalogShow',
+      'setCatalogChaptersShow',
       'setSettingShow'
     ]),
     /**
      * 目录按钮点击响应
      */
     onCatalogClicked () {
-      this.setCatalogShow(true)
+      this.setCatalogChaptersShow(true)
       this.setUserMenuShow(false)
     },
     /**

@@ -76,12 +76,19 @@ export default {
   name: 'UserMenu.TopUserMenu',
   computed: {
     ...mapState({
+      domain: state => state.domain,
+      novelName: state => state.novelName,
+      authorName: state => state.authorName,
+      readingChapterTitle: state => state.mainBody.readingChapterTitle,
+      readingChapterIndex: state => state.mainBody.readingChapterIndex,
+      chapters: state => state.mainBody.chapters,
       readingChapterIsBookmarked: state => state.mainBody.readingChapterIsBookmarked
     })
   },
   methods: {
     ...mapMutations([
       'setUserMenuShow',
+      'setCatalogBookmarksShow',
       'updateReadingChapterIsBookmarked'
     ]),
     /**
@@ -102,15 +109,19 @@ export default {
      * 查看书签
      */
     seeBookmarks () {
-      // TODO
-      console.log('[INFO] seeBookmarks todo')
+      this.setCatalogBookmarksShow(true)
     },
     /**
      * 添加书签
      */
     addBookmark () {
-      // TODO
-      console.log('[INFO] addBookmark todo')
+      const chapterIndex = this.chapters[this.readingChapterIndex].chapterIndex
+      if (window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, chapterIndex, this.readingChapterTitle)) {
+        console.log('[INFO] addBookmark success')
+        this.updateReadingChapterIsBookmarked()
+      } else {
+        console.log('[ERROR] addBookmark fail')
+      }
     }
   }
 }
@@ -135,13 +146,14 @@ export default {
   }
   .change-source {
     position: fixed;
-    top: 0.2rem;
+    height: 0.8rem;
+    top: 0.3rem;
     right: 2rem;
     display: flex;
     align-items: center;
     font-size: 0.5rem;
     > img {
-      width: 1rem;
+      width: 0.8rem;
       margin-right: 0.2rem;
     }
   }

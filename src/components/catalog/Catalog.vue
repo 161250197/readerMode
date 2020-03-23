@@ -3,7 +3,13 @@
     class="catalog"
     @click.stop="hideCatalog"
   >
-    <div class="page">
+    <div
+      class="page"
+      :style="{
+        background: nightMode ? nightModeBackgroundColor : backgroundColor
+      }"
+      @click.stop
+    >
       <div class="novel-info">
         <div class="novel-name text-ellipsis">
           {{ novelName }}
@@ -13,17 +19,23 @@
         </div>
       </div>
       <div class="content">
-        <CatalogChapters v-show="tabIndex === 0" />
-        <Bookmarks v-show="tabIndex === 1" />
+        <CatalogChapters v-show="catalogChaptersShow" />
+        <Bookmarks v-show="catalogBookmarksShow" />
       </div>
       <div class="tabs">
         <div
           class="tab"
-          v-for="(tab, index) in tabs"
-          :key="index"
-          @click.stop="() => updateTabIndex(index)"
+          :class="{ 'selected': catalogChaptersShow }"
+          @click.stop="showCatalogChapters"
         >
-          {{ tab }}
+          目录
+        </div>
+        <div
+          class="tab"
+          :class="{ 'selected': catalogBookmarksShow }"
+          @click.stop="showCatalogBookmarks"
+        >
+          书签
         </div>
       </div>
     </div>
@@ -32,6 +44,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { nightModeBackgroundColor } from './../../utils/consts'
 import Bookmarks from './components/Bookmarks'
 import CatalogChapters from './components/CatalogChapters'
 
@@ -43,32 +56,42 @@ export default {
   },
   computed: {
     ...mapState({
+      backgroundColor: state => state.userConfig.backgroundColor,
+      nightMode: state => state.userConfig.nightMode,
+      catalogChaptersShow: state => state.showState.catalogChaptersShow,
+      catalogBookmarksShow: state => state.showState.catalogBookmarksShow,
       novelName: state => state.novelName,
       authorName: state => state.authorName
     })
   },
   data () {
     return {
-      tabs: ['目录', '书签'],
-      tabIndex: 0
+      nightModeBackgroundColor
     }
   },
   methods: {
     ...mapMutations([
-      'setCatalogShow'
+      'setCatalogBookmarksShow',
+      'setCatalogChaptersShow'
     ]),
     /**
-     * 更新 tab 索引
-     * @param {Number} tabIndex tab 索引
+     * 显示目录章节页
      */
-    updateTabIndex (tabIndex) {
-      this.tabIndex = tabIndex
+    showCatalogChapters () {
+      this.setCatalogChaptersShow(true)
+    },
+    /**
+     * 显示目录书签页
+     */
+    showCatalogBookmarks () {
+      this.setCatalogBookmarksShow(true)
     },
     /**
      * 隐藏目录栏
      */
     hideCatalog () {
-      this.setCatalogShow(false)
+      this.setCatalogChaptersShow(false)
+      this.setCatalogBookmarksShow(false)
     }
   }
 }

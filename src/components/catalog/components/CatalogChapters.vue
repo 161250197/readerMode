@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCatalogShow',
+      'setCatalogChaptersShow',
       'setChapterIndex'
     ]),
     ...mapActions([
@@ -53,7 +53,7 @@ export default {
      * @param {Number} chapterIndex
      */
     jumpChapters (chapterIndex) {
-      this.setCatalogShow(false)
+      this.setCatalogChaptersShow(false)
       this.setChapterIndex(chapterIndex)
       this.loadMainBodyContent()
     }

@@ -6,7 +6,8 @@ const store = {
     errorShow: false,
     loadingShow: true,
     userMenuShow: false,
-    catalogShow: false,
+    catalogChaptersShow: false,
+    catalogBookmarksShow: false,
     settingShow: false,
     moreSettingShow: false
   },
@@ -39,12 +40,28 @@ const store = {
       }
     },
     /**
-     * 设置目录页显示
+     * 设置目录章节页显示
+     * - 目录章节页显示时自动关闭目录书签页显示
      * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
-    setCatalogShow (state, value) {
-      state.catalogShow = value
+    setCatalogChaptersShow (state, value) {
+      state.catalogChaptersShow = value
+      if (value) {
+        this.commit('setCatalogBookmarksShow', false)
+      }
+    },
+    /**
+     * 设置目录书签页显示
+     * - 目录书签页显示时自动关闭目录章节页显示
+     * @param {Object} state showState.state
+     * @param {Boolean} value 值
+     */
+    setCatalogBookmarksShow (state, value) {
+      state.catalogBookmarksShow = value
+      if (value) {
+        this.commit('setCatalogChaptersShow', false)
+      }
     },
     /**
      * 设置设置页显示
