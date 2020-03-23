@@ -9,6 +9,7 @@ const store = {
     catalogChaptersShow: false,
     catalogBookmarksShow: false,
     settingShow: false,
+    rowHeightPromptShow: false,
     moreSettingShow: false
   },
   mutations: {
@@ -70,6 +71,14 @@ const store = {
      */
     setSettingShow (state, value) {
       state.settingShow = value
+    },
+    /**
+     * 设置行高选项弹窗显示
+     * @param {Object} state showState.state
+     * @param {Boolean} value 值
+     */
+    setRowHeightPromptShow (state, value) {
+      state.rowHeightPromptShow = value
     },
     /**
      * 设置更多设置页显示

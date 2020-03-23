@@ -1,0 +1,124 @@
+<template>
+  <div
+    class="row-height-prompt"
+    @click.stop="closePrompt"
+  >
+    <div
+      class="content"
+      @click.stop
+    >
+      <div class="wrapper">
+        <div
+          class="prompt"
+          v-for="(prompt, index) in rowSpacePrompts"
+          :key="index"
+          @click.stop="() => onPromptClicked(index)"
+        >
+          {{ prompt }}
+          <img
+            v-if="rowSpace === rowSpaces[index]"
+            class="day-mode-item"
+            src="./../../../assets/checked.png"
+            alt="day mode checked icon"
+          />
+          <img
+            v-if="rowSpace === rowSpaces[index]"
+            class="night-mode-item"
+            src="./../../../assets/checked-night.png"
+            alt="night mode checked icon"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState, mapMutations } from 'vuex'
+import { rowSpaces, rowSpacePrompts } from './../../../utils/consts.js'
+
+export default {
+  name: 'MoreSetting.RowHeightPrompt',
+  computed: {
+    ...mapState({
+      rowSpace: state => state.userConfig.rowSpace
+    })
+  },
+  data () {
+    return {
+      rowSpaces,
+      rowSpacePrompts
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'setRowSpace',
+      'setRowHeightPromptShow'
+    ]),
+    /**
+     * 选项点击响应
+     * - 设置行高
+     */
+    onPromptClicked (index) {
+      const rowSpace = this.rowSpaces[index]
+      this.setRowSpace(rowSpace)
+    },
+    /**
+     * 关闭选项
+     */
+    closePrompt () {
+      this.setRowHeightPromptShow(false)
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.row-height-prompt {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
+  .content {
+    width: 100%;
+    padding: 0 0.4rem;
+    box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    bottom: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    .wrapper {
+      background: white;
+      border-radius: 0.4rem;
+      line-height: 100%;
+      .prompt {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 1.5rem;
+        font-size: 0.5rem;
+        padding: 0 0.6rem;
+        border-bottom: thin solid rgba(0, 0, 0, 0.6);
+        &:last-child {
+          border-bottom: none;
+        }
+        > img {
+          width: 1rem;
+        }
+      }
+    }
+  }
+}
+.night-mode {
+  .row-height-prompt {
+    .content {
+      .wrapper {
+        background: #1a1a18;
+      }
+    }
+  }
+}
+</style>

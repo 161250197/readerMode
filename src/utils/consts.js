@@ -1,5 +1,15 @@
 /** 夜间模式背景色 */
 const nightModeBackgroundColor = '#1a1a18'
+/** 背景色选项 */
+const backgroundColors = [
+  '#fff6e6',
+  '#efcceb',
+  '#deefd1',
+  '#f2c5c5',
+  '#ccdaef'
+]
+/** 默认背景色 */
+const defaultBackgroundColor = backgroundColors[0]
 /** 夜间模式字体色 */
 const nightModeFontColor = '#666666'
 /** 日间模式字体色 */
@@ -15,22 +25,43 @@ const updateTimeAndBatteryIntervalTime = 60 * 1000
 const readerModeUpDown = 'upDown'
 /** 左右翻页 */
 const readerModeLeftRight = 'leftRight'
-/** 字体大小设定类型 */
+/** 字体大小选项 */
 const fontSizes = [
   '0.6rem',
   '0.8rem',
   '1rem',
   '1.2rem'
 ]
-/** 行间距设定类型 */
+/** 行间距选项提示 */
+const fontSizesPrompt = [
+  '小',
+  '默认',
+  '大',
+  '超大'
+]
+/** 默认字体大小 */
+const defaultFontSize = fontSizes[1]
+/** 行间距选项 */
 const rowSpaces = [
   '100%',
   '135%',
   '170%'
 ]
+/** 行间距选项提示 */
+const rowSpacePrompts = [
+  '紧凑',
+  '默认',
+  '宽松'
+]
+/** 默认行高 */
+const defaultRowSpace = rowSpaces[1]
+/** 默认行间距选项提示 */
+const defaultRowSpacePrompt = rowSpacePrompts[1]
 
 export {
   nightModeBackgroundColor,
+  backgroundColors,
+  defaultBackgroundColor,
   nightModeFontColor,
   dayModeFontColor,
   preloadPageCount,
@@ -38,5 +69,10 @@ export {
   readerModeUpDown,
   readerModeLeftRight,
   fontSizes,
-  rowSpaces
+  fontSizesPrompt,
+  defaultFontSize,
+  rowSpaces,
+  rowSpacePrompts,
+  defaultRowSpace,
+  defaultRowSpacePrompt
 }

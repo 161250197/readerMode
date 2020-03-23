@@ -2,7 +2,13 @@ import {
   readerModeUpDown,
   readerModeLeftRight,
   fontSizes,
-  rowSpaces
+  defaultFontSize,
+  rowSpaces,
+  rowSpacePrompts,
+  defaultRowSpace,
+  defaultRowSpacePrompt,
+  backgroundColors,
+  defaultBackgroundColor
 } from './../../utils/consts.js'
 
 /**
@@ -12,10 +18,11 @@ const store = {
   state: {
     volumeKeyOn: false,
     nightMode: false,
-    readerMode: 'upDown',
-    fontSize: '0.8rem',
-    rowSpace: '135%',
-    backgroundColor: '#fff6e6'
+    readerMode: readerModeUpDown,
+    fontSize: defaultFontSize,
+    rowSpace: defaultRowSpace,
+    rowSpacePrompt: defaultRowSpacePrompt,
+    backgroundColor: defaultBackgroundColor
   },
   mutations: {
     /**
@@ -67,8 +74,10 @@ const store = {
      * @throws {Error} 正文内容行间距大小值非法
      */
     setRowSpace (state, value) {
-      if (rowSpaces.indexOf(value) >= 0) {
+      const index = rowSpaces.indexOf(value)
+      if (index >= 0) {
         state.rowSpace = value
+        state.rowSpacePrompt = rowSpacePrompts[index]
       } else {
         throw Error(`setRowSpace wrongValue: ${value}`)
       }
@@ -80,7 +89,7 @@ const store = {
      * @throws {Error} 正文内容页面背景色值非法
      */
     setBackgroundColor (state, value) {
-      if (/#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?/.test(value)) {
+      if (backgroundColors.indexOf(value) >= 0) {
         state.backgroundColor = value
       } else {
         throw Error(`setBackgroundColor wrongValue: ${value}`)

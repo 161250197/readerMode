@@ -20,13 +20,19 @@
     volumeKeySupport: true
   }
   const userConfigKey = '__browserObject-userConfig'
+  const {
+    readerModeUpDown,
+    defaultFontSize,
+    defaultRowSpace,
+    defaultBackgroundColor
+  } = require('./../utils/consts')
   const defultUserConfig = {
     volumeKeyOn: false,
     nightMode: false,
-    readerMode: 'upDown',
-    fontSize: '0.8rem',
-    rowSpace: '135%',
-    backgroundColor: '#fff6e6'
+    readerMode: readerModeUpDown,
+    fontSize: defaultFontSize,
+    rowSpace: defaultRowSpace,
+    backgroundColor: defaultBackgroundColor
   }
   window.__browserObject = {
     /**
