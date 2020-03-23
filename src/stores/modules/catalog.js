@@ -8,9 +8,9 @@ const store = {
     isLoadingCatalogChapters: true,
     loadingCatalogChaptersFail: false,
     catalogChapters: [],
-    isLoadingBookMarks: true,
-    loadingBookMarksFail: false,
-    bookMarks: []
+    isLoadingBookmarks: true,
+    loadingBookmarksFail: false,
+    bookmarks: []
   },
   mutations: {
     /**
@@ -46,8 +46,8 @@ const store = {
      * @param {Boolean} value 值
      * @private
      */
-    setIsLoadingBookMarks (state, value) {
-      state.isLoadingBookMarks = value
+    setIsLoadingBookmarks (state, value) {
+      state.isLoadingBookmarks = value
     },
     /**
      * 设置加载书签列表失败
@@ -55,17 +55,17 @@ const store = {
      * @param {Boolean} value 值
      * @private
      */
-    setLoadingBookMarksFail (state, value) {
-      state.loadingBookMarksFail = value
+    setLoadingBookmarksFail (state, value) {
+      state.loadingBookmarksFail = value
     },
     /**
      * 设置书签列表
      * @param {Object} state catalog.state
-     * @param {Array<{chapterIndex: Number, chapterTitle: String}>} bookMarks 书签列表
+     * @param {Array<{chapterIndex: Number, chapterTitle: String}>} bookmarks 书签列表
      * @private
      */
-    setBookMarks (state, bookMarks) {
-      state.bookMarks = [...bookMarks]
+    setBookmarks (state, bookmarks) {
+      state.bookmarks = [...bookmarks]
     }
   },
   actions: {
@@ -95,22 +95,22 @@ const store = {
     /**
      * 加载书签列表
      */
-    loadBookMarks ({ commit }) {
-      commit('setIsLoadingBookMarks', true)
-      commit('setLoadingBookMarksFail', false)
+    loadBookmarks ({ commit }) {
+      commit('setIsLoadingBookmarks', true)
+      commit('setLoadingBookmarksFail', false)
       try {
         const {
           domain,
           novelName,
           authorName
         } = this.state
-        const bookMarks = window.__browserObject.getBookMarks(domain, novelName, authorName)
-        commit('setBookMarks', bookMarks)
+        const bookmarks = window.__browserObject.getBookmarks(domain, novelName, authorName)
+        commit('setBookmarks', bookmarks)
       } catch (e) {
-        console.log('[ERROR] loadBookMarks', e)
-        commit('setLoadingBookMarksFail', true)
+        console.log('[ERROR] loadBookmarks', e)
+        commit('setLoadingBookmarksFail', true)
       }
-      commit('setIsLoadingBookMarks', false)
+      commit('setIsLoadingBookmarks', false)
     }
   }
 }

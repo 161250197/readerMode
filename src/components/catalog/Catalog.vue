@@ -14,7 +14,7 @@
       </div>
       <div class="content">
         <CatalogChapters v-show="tabIndex === 0" />
-        <BookMarks v-show="tabIndex === 1" />
+        <Bookmarks v-show="tabIndex === 1" />
       </div>
       <div class="tabs">
         <div
@@ -32,13 +32,13 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import BookMarks from './components/BookMarks'
+import Bookmarks from './components/Bookmarks'
 import CatalogChapters from './components/CatalogChapters'
 
 export default {
   name: 'Catalog',
   components: {
-    BookMarks,
+    Bookmarks,
     CatalogChapters
   },
   computed: {

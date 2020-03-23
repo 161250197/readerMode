@@ -1,18 +1,18 @@
 <template>
   <div class="book-marks">
-    <LoadingDiv v-show="isLoadingBookMarks" />
+    <LoadingDiv v-show="isLoadingBookmarks" />
     <ErrorDiv
-      v-show="loadingBookMarksFail"
-      :retryCallback="loadBookMarks"
+      v-show="loadingBookmarksFail"
+      :retryCallback="loadBookmarks"
     />
-    <div v-if="!(isLoadingBookMarks || loadingBookMarksFail)">
+    <div v-if="!(isLoadingBookmarks || loadingBookmarksFail)">
       <div
         class="book-mark"
-        v-if="bookMarks.length"
+        v-if="bookmarks.length"
       >
         <div
           class="title text-ellipsis"
-          v-for="({ chapterTitle, chapterIndex }) in bookMarks"
+          v-for="({ chapterTitle, chapterIndex }) in bookmarks"
           :key="chapterIndex"
         >
           {{ chapterTitle }}
@@ -31,21 +31,21 @@ import LoadingDiv from './../../utils/LoadingDiv'
 import ErrorDiv from './../../utils/ErrorDiv'
 
 export default {
-  name: 'Catalog.BookMarks',
+  name: 'Catalog.Bookmarks',
   components: {
     LoadingDiv,
     ErrorDiv
   },
   computed: {
     ...mapState({
-      isLoadingBookMarks: state => state.catalog.isLoadingBookMarks,
-      loadingBookMarksFail: state => state.catalog.loadingBookMarksFail,
-      bookMarks: state => state.catalog.bookMarks
+      isLoadingBookmarks: state => state.catalog.isLoadingBookmarks,
+      loadingBookmarksFail: state => state.catalog.loadingBookmarksFail,
+      bookmarks: state => state.catalog.bookmarks
     })
   },
   methods: {
     ...mapActions([
-      'loadBookMarks'
+      'loadBookmarks'
     ])
   }
 }

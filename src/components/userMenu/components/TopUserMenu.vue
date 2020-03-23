@@ -3,14 +3,116 @@
     class="top-user-menu"
     @click.stop
   >
-    TopUserMenu
+    <div
+      class="back"
+      @click.stop="quitReaderMode"
+    >
+      <img
+        class="day-mode-item"
+        src="./../../../assets/back.png"
+        alt="day mode back icon"
+      />
+      <img
+        class="night-mode-item"
+        src="./../../../assets/back-night.png"
+        alt="night mode back icon"
+      />
+    </div>
+    <div
+      class="change-source"
+      @click.stop="openChangeSource"
+    >
+      <img
+        class="day-mode-item"
+        src="./../../../assets/refresh.png"
+        alt="day mode refresh icon"
+      />
+      <img
+        class="night-mode-item"
+        src="./../../../assets/refresh-night.png"
+        alt="night mode refresh icon"
+      />
+      换源
+    </div>
+    <div
+      v-if="readingChapterIsBookmarked"
+      class="bookmark"
+      @click.stop="seeBookmarks"
+    >
+      <img
+        class="day-mode-item"
+        src="./../../../assets/checked-bookmark.png"
+        alt="day mode checked-bookmark icon"
+      />
+      <img
+        class="night-mode-item"
+        src="./../../../assets/checked-bookmark-night.png"
+        alt="night mode checked-bookmark icon"
+      />
+    </div>
+    <div
+      v-else
+      class="bookmark"
+      @click.stop="addBookmark"
+    >
+      <img
+        class="day-mode-item"
+        src="./../../../assets/bookmark.png"
+        alt="day mode bookmark icon"
+      />
+      <img
+        class="night-mode-item"
+        src="./../../../assets/bookmark-night.png"
+        alt="night mode bookmark icon"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: 'UserMenu.TopUserMenu'
+  name: 'UserMenu.TopUserMenu',
+  computed: {
+    ...mapState({
+      readingChapterIsBookmarked: state => state.mainBody.readingChapterIsBookmarked
+    })
+  },
+  methods: {
+    ...mapMutations([
+      'setUserMenuShow',
+      'updateReadingChapterIsBookmarked'
+    ]),
+    /**
+     * 退出阅读模式
+     */
+    quitReaderMode () {
+      window.__browserObject.exitReaderMode()
+      this.setUserMenuShow(false)
+    },
+    /**
+     * 打开小说换源面板
+     */
+    openChangeSource () {
+      // TODO
+      console.log('[INFO] openChangeSource todo')
+    },
+    /**
+     * 查看书签
+     */
+    seeBookmarks () {
+      // TODO
+      console.log('[INFO] seeBookmarks todo')
+    },
+    /**
+     * 添加书签
+     */
+    addBookmark () {
+      // TODO
+      console.log('[INFO] addBookmark todo')
+    }
+  }
 }
 </script>
 
@@ -20,7 +122,37 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
+  height: 1.4rem;
   background: white;
+  line-height: 100%;
+  .back {
+    position: fixed;
+    top: 0.2rem;
+    left: 0.2rem;
+    > img {
+      width: 1rem;
+    }
+  }
+  .change-source {
+    position: fixed;
+    top: 0.2rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.5rem;
+    > img {
+      width: 1rem;
+      margin-right: 0.2rem;
+    }
+  }
+  .bookmark {
+    position: fixed;
+    top: 0.35rem;
+    right: 0.6rem;
+    > img {
+      width: 0.7rem;
+    }
+  }
 }
 .night-mode {
   .top-user-menu {

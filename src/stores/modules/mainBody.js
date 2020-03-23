@@ -10,6 +10,7 @@ const store = {
     isLoadingNextChapter: false,
     loadingNextChapterFail: false,
     readingChapterTitle: '',
+    readingChapterIsBookmarked: false,
     readingChapterIndex: 0,
     chapters: []
   },
@@ -17,13 +18,29 @@ const store = {
     /**
      * 设置当前正在阅读的章节索引
      * - 同时自动更新正在阅读的章节标题
+     * - 同时自动更新正在阅读的章节是否已加入书签
      * @param {Object} state mainBody.state
      * @param {Number} value 值
      */
     setReadingChapterIndex (state, value) {
       state.readingChapterIndex = value
-      const readingChapterTitle = this.state.mainBody.chapters[value].title
+      const readingChapterTitle = state.chapters[value].title
       state.readingChapterTitle = readingChapterTitle
+      this.commit('updateReadingChapterIsBookmarked')
+    },
+    /**
+     * 更新正在阅读的章节是否已加入书签
+     * @param {Object} state mainBody.state
+     */
+    updateReadingChapterIsBookmarked (state) {
+      const {
+        domain,
+        novelName,
+        authorName
+      } = this.state
+      const chapterIndex = state.chapters[state.readingChapterIndex].chapterIndex
+      const isBookmarked = window.__browserObject.isBookmarked(domain, novelName, authorName, chapterIndex)
+      state.readingChapterIsBookmarked = isBookmarked
     },
     /**
      * 设置正在加载正文

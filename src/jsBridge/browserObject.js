@@ -8,9 +8,9 @@
    * @returns {String} 书签列表key
    * @private
    */
-  function createBookMarkKey (domain, novelName, authorName) {
-    const bookMarkKeyHeader = '__browserObject-bookMark'
-    return `${bookMarkKeyHeader}-${domain}-${novelName}-${authorName}`
+  function createBookmarkKey (domain, novelName, authorName) {
+    const bookmarkKeyHeader = '__browserObject-bookmark'
+    return `${bookmarkKeyHeader}-${domain}-${novelName}-${authorName}`
   }
   const deviceDataKey = '__browserObject-DeviceData'
   const defaultDeviceData = {
@@ -97,6 +97,23 @@
       return true
     },
     /**
+     * 检查是否已加入书签
+     * @param {String} domain 域名
+     * @param {String} novelName 小说名
+     * @param {String} authorName 作者名
+     * @param {Number} chapterIndex 章节索引 （从0开始的数字）
+     */
+    isBookmarked (domain, novelName, authorName, chapterIndex) {
+      let bookmarks = this.getBookmarks(domain, novelName, authorName)
+      let bookmarkCount = bookmarks.length
+      for (let i = 0; i < bookmarkCount; i++) {
+        if (bookmarks[i].chapterIndex === chapterIndex) {
+          return true
+        }
+      }
+      return false
+    },
+    /**
      * 添加书签
      * @param {String} domain 域名
      * @param {String} novelName 小说名
@@ -105,17 +122,17 @@
      * @param {String} chapterTitle 小说章节名
      * @returns {Boolean} 添加结果
      */
-    addBookMark (domain, novelName, authorName, chapterIndex, chapterTitle) {
-      let bookMarks = this.getBookMarks(domain, novelName, authorName)
-      let bookMarkCount = bookMarks.length
-      for (let i = 0; i < bookMarkCount; i++) {
-        if (bookMarks[i].chapterIndex === chapterIndex) {
+    addBookmark (domain, novelName, authorName, chapterIndex, chapterTitle) {
+      let bookmarks = this.getBookmarks(domain, novelName, authorName)
+      let bookmarkCount = bookmarks.length
+      for (let i = 0; i < bookmarkCount; i++) {
+        if (bookmarks[i].chapterIndex === chapterIndex) {
           return false
         }
       }
-      bookMarks.push({chapterIndex, chapterTitle})
-      const key = createBookMarkKey(domain, novelName, authorName)
-      localStorage.setItem(key, JSON.stringify(bookMarks))
+      bookmarks.push({ chapterIndex, chapterTitle })
+      const key = createBookmarkKey(domain, novelName, authorName)
+      localStorage.setItem(key, JSON.stringify(bookmarks))
       return true
     },
     /**
@@ -126,14 +143,14 @@
      * @param {Number} chapterIndex 章节索引 （从0开始的数字）
      * @returns {Boolean} 删除结果
      */
-    removeBookMark (domain, novelName, authorName, chapterIndex) {
-      let bookMarks = this.getBookMarks(domain, novelName, authorName)
-      let bookMarkCount = bookMarks.length
-      for (let i = 0; i < bookMarkCount; i++) {
-        if (bookMarks[i].chapterIndex === chapterIndex) {
-          bookMarks.splice(i, 1)
-          const key = createBookMarkKey(domain, novelName, authorName)
-          localStorage.setItem(key, JSON.stringify(bookMarks))
+    removeBookmark (domain, novelName, authorName, chapterIndex) {
+      let bookmarks = this.getBookmarks(domain, novelName, authorName)
+      let bookmarkCount = bookmarks.length
+      for (let i = 0; i < bookmarkCount; i++) {
+        if (bookmarks[i].chapterIndex === chapterIndex) {
+          bookmarks.splice(i, 1)
+          const key = createBookmarkKey(domain, novelName, authorName)
+          localStorage.setItem(key, JSON.stringify(bookmarks))
           return true
         }
       }
@@ -146,8 +163,8 @@
      * @param {String} authorName 作者名
      * @returns {Array<{chapterIndex: Number, chapterTitle: String}>} 书签列表
      */
-    getBookMarks (domain, novelName, authorName) {
-      const key = createBookMarkKey(domain, novelName, authorName)
+    getBookmarks (domain, novelName, authorName) {
+      const key = createBookmarkKey(domain, novelName, authorName)
       const bookMatksStr = localStorage.getItem(key)
       if (bookMatksStr) {
         return JSON.parse(bookMatksStr)

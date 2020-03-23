@@ -75,7 +75,7 @@ let store = new Vuex.Store({
           // 加载小说章节目录
           dispatch('loadCatalogChapters')
           // 加载小说书签列表
-          dispatch('loadBookMarks')
+          dispatch('loadBookmarks')
           // 初始化小说正文内容
           dispatch('loadMainBodyContent')
         })
