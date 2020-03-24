@@ -48,20 +48,19 @@ const store = {
      * 设置阅读模式
      * @param {Object} state userConfig.state
      * @param {String} value 阅读模式
-     * @throws {Error} 阅读模式值非法
      */
     setReaderMode (state, value) {
       if (value === readerModeUpDown || value === readerModeLeftRight) {
         state.readerMode = value
       } else {
-        throw Error(`setReaderMode wrongValue: ${value}`)
+        state.readerMode = readerModeUpDown
+        console.log(`[ERROR] setReaderMode wrongValue: ${value}`)
       }
     },
     /**
      * 设置正文字体大小
      * @param {Object} state userConfig.state
      * @param {String} value 正文字体大小
-     * @throws {Error} 正文字体大小值非法
      */
     setFontSize (state, value) {
       const index = fontSizes.indexOf(value)
@@ -69,14 +68,15 @@ const store = {
         state.fontSize = value
         state.textIndent = textIndents[index]
       } else {
-        throw Error(`setFontSize wrongValue: ${value}`)
+        state.fontSize = defaultFontSize
+        state.textIndent = defaultTextIndent
+        console.log(`[ERROR] setFontSize wrongValue: ${value}`)
       }
     },
     /**
      * 设置正文内容行间距大小
      * @param {Object} state userConfig.state
      * @param {String} value 正文内容行间距大小
-     * @throws {Error} 正文内容行间距大小值非法
      */
     setRowSpace (state, value) {
       const index = rowSpaces.indexOf(value)
@@ -84,27 +84,28 @@ const store = {
         state.rowSpace = value
         state.rowSpacePrompt = rowSpacePrompts[index]
       } else {
-        throw Error(`setRowSpace wrongValue: ${value}`)
+        state.rowSpace = defaultRowSpace
+        state.rowSpacePrompt = defaultRowSpacePrompt
+        console.log(`[ERROR] setRowSpace wrongValue: ${value}`)
       }
     },
     /**
      * 设置正文内容页面背景色
      * @param {Object} state userConfig.state
      * @param {String} value 正文内容页面背景色
-     * @throws {Error} 正文内容页面背景色值非法
      */
     setBackgroundColor (state, value) {
       if (backgroundColors.indexOf(value) >= 0) {
         state.backgroundColor = value
       } else {
-        throw Error(`setBackgroundColor wrongValue: ${value}`)
+        state.backgroundColor = defaultBackgroundColor
+        console.log(`[ERROR] setBackgroundColor wrongValue: ${value}`)
       }
     }
   },
   actions: {
     /**
      * 初始化用户设置
-     * @throws {Error} 用户设置值非法
      */
     setupUserConfig ({ commit }) {
       const userConfig = window.__browserObject.getUserConfig()
@@ -116,20 +117,16 @@ const store = {
         rowSpace,
         backgroundColor
       } = userConfig
-      try {
-        commit('setReaderMode', readerMode)
-        commit('setFontSize', fontSize)
-        commit('setRowSpace', rowSpace)
-        commit('setBackgroundColor', backgroundColor)
-      } catch (e) {
-        return Promise.reject(e)
-      }
+      commit('setReaderMode', readerMode)
+      commit('setFontSize', fontSize)
+      commit('setRowSpace', rowSpace)
+      commit('setBackgroundColor', backgroundColor)
       commit('setVolumeKeyOn', volumeKeyOn)
       commit('setNightMode', nightMode)
     },
     /**
      * 保存用户设置
-     * @throws {Error} 保存用户设置失败
+     * @throws 保存用户设置失败
      */
     saveUserConfig ({ state }) {
       const {

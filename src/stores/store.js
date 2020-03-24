@@ -101,7 +101,7 @@ let store = new Vuex.Store({
     },
     /**
      * 初始化小说参数
-     * @throws {Error} 请求失败
+     * @throws 请求失败
      */
     async initNovelData ({ commit }) {
       const url = document.location.href

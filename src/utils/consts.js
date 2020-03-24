@@ -27,17 +27,17 @@ const readerModeUpDown = 'upDown'
 const readerModeLeftRight = 'leftRight'
 /** 字体大小选项 */
 const fontSizes = [
-  '0.6rem',
+  '0.5rem',
+  '0.65rem',
   '0.8rem',
-  '1rem',
-  '1.2rem'
+  '1rem'
 ]
 /** 首行缩进选项 */
 const textIndents = [
-  '1.2rem',
+  '1rem',
+  '1.3rem',
   '1.6rem',
-  '2rem',
-  '2.4rem'
+  '2rem'
 ]
 /** 行间距选项提示 */
 const fontSizesPrompt = [
@@ -48,6 +48,7 @@ const fontSizesPrompt = [
 ]
 /** 默认字体大小 */
 const defaultFontSize = fontSizes[1]
+/** 默认首行缩进大小 */
 const defaultTextIndent = textIndents[1]
 /** 行间距选项 */
 const rowSpaces = [

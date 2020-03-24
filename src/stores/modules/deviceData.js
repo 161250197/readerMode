@@ -35,7 +35,7 @@ const store = {
      * 设置亮度信息
      * @param {Object} state deviceData.state
      * @param {Number} value 值
-     * @throws {Error} 设置亮度信息失败
+     * @throws 设置亮度信息失败
      */
     setBrightness (state, value) {
       if (!window.__browserObject.setBrightness(value)) {
