@@ -25,6 +25,7 @@
         </div>
         <div
           class="text"
+          :style="{ textIndent }"
           v-html="text"
         ></div>
       </div>
@@ -68,6 +69,7 @@ export default {
   },
   computed: {
     ...mapState({
+      textIndent: state => state.userConfig.textIndent,
       deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
@@ -305,6 +307,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .up-down {
   width: 100%;
   height: 100%;
@@ -318,6 +322,12 @@ export default {
     }
     .chapter {
       padding: 0 0.4rem;
+      .title {
+        text-align: center;
+        font-size: 125%;
+        line-height: 150%;
+        border-bottom: thin solid @borderColor;
+      }
     }
     .loading-prev,
     .see-more,
@@ -325,6 +335,17 @@ export default {
     .loading-next-fail {
       width: 100%;
       height: 50%;
+    }
+  }
+}
+.night-mode {
+  .up-down {
+    .content {
+      .chapter {
+        .title {
+          border-bottom-color: @borderColorNight;
+        }
+      }
     }
   }
 }

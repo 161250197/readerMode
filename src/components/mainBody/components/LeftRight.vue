@@ -17,7 +17,7 @@
       </div>
       <div
         class="chapter"
-        :style="{marginBottom: `${deviceSize.height}px`}"
+        :style="{ marginBottom: `${deviceSize.height}px` }"
         v-for="({ text, title, chapterIndex }) in chapters"
         :key="chapterIndex"
       >
@@ -26,6 +26,7 @@
         </div>
         <div
           class="text"
+          :style="{ textIndent }"
           v-html="text"
         ></div>
       </div>
@@ -68,6 +69,7 @@ export default {
   },
   computed: {
     ...mapState({
+      textIndent: state => state.userConfig.textIndent,
       deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
@@ -254,6 +256,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .left-right {
   width: 100%;
   height: 100%;
@@ -267,6 +271,12 @@ export default {
     }
     .chapter {
       padding: 0 0.4rem;
+      .title {
+        text-align: center;
+        font-size: 125%;
+        line-height: 150%;
+        border-bottom: thin solid @borderColor;
+      }
       &:last-child {
         margin-bottom: 0 !important;
       }
@@ -277,6 +287,17 @@ export default {
     .loading-next-fail {
       width: 10.8rem;
       height: 100%;
+    }
+  }
+}
+.night-mode {
+  .left-right {
+    .content {
+      .chapter {
+        .title {
+          border-bottom-color: @borderColorNight;
+        }
+      }
     }
   }
 }

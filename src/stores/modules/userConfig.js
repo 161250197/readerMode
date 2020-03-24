@@ -3,6 +3,8 @@ import {
   readerModeLeftRight,
   fontSizes,
   defaultFontSize,
+  textIndents,
+  defaultTextIndent,
   rowSpaces,
   rowSpacePrompts,
   defaultRowSpace,
@@ -20,6 +22,7 @@ const store = {
     nightMode: false,
     readerMode: readerModeUpDown,
     fontSize: defaultFontSize,
+    textIndent: defaultTextIndent,
     rowSpace: defaultRowSpace,
     rowSpacePrompt: defaultRowSpacePrompt,
     backgroundColor: defaultBackgroundColor
@@ -61,8 +64,10 @@ const store = {
      * @throws {Error} 正文字体大小值非法
      */
     setFontSize (state, value) {
-      if (fontSizes.indexOf(value) >= 0) {
+      const index = fontSizes.indexOf(value)
+      if (index >= 0) {
         state.fontSize = value
+        state.textIndent = textIndents[index]
       } else {
         throw Error(`setFontSize wrongValue: ${value}`)
       }

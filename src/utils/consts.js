@@ -32,6 +32,13 @@ const fontSizes = [
   '1rem',
   '1.2rem'
 ]
+/** 首行缩进选项 */
+const textIndents = [
+  '1.2rem',
+  '1.6rem',
+  '2rem',
+  '2.4rem'
+]
 /** 行间距选项提示 */
 const fontSizesPrompt = [
   '小',
@@ -41,6 +48,7 @@ const fontSizesPrompt = [
 ]
 /** 默认字体大小 */
 const defaultFontSize = fontSizes[1]
+const defaultTextIndent = textIndents[1]
 /** 行间距选项 */
 const rowSpaces = [
   '100%',
@@ -69,8 +77,10 @@ export {
   readerModeUpDown,
   readerModeLeftRight,
   fontSizes,
-  fontSizesPrompt,
   defaultFontSize,
+  textIndents,
+  defaultTextIndent,
+  fontSizesPrompt,
   rowSpaces,
   rowSpacePrompts,
   defaultRowSpace,
