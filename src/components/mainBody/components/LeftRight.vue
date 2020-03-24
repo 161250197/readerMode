@@ -217,9 +217,8 @@ export default {
     },
     /**
      * touchend 事件处理
-     * @param {TouchEvent} e
      */
-    onWrapperTouchend (e) {
+    onWrapperTouchend () {
       if (this.moving) {
         // 避免第一次使用时点击呼出菜单栏触发翻至下一页
         if (this.moving < -Number.MIN_VALUE) {

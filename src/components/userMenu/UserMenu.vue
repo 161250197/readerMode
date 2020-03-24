@@ -5,7 +5,7 @@
   >
     <TopUserMenu v-show="!settingShow" />
     <BottomUserMenu v-show="!settingShow" />
-    <Setting v-show="settingShow" />
+    <Setting v-if="settingShow" />
   </div>
 </template>
 
