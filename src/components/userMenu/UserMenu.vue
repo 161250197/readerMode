@@ -13,7 +13,7 @@
 import { mapState, mapMutations } from 'vuex'
 import BottomUserMenu from './components/BottomUserMenu'
 import TopUserMenu from './components/TopUserMenu'
-import Setting from './components/Setting'
+import Setting from './components/Setting/Setting'
 
 export default {
   name: 'userMenu',
