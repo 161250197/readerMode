@@ -5,8 +5,7 @@
     :style="{
         background: nightMode ? nightModeBackgroundColor : backgroundColor,
         color: nightMode ? nightModeFontColor : dayModeFontColor,
-        fontSize: fontSize,
-        lineHeight: rowSpace
+        fontSize: fontSize
       }"
   >
     <MainBody v-show="!(loadingShow || errorShow)" />
@@ -48,7 +47,6 @@ export default {
       backgroundColor: state => state.userConfig.backgroundColor,
       nightMode: state => state.userConfig.nightMode,
       fontSize: state => state.userConfig.fontSize,
-      rowSpace: state => state.userConfig.rowSpace,
       userMenuShow: state => state.showState.userMenuShow,
       catalogChaptersShow: state => state.showState.catalogChaptersShow,
       catalogBookmarksShow: state => state.showState.catalogBookmarksShow,

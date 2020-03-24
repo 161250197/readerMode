@@ -2,6 +2,7 @@
   <div
     ref="wrapper"
     class="up-down"
+    :style="{ lineHeight: rowSpace }"
     @touchstart="onWrapperTouchstart"
     @touchmove="onWrapperTouchmove"
     @touchend="onWrapperTouchend"
@@ -69,6 +70,7 @@ export default {
   },
   computed: {
     ...mapState({
+      rowSpace: state => state.userConfig.rowSpace,
       textIndent: state => state.userConfig.textIndent,
       deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,

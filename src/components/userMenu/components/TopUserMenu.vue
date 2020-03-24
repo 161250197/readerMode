@@ -137,7 +137,6 @@ export default {
   width: 100%;
   height: 1.4rem;
   background: @secondBackground;
-  line-height: 100%;
   .back {
     position: fixed;
     top: 0.2rem;

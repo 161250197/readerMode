@@ -1,6 +1,7 @@
 <template>
   <div
     class="left-right"
+    :style="{ lineHeight: rowSpace }"
     @touchstart="onWrapperTouchstart"
     @touchmove.prevent="onWrapperTouchmove"
     @touchend="onWrapperTouchend"
@@ -69,6 +70,7 @@ export default {
   },
   computed: {
     ...mapState({
+      rowSpace: state => state.userConfig.rowSpace,
       textIndent: state => state.userConfig.textIndent,
       deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,

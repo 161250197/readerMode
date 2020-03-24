@@ -95,7 +95,6 @@ export default {
     .wrapper {
       background: @secondBackground;
       border-radius: 0.4rem;
-      line-height: 100%;
       .prompt {
         display: flex;
         align-items: center;

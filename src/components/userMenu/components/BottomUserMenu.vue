@@ -106,7 +106,6 @@ export default {
   height: 3rem;
   background: @secondBackground;
   display: flex;
-  line-height: 100%;
   .user-menu {
     height: 100%;
     flex: 1;

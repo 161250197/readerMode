@@ -51,7 +51,6 @@ export default {
   bottom: 0;
   width: 100%;
   font-size: 0.5rem;
-  line-height: 100%;
   background: @secondBackground;
   .more-setting {
     height: 1.2rem;

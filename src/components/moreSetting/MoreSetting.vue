@@ -134,7 +134,6 @@ export default {
   width: 100%;
   height: 100%;
   background: @secondBackground;
-  line-height: 100%;
   .header {
     height: 1.4rem;
     display: flex;
