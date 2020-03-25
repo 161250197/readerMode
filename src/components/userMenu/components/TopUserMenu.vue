@@ -19,6 +19,22 @@
       />
     </div>
     <div
+      class="book-mall"
+      @click.stop="jumpToBookMall"
+    >
+      <img
+        class="day-mode-item"
+        src="./../../../assets/bookMall.png"
+        alt="day mode bookMall icon"
+      />
+      <img
+        class="night-mode-item"
+        src="./../../../assets/bookMall-night.png"
+        alt="night mode bookMall icon"
+      />
+      书城
+    </div>
+    <div
       class="change-source"
       :class="{ 'active': changeSourceShow }"
       @click.stop="openChangeSource"
@@ -121,6 +137,18 @@ export default {
       this.setUserMenuShow(false)
     },
     /**
+     * 跳转小说书城
+     */
+    jumpToBookMall () {
+      // TODO 添加提示
+      if (window.__browserObject.jumpToBookMall()) {
+        console.log('[INFO] jumpToBookMall success')
+        this.setUserMenuShow(false)
+      } else {
+        console.log('[INFO] jumpToBookMall fail')
+      }
+    },
+    /**
      * 打开小说换源面板
      */
     openChangeSource () {
@@ -136,6 +164,7 @@ export default {
      * 添加书签
      */
     addBookmark () {
+      // TODO 添加提示
       const chapterIndex = this.chapters[this.readingChapterIndex].chapterIndex
       if (window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, chapterIndex, this.readingChapterTitle)) {
         console.log('[INFO] addBookmark success')
@@ -164,6 +193,19 @@ export default {
     left: 0.2rem;
     > img {
       width: 1rem;
+    }
+  }
+  .book-mall {
+    position: fixed;
+    height: 0.8rem;
+    top: 0.3rem;
+    right: 4.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.5rem;
+    > img {
+      width: 0.8rem;
+      margin-right: 0.2rem;
     }
   }
   > .change-source {
