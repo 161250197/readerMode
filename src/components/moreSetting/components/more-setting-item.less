@@ -1,0 +1,23 @@
+@import url('./../../../style/variables.less');
+
+.more-setting {
+  .item {
+    box-sizing: border-box;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.4rem;
+    border-bottom: thin solid @borderColor;
+    .title {
+      font-size: 0.6rem;
+    }
+  }
+}
+.night-mode {
+  .more-setting {
+    .item {
+      border-bottom-color: @borderColorNight;
+    }
+  }
+}
