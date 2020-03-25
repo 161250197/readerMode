@@ -20,15 +20,26 @@
     </div>
     <div
       class="change-source"
+      :class="{ 'active': changeSourceShow }"
       @click.stop="openChangeSource"
     >
       <img
-        class="day-mode-item"
+        class="day-mode-item active-item"
+        src="./../../../assets/refresh-active.png"
+        alt="day mode refresh-active icon"
+      />
+      <img
+        class="night-mode-item active-item"
+        src="./../../../assets/refresh-active-night.png"
+        alt="night mode refresh-active icon"
+      />
+      <img
+        class="day-mode-item inactive-item"
         src="./../../../assets/refresh.png"
         alt="day mode refresh icon"
       />
       <img
-        class="night-mode-item"
+        class="night-mode-item inactive-item"
         src="./../../../assets/refresh-night.png"
         alt="night mode refresh icon"
       />
@@ -66,16 +77,24 @@
         alt="night mode bookmark icon"
       />
     </div>
+    <div class="change-source-wrapper">
+      <ChangeSource v-if="changeSourceShow" />
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import ChangeSource from './ChangeSource'
 
 export default {
   name: 'UserMenu.TopUserMenu',
+  components: {
+    ChangeSource
+  },
   computed: {
     ...mapState({
+      changeSourceShow: state => state.showState.changeSourceShow,
       domain: state => state.domain,
       novelName: state => state.novelName,
       authorName: state => state.authorName,
@@ -87,9 +106,12 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setChangeSourceShow',
       'setUserMenuShow',
-      'setCatalogBookmarksShow',
-      'updateReadingChapterIsBookmarked'
+      'setCatalogBookmarksShow'
+    ]),
+    ...mapActions([
+      'loadBookmarks'
     ]),
     /**
      * 退出阅读模式
@@ -102,8 +124,7 @@ export default {
      * 打开小说换源面板
      */
     openChangeSource () {
-      // TODO
-      console.log('[INFO] openChangeSource todo')
+      this.setChangeSourceShow(!this.changeSourceShow)
     },
     /**
      * 查看书签
@@ -118,7 +139,7 @@ export default {
       const chapterIndex = this.chapters[this.readingChapterIndex].chapterIndex
       if (window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, chapterIndex, this.readingChapterTitle)) {
         console.log('[INFO] addBookmark success')
-        this.updateReadingChapterIsBookmarked()
+        this.loadBookmarks()
       } else {
         console.log('[ERROR] addBookmark fail')
       }
@@ -135,7 +156,7 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
-  height: 1.4rem;
+  min-height: 1.4rem;
   background: @secondBackground;
   .back {
     position: fixed;
@@ -145,7 +166,7 @@ export default {
       width: 1rem;
     }
   }
-  .change-source {
+  > .change-source {
     position: fixed;
     height: 0.8rem;
     top: 0.3rem;
@@ -153,6 +174,9 @@ export default {
     display: flex;
     align-items: center;
     font-size: 0.5rem;
+    &.active {
+      color: @primaryColor;
+    }
     > img {
       width: 0.8rem;
       margin-right: 0.2rem;
@@ -166,10 +190,18 @@ export default {
       width: 0.7rem;
     }
   }
+  .change-source-wrapper {
+    margin-top: 1.4rem;
+  }
 }
 .night-mode {
   .top-user-menu {
     background: @secondBackgroundNight;
+    > .change-source {
+      &.active {
+        color: @primaryColorNight;
+      }
+    }
   }
 }
 </style>

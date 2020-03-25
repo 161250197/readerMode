@@ -26,28 +26,27 @@
       <div class="title">
         音量键翻页
       </div>
-      <div class="content">
+      <div
+        class="content"
+        :class="{ 'active': volumeKeyOn }"
+      >
         <img
-          v-show="volumeKeyOn"
-          class="day-mode-item"
+          class="day-mode-item active-item"
           src="./../../assets/switch-on.png"
           alt="day mode switch-on icon"
         />
         <img
-          v-show="volumeKeyOn"
-          class="night-mode-item"
+          class="night-mode-item active-item"
           src="./../../assets/switch-on-night.png"
           alt="night mode switch-on icon"
         />
         <img
-          v-show="!volumeKeyOn"
-          class="day-mode-item"
+          class="day-mode-item inactive-item"
           src="./../../assets/switch-off.png"
           alt="day mode switch-off icon"
         />
         <img
-          v-show="!volumeKeyOn"
-          class="night-mode-item"
+          class="night-mode-item inactive-item"
           src="./../../assets/switch-off-night.png"
           alt="night mode switch-off icon"
         />
@@ -161,6 +160,7 @@ export default {
     }
     &.volume-key-on {
       .content {
+        height: 1.3rem;
         img {
           width: 1.3rem;
         }

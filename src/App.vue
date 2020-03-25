@@ -112,12 +112,40 @@ export default {
   .night-mode-item {
     display: none;
   }
+  .active-item {
+    display: none;
+  }
+  .active {
+    .inactive-item {
+      display: none;
+    }
+    .active-item {
+      display: block;
+    }
+    .night-mode-item {
+      display: none;
+    }
+  }
   &.night-mode {
+    .day-mode-item {
+      display: none;
+    }
     .night-mode-item {
       display: block;
     }
-    .day-mode-item {
+    .active-item {
       display: none;
+    }
+    .active {
+      .inactive-item {
+        display: none;
+      }
+      .active-item {
+        display: block;
+      }
+      .day-mode-item {
+        display: none;
+      }
     }
   }
 }

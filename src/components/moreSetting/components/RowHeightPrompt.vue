@@ -10,20 +10,19 @@
       <div class="wrapper">
         <div
           class="prompt"
+          :class="{ 'active': rowSpace === rowSpaces[index] }"
           v-for="(prompt, index) in rowSpacePrompts"
           :key="index"
           @click.stop="() => onPromptClicked(index)"
         >
           {{ prompt }}
           <img
-            v-if="rowSpace === rowSpaces[index]"
-            class="day-mode-item"
+            class="day-mode-item active-item"
             src="./../../../assets/checked.png"
             alt="day mode checked icon"
           />
           <img
-            v-if="rowSpace === rowSpaces[index]"
-            class="night-mode-item"
+            class="night-mode-item active-item"
             src="./../../../assets/checked-night.png"
             alt="night mode checked icon"
           />

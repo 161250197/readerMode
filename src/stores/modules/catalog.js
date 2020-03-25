@@ -106,6 +106,7 @@ const store = {
         } = this.state
         const bookmarks = window.__browserObject.getBookmarks(domain, novelName, authorName)
         commit('setBookmarks', bookmarks)
+        commit('updateReadingChapterIsBookmarked')
       } catch (e) {
         console.log('[ERROR] loadBookmarks', e)
         commit('setLoadingBookmarksFail', true)

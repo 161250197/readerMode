@@ -30,15 +30,21 @@ const store = {
     },
     /**
      * 更新正在阅读的章节是否已加入书签
+     * - 章节数组未加载完成时不做操作
      * @param {Object} state mainBody.state
      */
     updateReadingChapterIsBookmarked (state) {
+      const chapter = state.chapters[state.readingChapterIndex]
+      if (!chapter) {
+        console.log('[WARN] updateReadingChapterIsBookmarked chapters not ready')
+        return
+      }
+      const chapterIndex = chapter.chapterIndex
       const {
         domain,
         novelName,
         authorName
       } = this.state
-      const chapterIndex = state.chapters[state.readingChapterIndex].chapterIndex
       const isBookmarked = window.__browserObject.isBookmarked(domain, novelName, authorName, chapterIndex)
       state.readingChapterIsBookmarked = isBookmarked
     },
