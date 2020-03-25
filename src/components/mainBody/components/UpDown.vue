@@ -18,8 +18,8 @@
       </div>
       <div
         class="chapter"
-        v-for="({ text, title, chapterIndex }) in chapters"
-        :key="chapterIndex"
+        v-for="({ text, title }, index) in chapters"
+        :key="index"
       >
         <div class="title">
           {{ title }}
@@ -29,6 +29,7 @@
           :style="{ textIndent }"
           v-html="text"
         ></div>
+        <Ad :index="index" />
       </div>
       <div
         v-show="loadingNextChapterFail"
@@ -59,12 +60,14 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
 import { debounce } from './../../../utils/tools.js'
+import Ad from './Ad'
 import ErrorDiv from './../../utils/ErrorDiv'
 import LoadingDiv from './../../utils/LoadingDiv'
 
 export default {
   name: 'MainBody.UpDown',
   components: {
+    Ad,
     ErrorDiv,
     LoadingDiv
   },

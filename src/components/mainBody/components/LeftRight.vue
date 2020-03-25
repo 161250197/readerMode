@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="wrapper"
     class="left-right"
     :style="{ lineHeight: rowSpace }"
     @touchstart="onWrapperTouchstart"
@@ -18,18 +19,29 @@
       </div>
       <div
         class="chapter"
-        :style="{ marginBottom: `${deviceSize.height}px` }"
-        v-for="({ text, title, chapterIndex }) in chapters"
-        :key="chapterIndex"
+        v-for="({ text, title }, index) in chapters"
+        :key="index"
       >
         <div class="title">
           {{ title }}
         </div>
         <div
           class="text"
-          :style="{ textIndent }"
+          :style="{
+            textIndent,
+            marginBottom: `${visibleHeight}px`
+          }"
           v-html="text"
         ></div>
+        <div
+          v-show="chapterAds[index]"
+          :style="{
+            height: `${visibleHeight}px`
+          }"
+          class="ad-wrapper"
+        >
+          <Ad :index="index" />
+        </div>
       </div>
       <div
         v-show="loadingNextChapterFail"
@@ -59,17 +71,21 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
+// TODO 上下翻页切换为左右翻页时高度渲染异常
+import Ad from './Ad'
 import ErrorDiv from './../../utils/ErrorDiv'
 import LoadingDiv from './../../utils/LoadingDiv'
 
 export default {
   name: 'MainBody.LeftRight',
   components: {
+    Ad,
     ErrorDiv,
     LoadingDiv
   },
   computed: {
     ...mapState({
+      chapterAds: state => state.ad.chapterAds,
       rowSpace: state => state.userConfig.rowSpace,
       textIndent: state => state.userConfig.textIndent,
       deviceSize: state => state.deviceData.deviceSize,
@@ -86,24 +102,35 @@ export default {
       chapterCountArr: [],
       touchstartX: 0,
       pageIndex: 0,
+      visibleHeight: 0,
       // 初始值设定最小负数，防止初次打开时的滚动动画
       moving: -Number.MIN_VALUE
     }
   },
   watch: {
     /**
-     * 章节数据更新时需要更新章节相关数据
+     * 章节数据更新时
+     * - 更新章节相关数据
      */
     chapters () {
       this.$nextTick(this.updateChapterInfo)
     },
     /**
-     * 设备尺寸更新时需要更新章节相关数据
+     * 广告数据更新时
+     * - 更新章节页数
+     */
+    chapterAds () {
+      this.$nextTick(this.updateChapterCountArr)
+    },
+    /**
+     * 设备尺寸更新时
+     * - 更新章节页数
      * - 页面重新定位至章节首部
      */
     deviceSize () {
+      this.updateDeviceSizeData()
       this.$nextTick(() => {
-        this.updateChapterInfo()
+        this.updateChapterCountArr()
         this.scrollToReadingChapterTop()
       })
     }
@@ -116,6 +143,12 @@ export default {
       'loadPrevChapter',
       'loadNextChapter'
     ]),
+    /**
+     * 更新尺寸数据
+     */
+    updateDeviceSizeData () {
+      this.visibleHeight = this.$refs.wrapper.getBoundingClientRect().height
+    },
     /**
      * 翻至下一页
      */
@@ -249,9 +282,12 @@ export default {
     }
   },
   mounted () {
-    this.updateChapterInfo()
-    this.checkPreloadNextChapter()
-    this.scrollToReadingChapterTop()
+    this.updateDeviceSizeData()
+    this.$nextTick(() => {
+      this.updateChapterInfo()
+      this.checkPreloadNextChapter()
+      this.scrollToReadingChapterTop()
+    })
   }
 }
 </script>
@@ -280,6 +316,10 @@ export default {
       }
       &:last-child {
         margin-bottom: 0 !important;
+      }
+      .ad-wrapper {
+        display: flex;
+        align-items: center;
       }
     }
     .loading-prev,

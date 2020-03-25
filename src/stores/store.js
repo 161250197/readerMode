@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import ad from './modules/ad'
 import catalog from './modules/catalog'
 import deviceData from './modules/deviceData'
 import mainBody from './modules/mainBody'
@@ -8,6 +9,7 @@ import { api } from './../apis/api'
 
 let store = new Vuex.Store({
   modules: {
+    ad,
     catalog,
     deviceData,
     mainBody,

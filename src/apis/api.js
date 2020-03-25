@@ -2,6 +2,17 @@ import { instance } from '../utils/request'
 
 const api = {
   /**
+   * 获取广告数据
+   * @param {String} adId 广告id
+   * @returns {Promise}
+   */
+  getAdData (adId) {
+    if (adId) {
+      return instance.post('/getAdData', { adId })
+    }
+    return instance.post('/getAdData')
+  },
+  /**
    * 获取网络小说参数
    * @param {String} url 网络小说页面网址
    * @returns {Promise}
