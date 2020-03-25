@@ -77,10 +77,10 @@ export default {
   .content {
     justify-content: space-evenly;
     .reader-mode-item {
+      box-sizing: border-box;
       height: 0.8rem;
-      line-height: 0.8rem;
       padding: 0 0.4rem;
-      border: thin solid @borderColor;
+      border: 0.05rem solid @borderColor;
       border-radius: 0.4rem;
       font-weight: bold;
       background: @secondBackground;
