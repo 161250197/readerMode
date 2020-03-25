@@ -2,11 +2,11 @@
   <div class="catalog-chapters">
     <LoadingDiv v-show="isLoadingCatalogChapters" />
     <ErrorDiv
-      v-show="loadingCatalogChaptersFail"
+      v-show="loadCatalogChaptersFail"
       :retryCallback="loadCatalogChapters"
     />
     <div
-      v-if="!(isLoadingCatalogChapters || loadingCatalogChaptersFail)"
+      v-if="!(isLoadingCatalogChapters || loadCatalogChaptersFail)"
       class="catalog-chapter"
     >
       <div
@@ -35,7 +35,7 @@ export default {
   computed: {
     ...mapState({
       isLoadingCatalogChapters: state => state.catalog.isLoadingCatalogChapters,
-      loadingCatalogChaptersFail: state => state.catalog.loadingCatalogChaptersFail,
+      loadCatalogChaptersFail: state => state.catalog.loadCatalogChaptersFail,
       catalogChapters: state => state.catalog.catalogChapters
     })
   },

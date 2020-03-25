@@ -6,7 +6,7 @@
     <DeviceInfo />
     <div class="content">
       <ErrorDiv
-        v-if="loadingMainBodyContentFail"
+        v-if="loadMainBodyContentFail"
         :retryCallback="loadMainBodyContent"
       />
       <LoadingDiv v-else-if="isLoadingMainBodyContent" />
@@ -50,7 +50,7 @@ export default {
       volumeKeySupport: state => state.deviceData.volumeKeySupport,
       deviceSize: state => state.deviceData.deviceSize,
       isLoadingMainBodyContent: state => state.mainBody.isLoadingMainBodyContent,
-      loadingMainBodyContentFail: state => state.mainBody.loadingMainBodyContentFail,
+      loadMainBodyContentFail: state => state.mainBody.loadMainBodyContentFail,
       readerMode: state => state.userConfig.readerMode
     })
   },

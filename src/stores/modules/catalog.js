@@ -6,10 +6,10 @@ import { api } from './../../apis/api'
 const store = {
   state: {
     isLoadingCatalogChapters: true,
-    loadingCatalogChaptersFail: false,
+    loadCatalogChaptersFail: false,
     catalogChapters: [],
     isLoadingBookmarks: true,
-    loadingBookmarksFail: false,
+    loadBookmarksFail: false,
     bookmarks: []
   },
   mutations: {
@@ -28,8 +28,8 @@ const store = {
      * @param {Boolean} value 值
      * @private
      */
-    setLoadingCatalogChaptersFail (state, value) {
-      state.loadingCatalogChaptersFail = value
+    setLoadCatalogChaptersFail (state, value) {
+      state.loadCatalogChaptersFail = value
     },
     /**
      * 设置章节目录
@@ -55,8 +55,8 @@ const store = {
      * @param {Boolean} value 值
      * @private
      */
-    setLoadingBookmarksFail (state, value) {
-      state.loadingBookmarksFail = value
+    setLoadBookmarksFail (state, value) {
+      state.loadBookmarksFail = value
     },
     /**
      * 设置书签列表
@@ -74,7 +74,7 @@ const store = {
      */
     async loadCatalogChapters ({ commit }) {
       commit('setIsLoadingCatalogChapters', true)
-      commit('setLoadingCatalogChaptersFail', false)
+      commit('setLoadCatalogChaptersFail', false)
       try {
         const {
           domain,
@@ -88,7 +88,7 @@ const store = {
         commit('setCatalogChapters', data)
       } catch (e) {
         console.log('[ERROR] initCatalogChapters', e)
-        commit('setLoadingCatalogChaptersFail', true)
+        commit('setLoadCatalogChaptersFail', true)
       }
       commit('setIsLoadingCatalogChapters', false)
     },
@@ -97,7 +97,7 @@ const store = {
      */
     loadBookmarks ({ commit }) {
       commit('setIsLoadingBookmarks', true)
-      commit('setLoadingBookmarksFail', false)
+      commit('setLoadBookmarksFail', false)
       try {
         const {
           domain,
@@ -109,7 +109,7 @@ const store = {
         commit('updateReadingChapterIsBookmarked')
       } catch (e) {
         console.log('[ERROR] loadBookmarks', e)
-        commit('setLoadingBookmarksFail', true)
+        commit('setLoadBookmarksFail', true)
       }
       commit('setIsLoadingBookmarks', false)
     }

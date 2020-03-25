@@ -44,7 +44,7 @@
         </div>
       </div>
       <div
-        v-show="loadingNextChapterFail"
+        v-show="loadNextChapterFail"
         class="loading-next-fail"
       >
         <ErrorDiv
@@ -53,13 +53,13 @@
         />
       </div>
       <div
-        v-show="!loadingNextChapterFail && isLoadingNextChapter"
+        v-show="!loadNextChapterFail && isLoadingNextChapter"
         class="loading-next"
       >
         <LoadingDiv prompt="正在加载下一章" />
       </div>
       <div
-        v-show="!(isLoadingNextChapter || loadingNextChapterFail)"
+        v-show="!(isLoadingNextChapter || loadNextChapterFail)"
         class="see-more"
       >
         TODO
@@ -91,7 +91,7 @@ export default {
       deviceSize: state => state.deviceData.deviceSize,
       readingChapterIndex: state => state.mainBody.readingChapterIndex,
       isLoadingNextChapter: state => state.mainBody.isLoadingNextChapter,
-      loadingNextChapterFail: state => state.mainBody.loadingNextChapterFail,
+      loadNextChapterFail: state => state.mainBody.loadNextChapterFail,
       chapters: state => state.mainBody.chapters
     })
   },
@@ -217,7 +217,7 @@ export default {
      * 检查并预加载下一章
      */
     checkPreloadNextChapter () {
-      if (this.isLoadingNextChapter || this.loadingNextChapterFail) {
+      if (this.isLoadingNextChapter || this.loadNextChapterFail) {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
         return
       }

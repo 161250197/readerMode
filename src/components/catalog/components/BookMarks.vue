@@ -2,10 +2,10 @@
   <div class="book-marks">
     <LoadingDiv v-show="isLoadingBookmarks" />
     <ErrorDiv
-      v-show="loadingBookmarksFail"
+      v-show="loadBookmarksFail"
       :retryCallback="loadBookmarks"
     />
-    <div v-if="!(isLoadingBookmarks || loadingBookmarksFail)">
+    <div v-if="!(isLoadingBookmarks || loadBookmarksFail)">
       <div
         class="book-mark"
         v-if="bookmarks.length"
@@ -39,7 +39,7 @@ export default {
   computed: {
     ...mapState({
       isLoadingBookmarks: state => state.catalog.isLoadingBookmarks,
-      loadingBookmarksFail: state => state.catalog.loadingBookmarksFail,
+      loadBookmarksFail: state => state.catalog.loadBookmarksFail,
       bookmarks: state => state.catalog.bookmarks
     })
   },

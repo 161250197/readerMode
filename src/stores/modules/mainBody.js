@@ -6,9 +6,9 @@ import { api } from './../../apis/api'
 const store = {
   state: {
     isLoadingMainBodyContent: true,
-    loadingMainBodyContentFail: false,
+    loadMainBodyContentFail: false,
     isLoadingNextChapter: false,
-    loadingNextChapterFail: false,
+    loadNextChapterFail: false,
     readingChapterTitle: '',
     readingChapterIsBookmarked: false,
     readingChapterIndex: 0,
@@ -63,8 +63,8 @@ const store = {
      * @param {Boolean} value 值
      * @private
      */
-    setLoadingMainBodyContentFail (state, value) {
-      state.loadingMainBodyContentFail = value
+    setLoadMainBodyContentFail (state, value) {
+      state.loadMainBodyContentFail = value
     },
     /**
      * 设置正在加载下一章
@@ -81,8 +81,8 @@ const store = {
      * @param {Boolean} value 值
      * @private
      */
-    setLoadingNextChapterFail (state, value) {
-      state.loadingNextChapterFail = value
+    setLoadNextChapterFail (state, value) {
+      state.loadNextChapterFail = value
     },
     /**
      * 设置章节数组
@@ -100,7 +100,7 @@ const store = {
      */
     async loadMainBodyContent ({ commit }) {
       commit('setIsLoadingMainBodyContent', true)
-      commit('setLoadingMainBodyContentFail', false)
+      commit('setLoadMainBodyContentFail', false)
       try {
         const {
           domain,
@@ -117,7 +117,7 @@ const store = {
         commit('setReadingChapterIndex', 0)
       } catch (e) {
         console.log('[ERROR] loadMainBodyContent ', e)
-        commit('setLoadingMainBodyContentFail', true)
+        commit('setLoadMainBodyContentFail', true)
       }
       commit('setIsLoadingMainBodyContent', false)
     },
@@ -139,7 +139,7 @@ const store = {
      */
     async loadNextChapter ({ commit, state }) {
       commit('setIsLoadingNextChapter', true)
-      commit('setLoadingNextChapterFail', false)
+      commit('setLoadNextChapterFail', false)
       let { chapters } = state
       const lastChapter = chapters[chapters.length - 1]
       if (!lastChapter.hasNext) {
@@ -162,7 +162,7 @@ const store = {
         commit('setChapters', [...chapters, chapter])
       } catch (e) {
         console.log('[ERROR] loadNextChapter ', e)
-        commit('setLoadingNextChapterFail', true)
+        commit('setLoadNextChapterFail', true)
       }
       commit('setIsLoadingNextChapter', false)
     }
