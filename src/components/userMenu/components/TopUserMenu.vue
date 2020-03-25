@@ -141,7 +141,8 @@ export default {
      */
     jumpToBookMall () {
       // TODO 添加提示
-      if (window.__browserObject.jumpToBookMall()) {
+      const result = window.__browserObject.jumpToBookMall()
+      if (result) {
         console.log('[INFO] jumpToBookMall success')
         this.setUserMenuShow(false)
       } else {
@@ -166,7 +167,8 @@ export default {
     addBookmark () {
       // TODO 添加提示
       const chapterIndex = this.chapters[this.readingChapterIndex].chapterIndex
-      if (window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, chapterIndex, this.readingChapterTitle)) {
+      const result = window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, chapterIndex, this.readingChapterTitle)
+      if (result) {
         console.log('[INFO] addBookmark success')
         this.loadBookmarks()
       } else {
@@ -189,8 +191,9 @@ export default {
   background: @secondBackground;
   .back {
     position: fixed;
-    top: 0.2rem;
-    left: 0.2rem;
+    top: 0;
+    left: 0;
+    padding: 0.2rem 0 0.2rem 0.45rem;
     > img {
       width: 1rem;
     }
@@ -199,7 +202,7 @@ export default {
     position: fixed;
     height: 0.8rem;
     top: 0.3rem;
-    right: 4.5rem;
+    right: 4.6rem;
     display: flex;
     align-items: center;
     font-size: 0.5rem;
@@ -212,7 +215,7 @@ export default {
     position: fixed;
     height: 0.8rem;
     top: 0.3rem;
-    right: 2rem;
+    right: 2.1rem;
     display: flex;
     align-items: center;
     font-size: 0.5rem;
@@ -227,7 +230,7 @@ export default {
   .bookmark {
     position: fixed;
     top: 0.35rem;
-    right: 0.6rem;
+    right: 0.7rem;
     > img {
       width: 0.7rem;
     }

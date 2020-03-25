@@ -84,11 +84,11 @@ export default {
   background: @coverBackground;
   .content {
     width: 100%;
-    padding: 0 0.4rem;
+    padding: 0 0.65rem;
     box-sizing: border-box;
     position: fixed;
     left: 0;
-    bottom: 0.4rem;
+    bottom: 0.65rem;
     display: flex;
     flex-direction: column;
     .wrapper {

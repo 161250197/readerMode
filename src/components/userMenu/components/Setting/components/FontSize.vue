@@ -173,7 +173,7 @@ export default {
   .content {
     justify-content: space-between;
     position: fixed;
-    right: 0.4rem;
+    right: 0.65rem;
     .prompt {
       font-size: 0.4rem;
       &:first-child {

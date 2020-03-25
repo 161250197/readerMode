@@ -75,7 +75,7 @@ export default {
 .reader-mode {
   justify-content: space-between;
   .content {
-    justify-content: space-evenly;
+    justify-content: flex-end;
     .reader-mode-item {
       box-sizing: border-box;
       height: 0.8rem;
@@ -87,6 +87,9 @@ export default {
       &.select {
         background: @primaryColor;
         color: @secondFontColor;
+      }
+      &:first-child {
+        margin-right: 0.4rem;
       }
     }
   }

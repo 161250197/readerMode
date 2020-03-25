@@ -43,12 +43,12 @@ export default {
   font-size: 0.5rem;
   .title {
     position: fixed;
-    left: 0.4rem;
+    left: 0.65rem;
     max-width: 6rem;
   }
   .time {
     position: fixed;
-    right: 1.8rem;
+    right: 1.95rem;
   }
   .battery {
     .battery-info-icon {
@@ -59,8 +59,8 @@ export default {
     .battery-info-icon {
       position: fixed;
       top: 0.3rem;
-      right: 0.56rem;
-      width: 1rem;
+      right: 0.81rem;
+      width: 0.9rem;
       height: 0.4rem;
       box-sizing: border-box;
       border: thin solid @fontColor;
@@ -68,7 +68,7 @@ export default {
     .battery-right-icon {
       position: fixed;
       top: 0.35rem;
-      right: 0.5rem;
+      right: 0.75rem;
       width: 0.04rem;
       height: 0.3rem;
       background: @fontColor;

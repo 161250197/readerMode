@@ -56,7 +56,7 @@ export default {
     height: 2rem;
   }
   .prompt {
-    margin: 0.5rem 0;
+    margin-top: 0.5rem;
     text-align: center;
   }
   .retry-prompt {

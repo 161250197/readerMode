@@ -183,3 +183,15 @@ export default {
   }
 }
 </style>
+
+<style lang="less">
+.main-body {
+  .content {
+    p {
+      text-align: justify;
+      margin-block-start: 0.5em;
+      margin-block-end: 0.5em;
+    }
+  }
+}
+</style>

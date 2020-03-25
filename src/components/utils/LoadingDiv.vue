@@ -42,7 +42,7 @@ export default {
     animation: rotate 1.5s ease infinite;
   }
   .prompt {
-    margin: 0.5rem 0;
+    margin-top: 0.5rem;
     text-align: center;
   }
 }
