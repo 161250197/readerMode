@@ -5,12 +5,21 @@ import { api } from './../../apis/api'
  */
 const store = {
   state: {
+    recommendBooks: [],
     chapterAds: []
   },
   mutations: {
     /**
+     * 设置推荐小说列表
+     * @param {Object} state ad.state
+     * @param {{bookId: String, cover: String, novelName: String}} recommendBooks 推荐小说列表
+     */
+    setRecommendBooks (state, recommendBooks) {
+      state.recommendBooks = [...recommendBooks]
+    },
+    /**
      * 设置章节广告
-     * @param {Object} state mainBody.state
+     * @param {Object} state ad.state
      * @param {{index: Number, ad: {adId: String, picture: String, title: String, info: String}}} param1 章节广告
      * @private
      */
@@ -21,7 +30,20 @@ const store = {
   },
   actions: {
     /**
-     * 初始化小说正文内容
+     * 加载推荐小说列表
+     */
+    async loadRecommendBooks ({ commit }) {
+      try {
+        const { bookId } = this.state
+        const { data } = await api.getRecommendBooks(bookId)
+        commit('setRecommendBooks', data)
+      } catch (e) {
+        console.log('[ERROR] loadRecommendBooks ', e)
+      }
+    },
+    /**
+     * 加载广告
+     * @param {Number} index 章节索引 - 从0开始
      */
     async loadAd ({ commit }, index) {
       try {

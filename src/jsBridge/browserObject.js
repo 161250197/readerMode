@@ -49,7 +49,7 @@
     /**
      * 设置移动端硬件亮度
      * @param {Number} brightness 移动端硬件亮度
-     * @returns {Boolean} 设置结果
+     * @returns {Boolean} 结果
      */
     setBrightness (brightness) {
       console.log(`[INFO] __browserObject setBrightness brightness:${brightness}`)
@@ -67,16 +67,17 @@
     },
     /**
      * 跳转小说书城
-     * @returns {Boolean} 设置结果
+     * @param {String} bookId 小说id
+     * @returns {Boolean} 结果
      */
-    jumpToBookMall () {
-      console.log('[INFO] __browserObject jumpToBookMall')
+    jumpToBookMall (bookId) {
+      console.log(`[INFO] __browserObject jumpToBookMall bookId:${bookId}`)
       return true
     },
     /**
      * 跳转广告页面
      * @param {String} adId 广告id
-     * @returns {Boolean} 设置结果
+     * @returns {Boolean} 结果
      */
     jumpToAdPage (adId) {
       console.log(`[INFO] __browserObject jumpToAdPage adId:${adId}`)
@@ -96,7 +97,7 @@
     /**
      * 保存用户自定义设置
      * @param {defultUserConfig} userConfig 用户自定义设置
-     * @returns {Boolean} 保存结果
+     * @returns {Boolean} 结果
      */
     saveUserConfig (userConfig) {
       localStorage.setItem(userConfigKey, JSON.stringify({...defultUserConfig, ...userConfig}))
@@ -126,7 +127,7 @@
      * @param {String} authorName 作者名
      * @param {Number} chapterIndex 章节索引 （从0开始的数字）
      * @param {String} chapterTitle 小说章节名
-     * @returns {Boolean} 添加结果
+     * @returns {Boolean} 结果
      */
     addBookmark (domain, novelName, authorName, chapterIndex, chapterTitle) {
       let bookmarks = this.getBookmarks(domain, novelName, authorName)
@@ -147,7 +148,7 @@
      * @param {String} novelName 小说名
      * @param {String} authorName 作者名
      * @param {Number} chapterIndex 章节索引 （从0开始的数字）
-     * @returns {Boolean} 删除结果
+     * @returns {Boolean} 结果
      */
     removeBookmark (domain, novelName, authorName, chapterIndex) {
       let bookmarks = this.getBookmarks(domain, novelName, authorName)
@@ -179,7 +180,7 @@
     },
     /**
      * 退出阅读模式
-     * @returns {Boolean} 退出结果
+     * @returns {Boolean} 结果
      */
     async exitReaderMode () {
       console.log('[INFO] __browserObject exitReaderMode')

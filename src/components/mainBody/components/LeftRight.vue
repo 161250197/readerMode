@@ -18,6 +18,7 @@
         {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
       </div>
       <div
+        ref="chapters"
         class="chapter"
         v-for="({ text, title }, index) in chapters"
         :key="index"
@@ -34,7 +35,7 @@
           v-html="text"
         ></div>
         <div
-          v-show="chapterAds[index]"
+          v-if="index !== lastChapterIndex"
           :style="{
             height: `${visibleHeight}px`
           }"
@@ -59,10 +60,10 @@
         <LoadingDiv prompt="正在加载下一章" />
       </div>
       <div
-        v-show="!(isLoadingNextChapter || loadNextChapterFail)"
-        class="see-more"
+        v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapter.hasNext)"
+        class="recommend-books-wrapper"
       >
-        TODO
+        <RecommendBooks />
       </div>
     </div>
   </div>
@@ -71,8 +72,8 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
-// TODO 上下翻页切换为左右翻页时高度渲染异常
 import Ad from './Ad'
+import RecommendBooks from './RecommendBooks'
 import ErrorDiv from './../../utils/ErrorDiv'
 import LoadingDiv from './../../utils/LoadingDiv'
 
@@ -80,6 +81,7 @@ export default {
   name: 'MainBody.LeftRight',
   components: {
     Ad,
+    RecommendBooks,
     ErrorDiv,
     LoadingDiv
   },
@@ -97,6 +99,8 @@ export default {
   },
   data () {
     return {
+      lastChapterIndex: 0,
+      lastChapter: {},
       hasPrev: true,
       pageCount: 0,
       chapterCountArr: [],
@@ -113,7 +117,7 @@ export default {
      * - 更新章节相关数据
      */
     chapters () {
-      this.$nextTick(this.updateChapterInfo)
+      this.updateChapterInfo()
     },
     /**
      * 广告数据更新时
@@ -175,8 +179,10 @@ export default {
      * 更新章节相关数据
      */
     updateChapterInfo () {
+      this.lastChapterIndex = this.chapters.length - 1
+      this.lastChapter = this.chapters[this.lastChapterIndex]
       this.updateHasPrev()
-      this.updateChapterCountArr()
+      this.$nextTick(this.updateChapterCountArr)
     },
     /**
      * 更新是否有上一章
@@ -189,7 +195,7 @@ export default {
      * 更新章节页数数组
      */
     updateChapterCountArr () {
-      const chapters = [...document.querySelectorAll('.left-right > .content > .chapter')]
+      const chapters = [...this.$refs.chapters]
       const deviceWidth = this.deviceSize.width
       this.chapterCountArr = chapters.map(chapter => Math.round(chapter.getBoundingClientRect().width / deviceWidth))
       // 最后还有一页
@@ -200,16 +206,15 @@ export default {
      */
     checkUpdateReadingChapterTitle () {
       let pageSum = 0
-      const chapterCount = this.chapterCountArr.length
       let chapterIndex = 0
-      for (; chapterIndex < chapterCount; chapterIndex++) {
+      for (; chapterIndex <= this.lastChapterIndex; chapterIndex++) {
         pageSum = pageSum + this.chapterCountArr[chapterIndex]
         if (this.pageIndex < pageSum) {
           break
         }
       }
-      if (chapterIndex === chapterCount) {
-        chapterIndex = chapterCount - 1
+      if (chapterIndex > this.lastChapterIndex) {
+        chapterIndex = this.lastChapterIndex
       }
       this.setReadingChapterIndex(chapterIndex)
     },
@@ -221,8 +226,7 @@ export default {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
         return
       }
-      const lastChapter = this.chapters[this.chapters.length - 1]
-      if (!lastChapter.hasNext) {
+      if (!this.lastChapter.hasNext) {
         console.log('[INFO] checkPreloadNextChapter no next chapter')
         return
       }
@@ -283,8 +287,8 @@ export default {
   },
   mounted () {
     this.updateDeviceSizeData()
+    this.updateChapterInfo()
     this.$nextTick(() => {
-      this.updateChapterInfo()
       this.checkPreloadNextChapter()
       this.scrollToReadingChapterTop()
     })
@@ -327,11 +331,15 @@ export default {
       }
     }
     .loading-prev,
-    .see-more,
     .loading-next,
     .loading-next-fail {
       width: 10.8rem;
       height: 100%;
+    }
+    .recommend-books-wrapper {
+      width: 10.8rem;
+      height: 100%;
+      display: flex;
     }
   }
 }

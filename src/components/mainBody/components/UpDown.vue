@@ -21,7 +21,10 @@
         v-for="({ text, title }, index) in chapters"
         :key="index"
       >
-        <div class="title">
+        <div
+          ref="titles"
+          class="title"
+        >
           {{ title }}
         </div>
         <div
@@ -29,7 +32,10 @@
           :style="{ textIndent }"
           v-html="text"
         ></div>
-        <Ad :index="index" />
+        <Ad
+          v-if="index !== lastChapterIndex"
+          :index="index"
+        />
       </div>
       <div
         v-show="loadNextChapterFail"
@@ -46,12 +52,7 @@
       >
         <LoadingDiv prompt="正在加载下一章" />
       </div>
-      <div
-        v-show="!(isLoadingNextChapter || loadNextChapterFail)"
-        class="see-more"
-      >
-        TODO
-      </div>
+      <RecommendBooks v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapter.hasNext)" />
     </div>
   </div>
 </template>
@@ -61,6 +62,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { preloadPageCount } from './../../../utils/consts.js'
 import { debounce } from './../../../utils/tools.js'
 import Ad from './Ad'
+import RecommendBooks from './RecommendBooks'
 import ErrorDiv from './../../utils/ErrorDiv'
 import LoadingDiv from './../../utils/LoadingDiv'
 
@@ -68,6 +70,7 @@ export default {
   name: 'MainBody.UpDown',
   components: {
     Ad,
+    RecommendBooks,
     ErrorDiv,
     LoadingDiv
   },
@@ -84,6 +87,8 @@ export default {
   },
   data () {
     return {
+      lastChapterIndex: 0,
+      lastChapter: {},
       isTop: true,
       hasPrev: true,
       touchstartY: 0,
@@ -153,6 +158,8 @@ export default {
      * 更新章节相关数据
      */
     updateChapterInfo () {
+      this.lastChapterIndex = this.chapters.length - 1
+      this.lastChapter = this.chapters[this.lastChapterIndex]
       this.updateHasPrev()
     },
     /**
@@ -173,7 +180,7 @@ export default {
      * 检查并更新章节标题
      */
     checkUpdateReadingChapterTitle () {
-      const chapterTitles = [...document.querySelectorAll('.up-down > .content > .chapter > .title')]
+      const chapterTitles = [...this.$refs.titles]
       const chapterIndex = this.getReadingChapterTitleIndex(chapterTitles, this.readingChapterIndex, this.isReading)
       if (chapterIndex !== this.readingChapterIndex) {
         this.setReadingChapterIndex(chapterIndex)
@@ -227,8 +234,7 @@ export default {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
         return
       }
-      const lastChapter = this.chapters[this.chapters.length - 1]
-      if (!lastChapter.hasNext) {
+      if (!this.lastChapter.hasNext) {
         console.log('[INFO] checkPreloadNextChapter no next chapter')
         return
       }
@@ -279,7 +285,7 @@ export default {
       // 不使用滑动特效
       this.moving = -Number.MIN_VALUE
       // 开头还有一个 .loading-prev
-      const title = document.querySelector(`.up-down > .content > .chapter:nth-child(${this.readingChapterIndex + 2}) > .title`)
+      const title = this.$refs.titles[this.readingChapterIndex]
       // 高度需要减去 .loading-prev 和 DeviceInfo 的高度
       let scrollTop = this.$refs.wrapper.scrollTop
       const titleTop = title.getBoundingClientRect().top
@@ -339,7 +345,6 @@ export default {
       }
     }
     .loading-prev,
-    .see-more,
     .loading-next,
     .loading-next-fail {
       width: 100%;

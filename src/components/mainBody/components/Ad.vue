@@ -15,12 +15,10 @@
     <div class="info">
       {{ chapterAds[index].info }}
     </div>
-    <div class="img">
-      <img
-        :src="chapterAds[index].picture"
-        alt="ad picture"
-      />
-    </div>
+    <img
+      :src="chapterAds[index].picture"
+      alt="ad picture"
+    />
   </div>
 </template>
 
@@ -91,11 +89,8 @@ export default {
     font-size: 0.45rem;
     line-height: 1rem;
   }
-  .img {
+  img {
     width: 100%;
-    img {
-      width: 100%;
-    }
   }
 }
 .night-mode {
@@ -104,10 +99,8 @@ export default {
     .header {
       border-bottom-color: @borderColorNight;
     }
-    .img {
-      img {
-        filter: brightness(0.5);
-      }
+    img {
+      filter: brightness(0.5);
     }
   }
 }

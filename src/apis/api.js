@@ -13,6 +13,14 @@ const api = {
     return instance.post('/getAdData')
   },
   /**
+   * 获取推荐小说列表
+   * @param {String} bookId 小说id
+   * @returns {Promise}
+   */
+  getRecommendBooks (bookId) {
+    return instance.post('/getRecommendBooks', { bookId })
+  },
+  /**
    * 获取网络小说参数
    * @param {String} url 网络小说页面网址
    * @returns {Promise}

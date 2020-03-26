@@ -17,12 +17,21 @@ let store = new Vuex.Store({
     userConfig
   },
   state: {
+    bookId: '',
     domain: '',
     novelName: '',
     authorName: '',
     chapterIndex: 0
   },
   mutations: {
+    /**
+     * 设置小说id
+     * @param {Object} state storeState
+     * @param {String} bookId 小说id
+     */
+    setBookId (state, bookId) {
+      state.bookId = bookId
+    },
     /**
      * 设置小说名
      * @param {Object} state storeState
@@ -109,10 +118,12 @@ let store = new Vuex.Store({
       const url = document.location.href
       const { data } = await api.getNovelData(url)
       const {
+        bookId,
         novelName,
         authorName,
         chapterIndex
       } = data
+      commit('setBookId', bookId)
       commit('setNovelName', novelName)
       commit('setAuthorName', authorName)
       commit('setChapterIndex', chapterIndex)

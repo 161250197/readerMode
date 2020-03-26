@@ -110,6 +110,7 @@ export default {
   },
   computed: {
     ...mapState({
+      bookId: state => state.bookId,
       changeSourceShow: state => state.showState.changeSourceShow,
       domain: state => state.domain,
       novelName: state => state.novelName,
@@ -141,7 +142,7 @@ export default {
      */
     jumpToBookMall () {
       // TODO 添加提示
-      const result = window.__browserObject.jumpToBookMall()
+      const result = window.__browserObject.jumpToBookMall(this.bookId)
       if (result) {
         console.log('[INFO] jumpToBookMall success')
         this.setUserMenuShow(false)
