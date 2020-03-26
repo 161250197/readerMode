@@ -4,7 +4,12 @@
     @click.stop="onMainBodyClick"
   >
     <DeviceInfo />
-    <div class="content">
+    <div
+      class="content"
+      :style="{
+        fontSize: fontSize
+      }"
+    >
       <ErrorDiv
         v-if="loadMainBodyContentFail"
         :retryCallback="loadMainBodyContent"
@@ -46,6 +51,7 @@ export default {
   },
   computed: {
     ...mapState({
+      fontSize: state => state.userConfig.fontSize,
       volumeKeyOn: state => state.userConfig.volumeKeyOn,
       volumeKeySupport: state => state.deviceData.volumeKeySupport,
       deviceSize: state => state.deviceData.deviceSize,

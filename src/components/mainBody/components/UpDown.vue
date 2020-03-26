@@ -52,7 +52,7 @@
       >
         <LoadingDiv prompt="正在加载下一章" />
       </div>
-      <RecommendBooks v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapter.hasNext)" />
+      <RecommendBooks v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapterHasNext)" />
     </div>
   </div>
 </template>
@@ -88,7 +88,7 @@ export default {
   data () {
     return {
       lastChapterIndex: 0,
-      lastChapter: {},
+      lastChapterHasNext: true,
       isTop: true,
       hasPrev: true,
       touchstartY: 0,
@@ -136,7 +136,7 @@ export default {
       let scrollTop = this.$refs.wrapper.scrollTop + this.visibleHeight
       this.$refs.wrapper.scrollTop = scrollTop
       this.checkUpdateReadingChapterTitle()
-      if (this.contentHeight - scrollTop < this.preloadHeight) {
+      if (this.lastChapterHasNext && this.contentHeight - scrollTop < this.preloadHeight) {
         this.checkPreloadNextChapter()
       }
     },
@@ -159,7 +159,8 @@ export default {
      */
     updateChapterInfo () {
       this.lastChapterIndex = this.chapters.length - 1
-      this.lastChapter = this.chapters[this.lastChapterIndex]
+      const lastChapter = this.chapters[this.lastChapterIndex]
+      this.lastChapterHasNext = lastChapter.hasNext
       this.updateHasPrev()
     },
     /**
@@ -174,7 +175,9 @@ export default {
      */
     onWrapperScroll () {
       this.checkUpdateReadingChapterTitle()
-      this.checkPreloadNextChapter()
+      if (this.lastChapterHasNext) {
+        this.checkPreloadNextChapter()
+      }
     },
     /**
      * 检查并更新章节标题
@@ -232,10 +235,6 @@ export default {
     checkPreloadNextChapter () {
       if (this.isLoadingNextChapter || this.loadNextChapterFail) {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
-        return
-      }
-      if (!this.lastChapter.hasNext) {
-        console.log('[INFO] checkPreloadNextChapter no next chapter')
         return
       }
       const { scrollHeight, scrollTop } = this.$refs.wrapper
@@ -310,7 +309,9 @@ export default {
   mounted () {
     this.updateDeviceSizeData()
     this.updateChapterInfo()
-    this.checkPreloadNextChapter()
+    if (this.lastChapterHasNext) {
+      this.checkPreloadNextChapter()
+    }
     this.$refs.wrapper.addEventListener('scroll', debounce(this, this.onWrapperScroll))
     this.scrollToReadingChapterTop(true)
   }

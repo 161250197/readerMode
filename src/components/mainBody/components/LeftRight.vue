@@ -60,7 +60,7 @@
         <LoadingDiv prompt="正在加载下一章" />
       </div>
       <div
-        v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapter.hasNext)"
+        v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapterHasNext)"
         class="recommend-books-wrapper"
       >
         <RecommendBooks />
@@ -100,7 +100,7 @@ export default {
   data () {
     return {
       lastChapterIndex: 0,
-      lastChapter: {},
+      lastChapterHasNext: true,
       hasPrev: true,
       pageCount: 0,
       chapterCountArr: [],
@@ -161,7 +161,9 @@ export default {
         this.pageIndex++
         this.checkUpdateReadingChapterTitle()
       }
-      this.checkPreloadNextChapter()
+      if (this.lastChapterHasNext) {
+        this.checkPreloadNextChapter()
+      }
     },
     /**
      * 翻至上一页
@@ -180,7 +182,8 @@ export default {
      */
     updateChapterInfo () {
       this.lastChapterIndex = this.chapters.length - 1
-      this.lastChapter = this.chapters[this.lastChapterIndex]
+      const lastChapter = this.chapters[this.lastChapterIndex]
+      this.lastChapterHasNext = lastChapter.hasNext
       this.updateHasPrev()
       this.$nextTick(this.updateChapterCountArr)
     },
@@ -224,10 +227,6 @@ export default {
     checkPreloadNextChapter () {
       if (this.isLoadingNextChapter || this.loadNextChapterFail) {
         console.log('[INFO] checkPreloadNextChapter isLoaing or fail return')
-        return
-      }
-      if (!this.lastChapter.hasNext) {
-        console.log('[INFO] checkPreloadNextChapter no next chapter')
         return
       }
       if (this.pageCount - this.pageIndex < preloadPageCount) {
@@ -289,7 +288,9 @@ export default {
     this.updateDeviceSizeData()
     this.updateChapterInfo()
     this.$nextTick(() => {
-      this.checkPreloadNextChapter()
+      if (this.lastChapterHasNext) {
+        this.checkPreloadNextChapter()
+      }
       this.scrollToReadingChapterTop()
     })
   }

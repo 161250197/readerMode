@@ -4,8 +4,7 @@
     :class="{ 'night-mode': nightMode }"
     :style="{
         background: nightMode ? nightModeBackgroundColor : backgroundColor,
-        color: nightMode ? nightModeFontColor : dayModeFontColor,
-        fontSize: fontSize
+        color: nightMode ? nightModeFontColor : dayModeFontColor
       }"
   >
     <MainBody v-show="!(loadingShow || errorShow)" />
@@ -46,7 +45,6 @@ export default {
     ...mapState({
       backgroundColor: state => state.userConfig.backgroundColor,
       nightMode: state => state.userConfig.nightMode,
-      fontSize: state => state.userConfig.fontSize,
       userMenuShow: state => state.showState.userMenuShow,
       catalogChaptersShow: state => state.showState.catalogChaptersShow,
       catalogBookmarksShow: state => state.showState.catalogBookmarksShow,
