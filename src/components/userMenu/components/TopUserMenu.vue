@@ -232,6 +232,8 @@ export default {
     position: fixed;
     top: 0.35rem;
     right: 0.7rem;
+    display: flex;
+    align-items: center;
     > img {
       width: 0.7rem;
     }
