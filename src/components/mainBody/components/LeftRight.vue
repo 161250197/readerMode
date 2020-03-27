@@ -154,6 +154,18 @@ export default {
       this.visibleHeight = this.$refs.wrapper.getBoundingClientRect().height
     },
     /**
+     * 刷新正文内容位置
+     */
+    refreshMainBodyPosition () {
+      this.updateChapterInfo()
+      this.$nextTick(() => {
+        if (this.lastChapterHasNext) {
+          this.checkPreloadNextChapter()
+        }
+        this.scrollToReadingChapterTop()
+      })
+    },
+    /**
      * 翻至下一页
      */
     goNextPage () {
@@ -293,6 +305,10 @@ export default {
       }
       this.scrollToReadingChapterTop()
     })
+    window.__readerModeObject = {
+      ...window.__readerModeObject,
+      refreshMainBodyPosition: this.refreshMainBodyPosition
+    }
   }
 }
 </script>

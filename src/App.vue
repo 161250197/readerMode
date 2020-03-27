@@ -13,6 +13,10 @@
     <MoreSetting v-show="moreSettingShow" />
     <Loading v-show="loadingShow" />
     <Error v-show="errorShow" />
+    <Loading
+      v-show="isChangingSource"
+      :prompt="isChangingSourcePrompt"
+    />
   </div>
 </template>
 
@@ -43,6 +47,7 @@ export default {
   },
   computed: {
     ...mapState({
+      isChangingSource: state => state.novelSource.isChangingSource,
       backgroundColor: state => state.userConfig.backgroundColor,
       nightMode: state => state.userConfig.nightMode,
       userMenuShow: state => state.showState.userMenuShow,
@@ -55,6 +60,7 @@ export default {
   },
   data () {
     return {
+      isChangingSourcePrompt: '正在换源……',
       nightModeBackgroundColor,
       nightModeFontColor,
       dayModeFontColor

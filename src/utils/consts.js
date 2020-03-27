@@ -67,7 +67,14 @@ const defaultRowSpace = rowSpaces[1]
 /** 默认行间距选项提示 */
 const defaultRowSpacePrompt = rowSpacePrompts[1]
 
+/** 默认加载中提示 */
+const defaultErrorPrompt = '对不起 出错了'
+/** 默认加载中提示 */
+const defaultLoadingPrompt = '加载中……'
+
 export {
+  defaultErrorPrompt,
+  defaultLoadingPrompt,
   nightModeBackgroundColor,
   backgroundColors,
   defaultBackgroundColor,

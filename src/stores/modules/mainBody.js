@@ -16,6 +16,14 @@ const store = {
   },
   mutations: {
     /**
+     * 设置章节正文
+     * @param {{ text: String, title: String, chapterIndex: Number, hasNext: Boolean }} chapters 章节数组
+     */
+    setMainBody (_, chapter) {
+      this.commit('setChapters', [chapter])
+      this.commit('setReadingChapterIndex', 0)
+    },
+    /**
      * 设置当前正在阅读的章节索引
      * - 同时自动更新正在阅读的章节标题
      * - 同时自动更新正在阅读的章节是否已加入书签
@@ -87,7 +95,7 @@ const store = {
     /**
      * 设置章节数组
      * @param {Object} state mainBody.state
-     * @param {Array<{text: String, title: String, chapterIndex: Number, hasNext: Boolean}>} chapters 章节数组
+     * @param {Array<{ text: String, title: String, chapterIndex: Number, hasNext: Boolean }>} chapters 章节数组
      * @private
      */
     setChapters (state, chapters) {
@@ -95,6 +103,21 @@ const store = {
     }
   },
   actions: {
+    /**
+     * 初始化小说正文内容换源
+     */
+    loadMainBodyContentChangeSource ({ state }, domain) {
+      const {
+        novelName,
+        authorName
+      } = this.state
+      const {
+        readingChapterIndex,
+        chapters
+      } = state
+      const chapterIndex = chapters[readingChapterIndex].chapterIndex
+      return api.getMainBodyText(domain, novelName, authorName, chapterIndex)
+    },
     /**
      * 初始化小说正文内容
      */
@@ -109,12 +132,7 @@ const store = {
           chapterIndex
         } = this.state
         const { data } = await api.getMainBodyText(domain, novelName, authorName, chapterIndex)
-        const chapter = {
-          ...data,
-          chapterIndex
-        }
-        commit('setChapters', [chapter])
-        commit('setReadingChapterIndex', 0)
+        commit('setMainBody', data)
       } catch (e) {
         console.log('[ERROR] loadMainBodyContent ', e)
         commit('setLoadMainBodyContentFail', true)

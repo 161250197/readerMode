@@ -104,13 +104,15 @@ export default {
   },
   watch: {
     /**
-     * 章节数据更新时需要更新章节相关数据
+     * 章节数据更新时
+     * - 更新章节相关数据
      */
     chapters () {
       this.$nextTick(this.updateChapterInfo)
     },
     /**
-     * 设备尺寸更新时需要更新章节相关数据
+     * 设备尺寸更新时
+     * - 更新章节相关数据
      * - 页面重新定位至章节首部
      */
     deviceSize () {
@@ -129,6 +131,18 @@ export default {
       'loadPrevChapter',
       'loadNextChapter'
     ]),
+    /**
+     * 刷新正文内容位置
+     */
+    refreshMainBodyPosition () {
+      this.$nextTick(() => {
+        this.updateChapterInfo()
+        if (this.lastChapterHasNext) {
+          this.checkPreloadNextChapter()
+        }
+        this.scrollToReadingChapterTop()
+      })
+    },
     /**
      * 翻至下一页
      */
@@ -314,6 +328,10 @@ export default {
     }
     this.$refs.wrapper.addEventListener('scroll', debounce(this, this.onWrapperScroll))
     this.scrollToReadingChapterTop(true)
+    window.__readerModeObject = {
+      ...window.__readerModeObject,
+      refreshMainBodyPosition: this.refreshMainBodyPosition
+    }
   }
 }
 </script>

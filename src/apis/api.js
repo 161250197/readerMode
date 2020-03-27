@@ -51,13 +51,12 @@ const api = {
   },
   /**
    * 获取小说来源列表
-   * @param {String} domain 域名
    * @param {String} novelName 小说名
    * @param {String} authorName 作者名
    * @returns {Promise}
    */
-  getNovelSources (domain, novelName, authorName) {
-    return instance.post('/getNovelSources', { domain, novelName, authorName })
+  getNovelSources (novelName, authorName) {
+    return instance.post('/getNovelSources', { novelName, authorName })
   }
 }
 

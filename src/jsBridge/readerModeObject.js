@@ -2,6 +2,13 @@
 (function () {
   window.__readerModeObject = {
     /**
+     * 刷新正文内容位置
+     * - 在 LeftDown.vue 和 UpDown.vue 中初始化
+     */
+    refreshMainBodyPosition () {
+      console.log('[ERROR] __readerModeObject refreshMainBodyPosition not initialed')
+    },
+    /**
      * 翻至下一页
      * - 在 MainBody.vue 中初始化
      */

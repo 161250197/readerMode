@@ -23,12 +23,14 @@
 </template>
 
 <script>
+import { defaultErrorPrompt } from './../../utils/consts.js'
+
 export default {
   name: 'ErrorDiv',
   props: {
     prompt: {
       type: String,
-      default: '对不起 出错了'
+      default: defaultErrorPrompt
     },
     retryCallback: {
       type: Function,
@@ -57,9 +59,12 @@ export default {
   }
   .prompt {
     margin-top: 0.5rem;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
     text-align: center;
   }
   .retry-prompt {
+    margin-top: 0.2rem;
     font-size: 0.5rem;
     font-weight: lighter;
   }

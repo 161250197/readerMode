@@ -3,6 +3,7 @@ import ad from './modules/ad'
 import catalog from './modules/catalog'
 import deviceData from './modules/deviceData'
 import mainBody from './modules/mainBody'
+import novelSource from './modules/novelSource'
 import showState from './modules/showState'
 import userConfig from './modules/userConfig'
 import { api } from './../apis/api'
@@ -13,6 +14,7 @@ let store = new Vuex.Store({
     catalog,
     deviceData,
     mainBody,
+    novelSource,
     showState,
     userConfig
   },
@@ -87,8 +89,10 @@ let store = new Vuex.Store({
           dispatch('loadCatalogChapters')
           // 加载小说书签列表
           dispatch('loadBookmarks')
-          // 初始化小说正文内容
+          // 加载小说正文内容
           dispatch('loadMainBodyContent')
+          // 加载小说来源
+          dispatch('loadNovelSources')
         })
         .catch(e => {
           console.log('[ERROR] initStore ', e)

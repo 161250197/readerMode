@@ -3,16 +3,23 @@
     class="loading"
     :style="{ 'background-color': backgroundColor }"
   >
-    <LoadingDiv />
+    <LoadingDiv :prompt="prompt" />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import LoadingDiv from './../utils/LoadingDiv'
+import { defaultLoadingPrompt } from './../../utils/consts.js'
 
 export default {
   name: 'Loading',
+  props: {
+    prompt: {
+      type: String,
+      default: defaultLoadingPrompt
+    }
+  },
   components: {
     LoadingDiv
   },

@@ -14,6 +14,22 @@ const store = {
   },
   mutations: {
     /**
+     * 设置章节目录
+     * @param {Object} state catalog.state
+     * @param {Array<String>} catalogChapters 章节目录
+     */
+    setCatalogChapters (state, catalogChapters) {
+      state.catalogChapters = [...catalogChapters]
+    },
+    /**
+     * 设置书签列表
+     * @param {Object} state catalog.state
+     * @param {Array<{ chapterIndex: Number, chapterTitle: String }>} bookmarks 书签列表
+     */
+    setBookmarks (state, bookmarks) {
+      state.bookmarks = [...bookmarks]
+    },
+    /**
      * 设置正在加载章节目录
      * @param {Object} state catalog.state
      * @param {Boolean} value 值
@@ -32,15 +48,6 @@ const store = {
       state.loadCatalogChaptersFail = value
     },
     /**
-     * 设置章节目录
-     * @param {Object} state catalog.state
-     * @param {Array<String>} catalogChapters 章节目录
-     * @private
-     */
-    setCatalogChapters (state, catalogChapters) {
-      state.catalogChapters = [...catalogChapters]
-    },
-    /**
      * 设置正在加载书签列表
      * @param {Object} state catalog.state
      * @param {Boolean} value 值
@@ -57,18 +64,34 @@ const store = {
      */
     setLoadBookmarksFail (state, value) {
       state.loadBookmarksFail = value
-    },
-    /**
-     * 设置书签列表
-     * @param {Object} state catalog.state
-     * @param {Array<{chapterIndex: Number, chapterTitle: String}>} bookmarks 书签列表
-     * @private
-     */
-    setBookmarks (state, bookmarks) {
-      state.bookmarks = [...bookmarks]
     }
   },
   actions: {
+    /**
+     * 加载小说章节目录换源
+     */
+    loadCatalogChaptersChangeSource (_, domain) {
+      const {
+        novelName,
+        authorName
+      } = this.state
+      return api.getNovelChapterData(domain, novelName, authorName)
+    },
+    /**
+     * 加载书签列表换源
+     */
+    loadBookmarksChangeSource (_, domain) {
+      const {
+        novelName,
+        authorName
+      } = this.state
+      try {
+        const bookmarks = window.__browserObject.getBookmarks(domain, novelName, authorName)
+        return Promise.resolve(bookmarks)
+      } catch (e) {
+        return Promise.reject(e)
+      }
+    },
     /**
      * 加载小说章节目录
      */

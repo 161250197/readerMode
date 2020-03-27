@@ -17,12 +17,14 @@
 </template>
 
 <script>
+import { defaultLoadingPrompt } from './../../utils/consts.js'
+
 export default {
   name: 'LoadingDiv',
   props: {
     prompt: {
       type: String,
-      default: '加载中……'
+      default: defaultLoadingPrompt
     }
   }
 }
@@ -43,6 +45,8 @@ export default {
   }
   .prompt {
     margin-top: 0.5rem;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
     text-align: center;
   }
 }

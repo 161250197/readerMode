@@ -12,7 +12,7 @@ const store = {
     /**
      * 设置推荐小说列表
      * @param {Object} state ad.state
-     * @param {{bookId: String, cover: String, novelName: String}} recommendBooks 推荐小说列表
+     * @param {Array<{ bookId: String, cover: String, novelName: String }>} recommendBooks 推荐小说列表
      */
     setRecommendBooks (state, recommendBooks) {
       state.recommendBooks = [...recommendBooks]
@@ -20,7 +20,7 @@ const store = {
     /**
      * 设置章节广告
      * @param {Object} state ad.state
-     * @param {{index: Number, ad: {adId: String, picture: String, title: String, info: String}}} param1 章节广告
+     * @param {{ index: Number, ad: {adId: String, picture: String, title: String, info: String }}} param1 章节广告
      * @private
      */
     setChapterAd (state, { index, ad }) {
