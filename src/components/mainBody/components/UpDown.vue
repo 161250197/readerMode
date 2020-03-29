@@ -37,8 +37,9 @@
           :index="index"
         />
       </div>
+      <RecommendBooks v-if="!lastChapterHasNext" />
       <div
-        v-show="loadNextChapterFail"
+        v-else-if="loadNextChapterFail"
         class="loading-next-fail"
       >
         <ErrorDiv
@@ -47,12 +48,11 @@
         />
       </div>
       <div
-        v-show="!loadNextChapterFail && isLoadingNextChapter"
+        v-else-if="isLoadingNextChapter"
         class="loading-next"
       >
         <LoadingDiv prompt="正在加载下一章" />
       </div>
-      <RecommendBooks v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapterHasNext)" />
     </div>
   </div>
 </template>
@@ -284,7 +284,7 @@ export default {
      */
     onWrapperTouchend (e) {
       if (this.moving) {
-        if (this.moving > 0) {
+        if (this.moving > this.visibleTop) {
           this.goPrevPage(true)
         }
         this.moving = 0
@@ -350,6 +350,13 @@ export default {
     transition: transform 0.5s;
     &.moving {
       transition: none;
+    }
+    .loading-prev {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 1em;
+      box-sizing: border-box;
     }
     .loading-prev,
     .loading-next,

@@ -15,7 +15,9 @@
       :style="{ transform: `translateX(${moving - (pageIndex + 1) * deviceSize.width}px)` }"
     >
       <div class="loading-prev">
-        {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
+        <div class="loading-prev-prompt">
+          {{ hasPrev ? '释放加载上一章' : '已经没有上一章了' }}
+        </div>
       </div>
       <div
         ref="chapters"
@@ -45,7 +47,21 @@
         </div>
       </div>
       <div
-        v-show="loadNextChapterFail"
+        v-if="!lastChapterHasNext"
+        class="recommend-books-wrapper"
+      >
+        <RecommendBooks />
+      </div>
+      <div
+        v-if="!lastChapterHasNext"
+        class="no-next"
+      >
+        <div class="no-next-prompt">
+          已经没有下一章了
+        </div>
+      </div>
+      <div
+        v-else-if="loadNextChapterFail"
         class="loading-next-fail"
       >
         <ErrorDiv
@@ -54,16 +70,10 @@
         />
       </div>
       <div
-        v-show="!loadNextChapterFail && isLoadingNextChapter"
+        v-else-if="isLoadingNextChapter"
         class="loading-next"
       >
         <LoadingDiv prompt="正在加载下一章" />
-      </div>
-      <div
-        v-if="!(isLoadingNextChapter || loadNextChapterFail || lastChapterHasNext)"
-        class="recommend-books-wrapper"
-      >
-        <RecommendBooks />
       </div>
     </div>
   </div>
@@ -260,9 +270,17 @@ export default {
       let moving = e.touches[0].clientX - this.touchstartX
       const deviceWidth = this.deviceSize.width
       if (moving < 0) {
-        this.moving = Math.max(moving, -deviceWidth)
+        if (this.pageIndex + 1 === this.pageCount) {
+          this.moving = Math.max(moving, -deviceWidth / 2)
+        } else {
+          this.moving = Math.max(moving, -deviceWidth)
+        }
       } else {
-        this.moving = Math.min(moving, deviceWidth)
+        if (this.pageIndex === 0) {
+          this.moving = Math.min(moving, deviceWidth / 2)
+        } else {
+          this.moving = Math.min(moving, deviceWidth)
+        }
       }
     },
     /**
@@ -328,6 +346,15 @@ export default {
     &.moving {
       transition: none;
     }
+    .loading-prev {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .loading-prev-prompt {
+        width: 1em;
+        margin-right: 1em;
+      }
+    }
     .chapter {
       &:last-child {
         margin-bottom: 0 !important;
@@ -337,16 +364,26 @@ export default {
         align-items: center;
       }
     }
+    .recommend-books-wrapper {
+      width: 10.8rem;
+      height: 100%;
+      display: flex;
+    }
+    .no-next {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .no-next-prompt {
+        width: 1em;
+        margin-left: 1em;
+      }
+    }
+    .no-next,
     .loading-prev,
     .loading-next,
     .loading-next-fail {
       width: 10.8rem;
       height: 100%;
-    }
-    .recommend-books-wrapper {
-      width: 10.8rem;
-      height: 100%;
-      display: flex;
     }
   }
 }
