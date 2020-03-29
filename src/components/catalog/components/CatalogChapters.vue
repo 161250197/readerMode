@@ -1,7 +1,11 @@
 <template>
   <div class="catalog-chapters">
-    <LoadingDiv v-show="isLoadingCatalogChapters" />
+    <LoadingDiv
+      :prompt="loadingPrompt"
+      v-show="isLoadingCatalogChapters"
+    />
     <ErrorDiv
+      :prompt="errorPrompt"
       v-show="loadCatalogChaptersFail"
       :retryCallback="loadCatalogChapters"
     />
@@ -11,6 +15,7 @@
     >
       <div
         class="title text-ellipsis"
+        :class="{ 'reading-chapter': index === chapterIndex }"
         v-for="(title, index) in catalogChapters"
         :key="index"
         @click.stop="() => jumpChapters(index)"
@@ -34,10 +39,17 @@ export default {
   },
   computed: {
     ...mapState({
+      chapterIndex: state => state.chapterIndex,
       isLoadingCatalogChapters: state => state.catalog.isLoadingCatalogChapters,
       loadCatalogChaptersFail: state => state.catalog.loadCatalogChaptersFail,
       catalogChapters: state => state.catalog.catalogChapters
     })
+  },
+  data () {
+    return {
+      loadingPrompt: '正在加载章节目录',
+      errorPrompt: '加载章节目录出错了'
+    }
   },
   methods: {
     ...mapMutations([
@@ -53,17 +65,41 @@ export default {
      * @param {Number} chapterIndex
      */
     jumpChapters (chapterIndex) {
-      this.setCatalogChaptersShow(false)
-      this.setChapterIndex(chapterIndex)
-      this.loadMainBodyContent()
+      if (chapterIndex !== this.chapterIndex) {
+        this.setCatalogChaptersShow(false)
+        this.setChapterIndex(chapterIndex)
+        this.loadMainBodyContent()
+      }
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+@import url('./../../../style/variables.less');
+
 .catalog-chapters {
   width: 100%;
   height: 100%;
+  .catalog-chapter {
+    font-size: 0.6rem;
+    line-height: 1rem;
+    .title {
+      &.reading-chapter {
+        color: @primaryColor;
+      }
+    }
+  }
+}
+.night-mode {
+  .catalog-chapters {
+    .catalog-chapter {
+      .title {
+        &.reading-chapter {
+          color: @primaryColorNight;
+        }
+      }
+    }
+  }
 }
 </style>
