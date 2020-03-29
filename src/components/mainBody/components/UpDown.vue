@@ -338,6 +338,7 @@ export default {
 
 <style lang="less" scoped>
 @import url('./../../../style/variables.less');
+@import url('./chapter.less');
 
 .up-down {
   width: 100%;
@@ -349,19 +350,6 @@ export default {
     transition: transform 0.5s;
     &.moving {
       transition: none;
-    }
-    .chapter {
-      padding: 0 0.65rem;
-      .title {
-        font-family: '宋体', Arial, Helvetica, sans-serif;
-        text-align: center;
-        font-size: 125%;
-        line-height: 150%;
-        border-bottom: thin solid @borderColor;
-      }
-      .text {
-        font-family: '宋体', Arial, Helvetica, sans-serif;
-      }
     }
     .loading-prev,
     .loading-next,
