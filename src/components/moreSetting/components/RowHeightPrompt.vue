@@ -114,6 +114,7 @@ export default {
 }
 .night-mode {
   .row-height-prompt {
+    background: @coverBackgroundNight;
     .content {
       .wrapper {
         background: @backgroundNight;

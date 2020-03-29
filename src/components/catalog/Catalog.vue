@@ -115,15 +115,52 @@ export default {
     top: 0;
     display: flex;
     flex-direction: column;
+    .novel-info {
+      padding: 0.4rem 0.4rem 0.2rem;
+      box-sizing: border-box;
+      .novel-name {
+        font-size: 0.8rem;
+        line-height: 1.2rem;
+      }
+      .author-name {
+        font-size: 0.6rem;
+        line-height: 0.8rem;
+      }
+    }
     .content {
       flex: 1;
       overflow-y: scroll;
+      padding: 0 0.4rem;
+      box-sizing: border-box;
     }
     .tabs {
       display: flex;
       .tab {
         flex: 1;
         text-align: center;
+        box-sizing: border-box;
+        height: 1.2rem;
+        font-size: 0.6rem;
+        line-height: 1.2rem;
+        &.selected {
+          color: @primaryColor;
+          border-bottom: thin solid @primaryColor;
+        }
+      }
+    }
+  }
+}
+.night-mode {
+  .catalog {
+    background: @coverBackgroundNight;
+    .page {
+      .tabs {
+        .tab {
+          &.selected {
+            color: @primaryColorNight;
+            border-bottom-color: @primaryColorNight;
+          }
+        }
       }
     }
   }
