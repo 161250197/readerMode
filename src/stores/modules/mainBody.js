@@ -25,15 +25,18 @@ const store = {
     },
     /**
      * 设置当前正在阅读的章节索引
-     * - 同时自动更新正在阅读的章节标题
-     * - 同时自动更新正在阅读的章节是否已加入书签
+     * - 更新正在阅读的章节的总索引 state.chapterIndex
+     * - 更新正在阅读的章节标题
+     * - 更新正在阅读的章节是否已加入书签
      * @param {Object} state mainBody.state
      * @param {Number} value 值
      */
     setReadingChapterIndex (state, value) {
       state.readingChapterIndex = value
-      const readingChapterTitle = state.chapters[value].title
-      state.readingChapterTitle = readingChapterTitle
+      const readingChapter = state.chapters[value]
+      const { title, chapterIndex } = readingChapter
+      state.readingChapterTitle = title
+      this.commit('setChapterIndex', chapterIndex)
       this.commit('updateReadingChapterIsBookmarked')
     },
     /**
@@ -42,13 +45,8 @@ const store = {
      * @param {Object} state mainBody.state
      */
     updateReadingChapterIsBookmarked (state) {
-      const chapter = state.chapters[state.readingChapterIndex]
-      if (!chapter) {
-        console.log('[WARN] updateReadingChapterIsBookmarked chapters not ready')
-        return
-      }
-      const chapterIndex = chapter.chapterIndex
       const {
+        chapterIndex,
         domain,
         novelName,
         authorName
@@ -106,16 +104,12 @@ const store = {
     /**
      * 初始化小说正文内容换源
      */
-    loadMainBodyContentChangeSource ({ state }, domain) {
+    loadMainBodyContentChangeSource (_, domain) {
       const {
+        chapterIndex,
         novelName,
         authorName
       } = this.state
-      const {
-        readingChapterIndex,
-        chapters
-      } = state
-      const chapterIndex = chapters[readingChapterIndex].chapterIndex
       return api.getMainBodyText(domain, novelName, authorName, chapterIndex)
     },
     /**

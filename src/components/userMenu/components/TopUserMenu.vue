@@ -110,14 +110,13 @@ export default {
   },
   computed: {
     ...mapState({
+      chapterIndex: state => state.chapterIndex,
       bookId: state => state.bookId,
       changeSourceShow: state => state.showState.changeSourceShow,
       domain: state => state.domain,
       novelName: state => state.novelName,
       authorName: state => state.authorName,
       readingChapterTitle: state => state.mainBody.readingChapterTitle,
-      readingChapterIndex: state => state.mainBody.readingChapterIndex,
-      chapters: state => state.mainBody.chapters,
       readingChapterIsBookmarked: state => state.mainBody.readingChapterIsBookmarked
     })
   },
@@ -167,8 +166,7 @@ export default {
      */
     addBookmark () {
       // TODO 添加提示
-      const chapterIndex = this.chapters[this.readingChapterIndex].chapterIndex
-      const result = window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, chapterIndex, this.readingChapterTitle)
+      const result = window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, this.chapterIndex, this.readingChapterTitle)
       if (result) {
         console.log('[INFO] addBookmark success')
         this.loadBookmarks()
