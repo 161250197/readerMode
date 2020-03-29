@@ -133,13 +133,13 @@ export default {
     onMainBodyClick (e) {
       const { clientX, clientY } = e
       if (
-        (clientX < this.oneThirdWidth && clientY < this.fiveSixthsHeight) ||
+        clientX < this.oneThirdWidth ||
         (clientX < this.twoThirdsWidth && clientY < this.oneSixthHeight)
       ) {
         this.goPrevPage()
       } else if (
         (clientX >= this.oneThirdWidth && clientY >= this.fiveSixthsHeight) ||
-        (clientX >= this.twoThirdsWidth && clientY >= this.oneSixthHeight)
+        clientX >= this.twoThirdsWidth
       ) {
         this.goNextPage()
       } else {
