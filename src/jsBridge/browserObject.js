@@ -130,6 +130,9 @@
      * @returns {Boolean} 结果
      */
     addBookmark (domain, novelName, authorName, chapterIndex, chapterTitle) {
+      if (!chapterTitle) {
+        return false
+      }
       let bookmarks = this.getBookmarks(domain, novelName, authorName)
       let bookmarkCount = bookmarks.length
       for (let i = 0; i < bookmarkCount; i++) {

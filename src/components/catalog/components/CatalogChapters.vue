@@ -2,15 +2,15 @@
   <div class="catalog-chapters">
     <LoadingDiv
       :prompt="loadingPrompt"
-      v-show="isLoadingCatalogChapters"
+      v-if="isLoadingCatalogChapters"
     />
     <ErrorDiv
       :prompt="errorPrompt"
-      v-show="loadCatalogChaptersFail"
+      v-else-if="loadCatalogChaptersFail"
       :retryCallback="loadCatalogChapters"
     />
     <div
-      v-if="!(isLoadingCatalogChapters || loadCatalogChaptersFail)"
+      v-else
       class="catalog-chapter"
     >
       <div
@@ -18,7 +18,7 @@
         :class="{ 'reading-chapter': index === chapterIndex }"
         v-for="(title, index) in catalogChapters"
         :key="index"
-        @click.stop="() => jumpChapters(index)"
+        @click.stop="() => jumpChapter(index)"
       >
         {{ title }}
       </div>
@@ -64,7 +64,7 @@ export default {
      * 跳转章节
      * @param {Number} chapterIndex
      */
-    jumpChapters (chapterIndex) {
+    jumpChapter (chapterIndex) {
       if (chapterIndex !== this.chapterIndex) {
         this.setCatalogChaptersShow(false)
         this.setChapterIndex(chapterIndex)
