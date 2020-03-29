@@ -94,6 +94,9 @@ const store = {
   actions: {
     /**
      * 换源
+     * - 更新正文内容
+     * - 更新章节目录
+     * - 更新书签列表
      * @param {Number} index 索引
      * @return {Promise<Boolean>} 换源结果
      * @throws 换源失败
@@ -112,6 +115,7 @@ const store = {
         commit('setBookmarks', bookmarks)
         commit('setDomain', domain)
         commit('setPresentNovelSourceIndex', index)
+        commit('updateReadingChapterIsBookmarked')
         commit('setNovelSourceUsed', index)
         commit('setIsChangingSource', false)
         return Promise.resolve(true)
