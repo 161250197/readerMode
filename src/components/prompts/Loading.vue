@@ -13,7 +13,7 @@ import LoadingDiv from './../utils/LoadingDiv'
 import { defaultLoadingPrompt } from './../../utils/consts.js'
 
 export default {
-  name: 'Loading',
+  name: 'Prompts.Loading',
   props: {
     prompt: {
       type: String,

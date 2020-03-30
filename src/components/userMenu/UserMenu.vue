@@ -16,7 +16,7 @@ import TopUserMenu from './components/TopUserMenu'
 import Setting from './components/Setting/Setting'
 
 export default {
-  name: 'userMenu',
+  name: 'UserMenu',
   components: {
     BottomUserMenu,
     TopUserMenu,

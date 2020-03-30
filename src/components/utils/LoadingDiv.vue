@@ -20,7 +20,7 @@
 import { defaultLoadingPrompt } from './../../utils/consts.js'
 
 export default {
-  name: 'LoadingDiv',
+  name: 'Utils.LoadingDiv',
   props: {
     prompt: {
       type: String,

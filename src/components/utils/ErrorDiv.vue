@@ -26,7 +26,7 @@
 import { defaultErrorPrompt } from './../../utils/consts.js'
 
 export default {
-  name: 'ErrorDiv',
+  name: 'Utils.ErrorDiv',
   props: {
     prompt: {
       type: String,

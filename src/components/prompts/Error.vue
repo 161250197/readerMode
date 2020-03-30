@@ -12,7 +12,7 @@ import { mapState, mapActions } from 'vuex'
 import ErrorDiv from './../utils/ErrorDiv'
 
 export default {
-  name: 'Error',
+  name: 'Prompts.Error',
   components: {
     ErrorDiv
   },
