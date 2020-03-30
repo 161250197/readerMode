@@ -116,6 +116,7 @@ export default {
   position: fixed;
   left: 0;
   right: 0;
+  user-select: none;
   .night-mode-item {
     display: none;
   }

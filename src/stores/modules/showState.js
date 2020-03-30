@@ -8,6 +8,7 @@ const store = {
     loadingShow: true,
     catalogChaptersShow: false,
     catalogBookmarksShow: false,
+    deleteBookmarkShow: false,
     userMenuShow: false,
     settingShow: false,
     changeSourceShow: false,
@@ -62,6 +63,14 @@ const store = {
       if (value) {
         this.commit('setCatalogChaptersShow', false)
       }
+    },
+    /**
+     * 设置删除书签页显示
+     * @param {Object} state showState.state
+     * @param {Boolean} value 值
+     */
+    setDeleteBookmarkShow (state, value) {
+      state.deleteBookmarkShow = value
     },
     /**
      * 设置菜单项显示

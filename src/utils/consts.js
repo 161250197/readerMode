@@ -77,7 +77,11 @@ const addBookmarkFailMessage = '添加书签失败了，请稍后重试'
 /** 添加书签成功弹窗提示 */
 const addBookmarkSuccessMessage = '添加书签成功'
 
+/** 长按时长 */
+const longpressTimeout = 800
+
 export {
+  longpressTimeout,
   addBookmarkFailMessage,
   addBookmarkSuccessMessage,
   defaultErrorPrompt,

@@ -1,5 +1,8 @@
 <template>
-  <div class="bookmarks">
+  <div
+    class="bookmarks"
+    @contextmenu.prevent
+  >
     <LoadingDiv
       :prompt="loadingPrompt"
       v-if="isLoadingBookmarks"
@@ -11,13 +14,18 @@
     />
     <div
       v-else
-      class="bookmark">
+      class="bookmark"
+    >
       <div
         class="title text-ellipsis"
         :class="{ 'reading-chapter': chapterIndex === presentChapterIndex }"
-        v-for="({ chapterTitle, chapterIndex }) in bookmarks"
+        v-for="({ chapterTitle, chapterIndex }, index) in bookmarks"
         :key="chapterIndex"
         @click.stop="() => jumpChapter(chapterIndex)"
+        @touchstart="() => onTitleTouchStart(index)"
+        @touchmove="cancelShowDeleteBookmark"
+        @touchend="cancelShowDeleteBookmark"
+        @touchcancel="cancelShowDeleteBookmark"
       >
         {{ chapterTitle }}
       </div>
@@ -33,18 +41,24 @@
         </div>
       </div>
     </div>
+    <DeleteBookmark
+      :chapterIndex="deleteChapterIndex"
+      :chapterTitle="deleteChapterTitle"
+    />
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { addBookmarkFailMessage, addBookmarkSuccessMessage } from './../../../utils/consts.js'
+import { addBookmarkFailMessage, addBookmarkSuccessMessage, longpressTimeout } from './../../../utils/consts.js'
+import DeleteBookmark from './DeleteBookmark'
 import LoadingDiv from './../../utils/LoadingDiv'
 import ErrorDiv from './../../utils/ErrorDiv'
 
 export default {
   name: 'Catalog.Bookmarks',
   components: {
+    DeleteBookmark,
     LoadingDiv,
     ErrorDiv
   },
@@ -63,6 +77,9 @@ export default {
   },
   data () {
     return {
+      longpressTimeoutId: undefined,
+      deleteChapterTitle: '',
+      deleteChapterIndex: -1,
       addBookmarkFailMessage,
       addBookmarkSuccessMessage,
       loadingPrompt: '正在加载书签',
@@ -71,6 +88,7 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setDeleteBookmarkShow',
       'setPromptMessage',
       'setCatalogBookmarksShow',
       'setChapterIndex'
@@ -89,6 +107,30 @@ export default {
         this.setChapterIndex(chapterIndex)
         this.loadMainBodyContent()
       }
+    },
+    /**
+     * 书签 touchstart 响应
+     * @param {Number} index 书签索引
+     */
+    onTitleTouchStart (index) {
+      this.cancelShowDeleteBookmark()
+      const bookmark = this.bookmarks[index]
+      const { chapterTitle, chapterIndex } = bookmark
+      this.deleteChapterTitle = chapterTitle
+      this.deleteChapterIndex = chapterIndex
+      this.longpressTimeoutId = setTimeout(this.showDeleteBookmark, longpressTimeout)
+    },
+    /**
+     * 取消长按显示删除书签页
+     */
+    cancelShowDeleteBookmark () {
+      clearTimeout(this.longpressTimeoutId)
+    },
+    /**
+     * 显示删除书签页
+     */
+    showDeleteBookmark () {
+      this.setDeleteBookmarkShow(true)
     },
     /**
      * 添加书签
