@@ -72,7 +72,14 @@ const defaultErrorPrompt = '对不起 出错了'
 /** 默认加载中提示 */
 const defaultLoadingPrompt = '加载中……'
 
+/** 添加书签失败弹窗提示 */
+const addBookmarkFailMessage = '添加书签失败了，请稍后重试'
+/** 添加书签成功弹窗提示 */
+const addBookmarkSuccessMessage = '添加书签成功'
+
 export {
+  addBookmarkFailMessage,
+  addBookmarkSuccessMessage,
   defaultErrorPrompt,
   defaultLoadingPrompt,
   nightModeBackgroundColor,

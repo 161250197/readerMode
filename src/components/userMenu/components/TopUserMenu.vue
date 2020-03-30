@@ -101,6 +101,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { addBookmarkFailMessage, addBookmarkSuccessMessage } from './../../../utils/consts.js'
 import ChangeSource from './ChangeSource'
 
 export default {
@@ -120,8 +121,16 @@ export default {
       readingChapterIsBookmarked: state => state.mainBody.readingChapterIsBookmarked
     })
   },
+  data () {
+    return {
+      jumpToBookMallFailMessage: '跳转小说书城失败，请稍后重试',
+      addBookmarkFailMessage,
+      addBookmarkSuccessMessage
+    }
+  },
   methods: {
     ...mapMutations([
+      'setPromptMessage',
       'setChangeSourceShow',
       'setUserMenuShow',
       'setCatalogBookmarksShow'
@@ -140,13 +149,11 @@ export default {
      * 跳转小说书城
      */
     jumpToBookMall () {
-      // TODO 添加提示
       const result = window.__browserObject.jumpToBookMall(this.bookId)
       if (result) {
-        console.log('[INFO] jumpToBookMall success')
         this.setUserMenuShow(false)
       } else {
-        console.log('[INFO] jumpToBookMall fail')
+        this.setPromptMessage(this.jumpToBookMallFailMessage)
       }
     },
     /**
@@ -165,13 +172,12 @@ export default {
      * 添加书签
      */
     addBookmark () {
-      // TODO 添加提示
       const result = window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, this.chapterIndex, this.readingChapterTitle)
       if (result) {
-        console.log('[INFO] addBookmark success')
+        this.setPromptMessage(this.addBookmarkSuccessMessage)
         this.loadBookmarks()
       } else {
-        console.log('[ERROR] addBookmark fail')
+        this.setPromptMessage(this.addBookmarkFailMessage)
       }
     }
   }

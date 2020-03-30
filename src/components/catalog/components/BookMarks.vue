@@ -38,6 +38,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { addBookmarkFailMessage, addBookmarkSuccessMessage } from './../../../utils/consts.js'
 import LoadingDiv from './../../utils/LoadingDiv'
 import ErrorDiv from './../../utils/ErrorDiv'
 
@@ -62,12 +63,15 @@ export default {
   },
   data () {
     return {
+      addBookmarkFailMessage,
+      addBookmarkSuccessMessage,
       loadingPrompt: '正在加载书签',
       errorPrompt: '加载书签出错了'
     }
   },
   methods: {
     ...mapMutations([
+      'setPromptMessage',
       'setCatalogBookmarksShow',
       'setChapterIndex'
     ]),
@@ -90,13 +94,12 @@ export default {
      * 添加书签
      */
     addBookmark () {
-      // TODO 添加提示
       const result = window.__browserObject.addBookmark(this.domain, this.novelName, this.authorName, this.presentChapterIndex, this.readingChapterTitle)
       if (result) {
-        console.log('[INFO] addBookmark success')
+        this.setPromptMessage(this.addBookmarkSuccessMessage)
         this.loadBookmarks()
       } else {
-        console.log('[ERROR] addBookmark fail')
+        this.setPromptMessage(this.addBookmarkFailMessage)
       }
     }
   }

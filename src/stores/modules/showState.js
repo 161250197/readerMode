@@ -3,6 +3,7 @@
  */
 const store = {
   state: {
+    promptMessage: '',
     errorShow: false,
     loadingShow: true,
     catalogChaptersShow: false,
@@ -14,6 +15,14 @@ const store = {
     moreSettingShow: false
   },
   mutations: {
+    /**
+     * 设置提示信息
+     * @param {Object} state showState.state
+     * @param {String} message 提示信息
+     */
+    setPromptMessage (state, message) {
+      state.promptMessage = message
+    },
     /**
      * 设置错误页显示
      * @param {Object} state showState.state

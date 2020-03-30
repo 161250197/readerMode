@@ -52,12 +52,15 @@ export default {
   },
   data () {
     return {
+      changeSourceSuccessMessage: '换源成功',
+      changeSourceFailMessage: '换源失败了，请稍后重试',
       errorPrompt: '加载换源列表失败了',
       loadingPrompt: '加载换源列表中……'
     }
   },
   methods: {
     ...mapMutations([
+      'setPromptMessage',
       'setUserMenuShow'
     ]),
     ...mapActions([
@@ -74,11 +77,10 @@ export default {
           .then(() => {
             window.__readerModeObject.refreshMainBodyPosition()
             this.setUserMenuShow()
-            // TODO 添加提示
+            this.setPromptMessage(this.changeSourceSuccessMessage)
           })
-          .catch(e => {
-            // TODO 添加提示
-            console.log('[ERROR] onNovelSourceClick changeSource fail')
+          .catch(_ => {
+            this.setPromptMessage(this.changeSourceFailMessage)
           })
       }
     }

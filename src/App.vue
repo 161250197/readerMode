@@ -17,6 +17,7 @@
       v-show="isChangingSource"
       :prompt="isChangingSourcePrompt"
     />
+    <Message />
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import UserMenu from './components/userMenu/UserMenu'
 import Catalog from './components/catalog/Catalog'
 import MoreSetting from './components/moreSetting/MoreSetting'
 import Loading from './components/prompts/Loading'
+import Message from './components/prompts/Message'
 import Error from './components/prompts/Error'
 
 export default {
@@ -43,6 +45,7 @@ export default {
     Catalog,
     MoreSetting,
     Loading,
+    Message,
     Error
   },
   computed: {
