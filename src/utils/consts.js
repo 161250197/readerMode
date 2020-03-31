@@ -80,7 +80,14 @@ const addBookmarkSuccessMessage = '添加书签成功'
 /** 长按时长 */
 const longpressTimeout = 800
 
+/** 服务端 host */
+const serverHost = 'localhost'
+/** 服务端 port */
+const serverPort = 8888
+
 export {
+  serverHost,
+  serverPort,
   longpressTimeout,
   addBookmarkFailMessage,
   addBookmarkSuccessMessage,
