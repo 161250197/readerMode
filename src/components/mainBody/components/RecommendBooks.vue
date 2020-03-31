@@ -106,8 +106,12 @@ export default {
     }
   }
   .enter-book-mall {
-    font-size: 0.45rem;
-    line-height: 1rem;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 0.5rem;
+    line-height: 0.4rem;
+    height: 0.8rem;
     padding: 0 0.4rem;
     border: 0.05rem solid @borderColor;
     border-radius: 0.4rem;

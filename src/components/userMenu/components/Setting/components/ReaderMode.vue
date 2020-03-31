@@ -77,16 +77,19 @@ export default {
   .content {
     justify-content: flex-end;
     .reader-mode-item {
+      display: flex;
+      align-items: center;
       box-sizing: border-box;
+      font-size: 0.5rem;
+      line-height: 0.4rem;
       height: 0.8rem;
       padding: 0 0.4rem;
       border: 0.05rem solid @borderColor;
       border-radius: 0.4rem;
       font-weight: bold;
-      background: @secondBackground;
       &.select {
-        background: @primaryColor;
-        color: @secondFontColor;
+        border-color: @primaryColor;
+        color: @primaryColor;
       }
       &:first-child {
         margin-right: 0.4rem;
@@ -99,10 +102,9 @@ export default {
     .content {
       .reader-mode-item {
         border-color: @borderColorNight;
-        background: @secondBackgroundNight;
         &.select {
-          background: @primaryColorNight;
-          color: @secondFontColorNight;
+          border-color: @primaryColorNight;
+          color: @primaryColorNight;
         }
       }
     }
