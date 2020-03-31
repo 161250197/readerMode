@@ -1,12 +1,14 @@
 <template>
-  <div
-    class="message-wrapper"
-    :style="{ opacity }"
-  >
-    <div class="message text-ellipsis">
-      {{ message }}
+  <transition name="fade">
+    <div
+      v-if="show"
+      class="message-wrapper"
+    >
+      <div class="message text-ellipsis">
+        {{ message }}
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -24,7 +26,7 @@ export default {
       if (this.promptMessage) {
         this.message = this.promptMessage
         this.setPromptMessage('')
-        this.opacity = 1
+        this.show = true
         clearTimeout(this.timeoutId)
         this.timeoutId = setTimeout(this.closePromptMessage, this.duration)
       }
@@ -33,7 +35,7 @@ export default {
   data () {
     return {
       message: '',
-      opacity: 0,
+      show: false,
       timeoutId: undefined,
       duration: 2000
     }
@@ -46,7 +48,7 @@ export default {
      * 关闭提示信息
      */
     closePromptMessage () {
-      this.opacity = 0
+      this.show = false
     }
   }
 }
@@ -65,7 +67,6 @@ export default {
   bottom: 1rem;
   padding: 0 1rem;
   box-sizing: border-box;
-  transition: opacity 0.5s;
   .message {
     text-align: center;
     font-size: 0.5rem;
