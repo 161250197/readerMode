@@ -111,6 +111,7 @@ export default {
 
 <style lang="less">
 @import url('./style/style.less');
+@import url('./style/cartoon.less');
 
 .app {
   position: fixed;
