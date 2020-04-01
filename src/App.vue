@@ -11,6 +11,7 @@
     <UserMenu v-show="userMenuShow" />
     <Catalog v-show="catalogChaptersShow || catalogBookmarksShow" />
     <MoreSetting v-show="moreSettingShow" />
+    <Guide v-if="!guideShowed" />
     <Loading v-show="loadingShow" />
     <Error v-show="errorShow" />
     <Loading
@@ -35,6 +36,7 @@ import Catalog from './components/catalog/Catalog'
 import MoreSetting from './components/moreSetting/MoreSetting'
 import Loading from './components/prompts/Loading'
 import Message from './components/prompts/Message'
+import Guide from './components/prompts/Guide'
 import Error from './components/prompts/Error'
 
 export default {
@@ -46,10 +48,12 @@ export default {
     MoreSetting,
     Loading,
     Message,
+    Guide,
     Error
   },
   computed: {
     ...mapState({
+      guideShowed: state => state.userConfig.guideShowed,
       isChangingSource: state => state.novelSource.isChangingSource,
       backgroundColor: state => state.userConfig.backgroundColor,
       nightMode: state => state.userConfig.nightMode,

@@ -34,7 +34,21 @@
     rowSpace: defaultRowSpace,
     backgroundColor: defaultBackgroundColor
   }
+  const guideShowedKey = '__browserObject-guideShowed'
   window.__browserObject = {
+    /**
+     * 是否已显示引导
+     * @param {Boolean} 结果
+     */
+    guideShowed () {
+      return localStorage.getItem(guideShowedKey)
+    },
+    /**
+     * 设置已显示引导
+     */
+    setGuideShowed () {
+      localStorage.setItem(guideShowedKey, true)
+    },
     /**
      * 获取移动端硬件属性数据
      * @returns {defaultDeviceData} 移动端硬件属性数据

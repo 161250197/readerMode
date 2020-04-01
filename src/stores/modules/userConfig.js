@@ -18,6 +18,7 @@ import {
  */
 const store = {
   state: {
+    guideShowed: false,
     volumeKeyOn: false,
     nightMode: false,
     readerMode: readerModeUpDown,
@@ -28,6 +29,14 @@ const store = {
     backgroundColor: defaultBackgroundColor
   },
   mutations: {
+    /**
+     * 设置是否已显示引导
+     * @param {Object} state userConfig.state
+     * @param {Boolean} value 值
+     */
+    setGuideShowed (state, value) {
+      state.guideShowed = value
+    },
     /**
      * 设置音量键翻页功能开启
      * @param {Object} state userConfig.state
@@ -105,6 +114,13 @@ const store = {
   },
   actions: {
     /**
+     * 设置已显示引导
+     */
+    setGuideShowed ({ commit }) {
+      window.__browserObject.setGuideShowed()
+      commit('setGuideShowed', true)
+    },
+    /**
      * 初始化用户设置
      */
     setupUserConfig ({ commit }) {
@@ -123,6 +139,8 @@ const store = {
       commit('setBackgroundColor', backgroundColor)
       commit('setVolumeKeyOn', volumeKeyOn)
       commit('setNightMode', nightMode)
+      const guideShowed = window.__browserObject.guideShowed()
+      commit('setGuideShowed', guideShowed)
     },
     /**
      * 保存用户设置
