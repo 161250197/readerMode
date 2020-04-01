@@ -26,7 +26,40 @@
      * back键回调
      */
     onBack () {
-      console.log('[INFO] __readerModeObject goPrevPage')
+      const store = require('./../stores/store.js').default
+      const {
+        catalogChaptersShow,
+        catalogBookmarksShow,
+        deleteBookmarkShow,
+        userMenuShow,
+        rowHeightPromptShow,
+        moreSettingShow
+      } = store.state.showState
+      if (deleteBookmarkShow) {
+        store.commit('setDeleteBookmarkShow', false)
+        return
+      }
+      if (catalogBookmarksShow) {
+        store.commit('setCatalogBookmarksShow', false)
+        return
+      }
+      if (catalogChaptersShow) {
+        store.commit('setCatalogChaptersShow', false)
+        return
+      }
+      if (userMenuShow) {
+        store.commit('setUserMenuShow', false)
+        return
+      }
+      if (rowHeightPromptShow) {
+        store.commit('setRowHeightPromptShow', false)
+        return
+      }
+      if (moreSettingShow) {
+        store.commit('setMoreSettingShow', false)
+        return
+      }
+      window.__browserObject.exitReaderMode()
     },
     ...window.__readerModeObject
   }
