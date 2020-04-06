@@ -18,6 +18,7 @@ import {
  */
 const store = {
   state: {
+    bookshelfAdded: false,
     guideShowed: false,
     volumeKeyOn: false,
     nightMode: false,
@@ -29,6 +30,14 @@ const store = {
     backgroundColor: defaultBackgroundColor
   },
   mutations: {
+    /**
+     * 设置是否已加入书架
+     * @param {Object} state userConfig.state
+     * @param {Boolean} value 值
+     */
+    setBookshelfAdded (state, value) {
+      state.bookshelfAdded = value
+    },
     /**
      * 设置是否已显示引导
      * @param {Object} state userConfig.state
@@ -141,6 +150,12 @@ const store = {
       commit('setNightMode', nightMode)
       const guideShowed = window.__browserObject.guideShowed()
       commit('setGuideShowed', guideShowed)
+      const {
+        novelName,
+        authorName
+      } = this.state
+      const bookshelfAdded = window.__browserObject.isAddedBookshelf(novelName, authorName)
+      commit('setBookshelfAdded', bookshelfAdded)
     },
     /**
      * 保存用户设置

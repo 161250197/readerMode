@@ -35,7 +35,48 @@
     backgroundColor: defaultBackgroundColor
   }
   const guideShowedKey = '__browserObject-guideShowed'
+  const bookshelfKey = '__browserObject-bookshelf'
   window.__browserObject = {
+    /**
+     * 是否已加入书架
+     * @param {String} novelName 小说名
+     * @param {String} authorName 作者名
+     * @param {Boolean} 结果
+     */
+    isAddedBookshelf (novelName, authorName) {
+      let bookshelf = localStorage.getItem(bookshelfKey)
+      if (bookshelf) {
+        bookshelf = JSON.parse(bookshelf)
+      } else {
+        bookshelf = []
+      }
+      for (let book of bookshelf) {
+        if (book.novelName === novelName && book.authorName === authorName) {
+          return true
+        }
+      }
+      return false
+    },
+    /**
+     * 加入书架
+     * @param {String} novelName 小说名
+     * @param {String} authorName 作者名
+     * @param {Boolean} 结果
+     */
+    addBookshelf (novelName, authorName) {
+      let bookshelf = localStorage.getItem(bookshelfKey)
+      if (bookshelf) {
+        bookshelf = JSON.parse(bookshelf)
+      } else {
+        bookshelf = []
+      }
+      bookshelf.push({
+        novelName,
+        authorName
+      })
+      localStorage.setItem(bookshelfKey, JSON.stringify(bookshelf))
+      return true
+    },
     /**
      * 是否已显示引导
      * @param {Boolean} 结果
@@ -86,6 +127,14 @@
      */
     jumpToBookMall (bookId) {
       console.log(`[INFO] __browserObject jumpToBookMall bookId:${bookId}`)
+      return true
+    },
+    /**
+     * 跳转小说书架
+     * @returns {Boolean} 结果
+     */
+    jumpToBookshelf () {
+      console.log('[INFO] __browserObject jumpToBookshelf')
       return true
     },
     /**
