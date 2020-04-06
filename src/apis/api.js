@@ -48,15 +48,6 @@ const api = {
    */
   getNovelChapterData (domain, novelName, authorName) {
     return instance.post('/getNovelChapterData', { domain, novelName, authorName })
-  },
-  /**
-   * 获取小说来源列表
-   * @param {String} novelName 小说名
-   * @param {String} authorName 作者名
-   * @returns {Promise}
-   */
-  getNovelSources (novelName, authorName) {
-    return instance.post('/getNovelSources', { novelName, authorName })
   }
 }
 

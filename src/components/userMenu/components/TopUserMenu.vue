@@ -35,33 +35,6 @@
       书城
     </div>
     <div
-      class="change-source"
-      :class="{ 'active': changeSourceShow }"
-      @click.stop="openChangeSource"
-    >
-      <img
-        class="day-mode-item active-item"
-        src="./../../../assets/refresh-active.png"
-        alt="day mode refresh-active icon"
-      />
-      <img
-        class="night-mode-item active-item"
-        src="./../../../assets/refresh-active-night.png"
-        alt="night mode refresh-active icon"
-      />
-      <img
-        class="day-mode-item inactive-item"
-        src="./../../../assets/refresh.png"
-        alt="day mode refresh icon"
-      />
-      <img
-        class="night-mode-item inactive-item"
-        src="./../../../assets/refresh-night.png"
-        alt="night mode refresh icon"
-      />
-      换源
-    </div>
-    <div
       v-if="readingChapterIsBookmarked"
       class="bookmark"
       @click.stop="seeBookmarks"
@@ -93,27 +66,19 @@
         alt="night mode bookmark icon"
       />
     </div>
-    <div class="change-source-wrapper">
-      <ChangeSource v-if="changeSourceShow" />
-    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { addBookmarkFailMessage, addBookmarkSuccessMessage } from './../../../utils/consts.js'
-import ChangeSource from './ChangeSource'
 
 export default {
   name: 'UserMenu.TopUserMenu',
-  components: {
-    ChangeSource
-  },
   computed: {
     ...mapState({
       chapterIndex: state => state.chapterIndex,
       bookId: state => state.bookId,
-      changeSourceShow: state => state.showState.changeSourceShow,
       domain: state => state.domain,
       novelName: state => state.novelName,
       authorName: state => state.authorName,
@@ -131,7 +96,6 @@ export default {
   methods: {
     ...mapMutations([
       'setPromptMessage',
-      'setChangeSourceShow',
       'setUserMenuShow',
       'setCatalogBookmarksShow'
     ]),
@@ -155,12 +119,6 @@ export default {
       } else {
         this.setPromptMessage(this.jumpToBookMallFailMessage)
       }
-    },
-    /**
-     * 打开小说换源面板
-     */
-    openChangeSource () {
-      this.setChangeSourceShow(!this.changeSourceShow)
     },
     /**
      * 查看书签
@@ -216,22 +174,6 @@ export default {
       margin-right: 0.2rem;
     }
   }
-  > .change-source {
-    position: fixed;
-    height: 0.8rem;
-    top: 0.3rem;
-    right: 2.1rem;
-    display: flex;
-    align-items: center;
-    font-size: 0.5rem;
-    &.active {
-      color: @primaryColor;
-    }
-    > img {
-      width: 0.8rem;
-      margin-right: 0.2rem;
-    }
-  }
   .bookmark {
     position: fixed;
     top: 0.35rem;
@@ -242,18 +184,10 @@ export default {
       width: 0.7rem;
     }
   }
-  .change-source-wrapper {
-    margin-top: 1.4rem;
-  }
 }
 .night-mode {
   .top-user-menu {
     background: @secondBackgroundNight;
-    > .change-source {
-      &.active {
-        color: @primaryColorNight;
-      }
-    }
   }
 }
 </style>

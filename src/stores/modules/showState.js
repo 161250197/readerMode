@@ -11,7 +11,6 @@ const store = {
     deleteBookmarkShow: false,
     userMenuShow: false,
     settingShow: false,
-    changeSourceShow: false,
     rowHeightPromptShow: false,
     moreSettingShow: false
   },
@@ -74,7 +73,7 @@ const store = {
     },
     /**
      * 设置菜单项显示
-     * - 菜单项关闭显示时，关闭设置页和换源页显示
+     * - 菜单项关闭显示时，关闭设置页显示
      * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
@@ -82,28 +81,15 @@ const store = {
       state.userMenuShow = value
       if (!value) {
         state.settingShow = false
-        state.changeSourceShow = false
       }
     },
     /**
      * 设置设置页显示
-     * - 设置页显示时，关闭换源页显示
      * @param {Object} state showState.state
      * @param {Boolean} value 值
      */
     setSettingShow (state, value) {
       state.settingShow = value
-      if (value) {
-        state.changeSourceShow = false
-      }
-    },
-    /**
-     * 设置换源页显示
-     * @param {Object} state showState.state
-     * @param {Boolean} value 值
-     */
-    setChangeSourceShow (state, value) {
-      state.changeSourceShow = value
     },
     /**
      * 设置行高选项弹窗显示

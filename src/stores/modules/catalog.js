@@ -68,31 +68,6 @@ const store = {
   },
   actions: {
     /**
-     * 加载小说章节目录换源
-     */
-    loadCatalogChaptersChangeSource (_, domain) {
-      const {
-        novelName,
-        authorName
-      } = this.state
-      return api.getNovelChapterData(domain, novelName, authorName)
-    },
-    /**
-     * 加载书签列表换源
-     */
-    loadBookmarksChangeSource (_, domain) {
-      const {
-        novelName,
-        authorName
-      } = this.state
-      try {
-        const bookmarks = window.__browserObject.getBookmarks(domain, novelName, authorName)
-        return Promise.resolve(bookmarks)
-      } catch (e) {
-        return Promise.reject(e)
-      }
-    },
-    /**
      * 加载小说章节目录
      */
     async loadCatalogChapters ({ commit }) {

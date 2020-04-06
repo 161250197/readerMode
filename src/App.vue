@@ -14,10 +14,6 @@
     <Guide v-if="!guideShowed" />
     <Loading v-show="loadingShow" />
     <Error v-show="errorShow" />
-    <Loading
-      v-show="isChangingSource"
-      :prompt="isChangingSourcePrompt"
-    />
     <Message />
   </div>
 </template>
@@ -54,7 +50,6 @@ export default {
   computed: {
     ...mapState({
       guideShowed: state => state.userConfig.guideShowed,
-      isChangingSource: state => state.novelSource.isChangingSource,
       backgroundColor: state => state.userConfig.backgroundColor,
       nightMode: state => state.userConfig.nightMode,
       userMenuShow: state => state.showState.userMenuShow,
@@ -67,7 +62,6 @@ export default {
   },
   data () {
     return {
-      isChangingSourcePrompt: '正在换源……',
       nightModeBackgroundColor,
       nightModeFontColor,
       dayModeFontColor

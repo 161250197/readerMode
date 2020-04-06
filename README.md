@@ -55,5 +55,4 @@ npm run build --report
 ### 附加功能
 
 * 书签功能
-* 小说换源功能
 

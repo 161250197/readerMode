@@ -102,17 +102,6 @@ const store = {
   },
   actions: {
     /**
-     * 初始化小说正文内容换源
-     */
-    loadMainBodyContentChangeSource (_, domain) {
-      const {
-        chapterIndex,
-        novelName,
-        authorName
-      } = this.state
-      return api.getMainBodyText(domain, novelName, authorName, chapterIndex)
-    },
-    /**
      * 初始化小说正文内容
      */
     async loadMainBodyContent ({ commit }) {
