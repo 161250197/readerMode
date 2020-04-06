@@ -24,12 +24,12 @@
     >
       <img
         class="day-mode-item"
-        src="./../../../assets/bookMall.png"
+        src="./../../../assets/book-mall.png"
         alt="day mode bookMall icon"
       />
       <img
         class="night-mode-item"
-        src="./../../../assets/bookMall-night.png"
+        src="./../../../assets/book-mall-night.png"
         alt="night mode bookMall icon"
       />
       书城
