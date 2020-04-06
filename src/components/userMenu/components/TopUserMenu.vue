@@ -3,68 +3,72 @@
     class="top-user-menu"
     @click.stop
   >
-    <div
-      class="back"
-      @click.stop="quitReaderMode"
-    >
-      <img
-        class="day-mode-item"
-        src="./../../../assets/back.png"
-        alt="day mode back icon"
-      />
-      <img
-        class="night-mode-item"
-        src="./../../../assets/back-night.png"
-        alt="night mode back icon"
-      />
+    <div class="left-wrapper">
+      <div
+        class="back"
+        @click.stop="quitReaderMode"
+      >
+        <img
+          class="day-mode-item"
+          src="./../../../assets/back.png"
+          alt="day mode back icon"
+        />
+        <img
+          class="night-mode-item"
+          src="./../../../assets/back-night.png"
+          alt="night mode back icon"
+        />
+      </div>
     </div>
-    <div
-      class="book-mall"
-      @click.stop="jumpToBookMall"
-    >
-      <img
-        class="day-mode-item"
-        src="./../../../assets/book-mall.png"
-        alt="day mode bookMall icon"
-      />
-      <img
-        class="night-mode-item"
-        src="./../../../assets/book-mall-night.png"
-        alt="night mode bookMall icon"
-      />
-      书城
-    </div>
-    <div
-      v-if="readingChapterIsBookmarked"
-      class="bookmark"
-      @click.stop="seeBookmarks"
-    >
-      <img
-        class="day-mode-item"
-        src="./../../../assets/checked-bookmark.png"
-        alt="day mode checked-bookmark icon"
-      />
-      <img
-        class="night-mode-item"
-        src="./../../../assets/checked-bookmark-night.png"
-        alt="night mode checked-bookmark icon"
-      />
-    </div>
-    <div
-      v-else
-      class="bookmark"
-      @click.stop="addBookmark"
-    >
-      <img
-        class="day-mode-item"
-        src="./../../../assets/bookmark.png"
-        alt="day mode bookmark icon"
-      />
-      <img
-        class="night-mode-item"
-        src="./../../../assets/bookmark-night.png"
-        alt="night mode bookmark icon"
-      />
+    <div class="right-wrapper">
+      <div
+        class="book-mall"
+        @click.stop="jumpToBookMall"
+      >
+        <img
+          class="day-mode-item"
+          src="./../../../assets/book-mall.png"
+          alt="day mode bookMall icon"
+        />
+        <img
+          class="night-mode-item"
+          src="./../../../assets/book-mall-night.png"
+          alt="night mode bookMall icon"
+        />
+        书城
+      </div>
+      <div
+        v-if="readingChapterIsBookmarked"
+        class="bookmark"
+        @click.stop="seeBookmarks"
+      >
+        <img
+          class="day-mode-item"
+          src="./../../../assets/checked-bookmark.png"
+          alt="day mode checked-bookmark icon"
+        />
+        <img
+          class="night-mode-item"
+          src="./../../../assets/checked-bookmark-night.png"
+          alt="night mode checked-bookmark icon"
+        />
+      </div>
+      <div
+        v-else
+        class="bookmark"
+        @click.stop="addBookmark"
+      >
+        <img
+          class="day-mode-item"
+          src="./../../../assets/bookmark.png"
+          alt="day mode bookmark icon"
+        />
+        <img
+          class="night-mode-item"
+          src="./../../../assets/bookmark-night.png"
+          alt="night mode bookmark icon"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -149,39 +153,43 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  min-height: 1.4rem;
+  height: 1.4rem;
   background: @secondBackground;
-  .back {
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 0.2rem 0 0.2rem 0.45rem;
-    > img {
-      width: 1rem;
+  .left-wrapper {
+    .back {
+      height: 1rem;
+      margin-left: 0.45rem;
+      > img {
+        width: 1rem;
+      }
     }
   }
-  .book-mall {
-    position: fixed;
-    height: 0.8rem;
-    top: 0.3rem;
-    right: 4.6rem;
+  .right-wrapper {
     display: flex;
     align-items: center;
-    font-size: 0.5rem;
-    > img {
-      width: 0.8rem;
-      margin-right: 0.2rem;
+    height: 100%;
+    .book-mall {
+      display: flex;
+      align-items: center;
+      height: 0.8rem;
+      margin-right: 0.4rem;
+      font-size: 0.5rem;
+      > img {
+        width: 0.8rem;
+        margin-right: 0.2rem;
+      }
     }
-  }
-  .bookmark {
-    position: fixed;
-    top: 0.35rem;
-    right: 0.7rem;
-    display: flex;
-    align-items: center;
-    > img {
-      width: 0.7rem;
+    .bookmark {
+      display: flex;
+      align-items: center;
+      margin-right: 0.7rem;
+      > img {
+        width: 0.7rem;
+      }
     }
   }
 }
