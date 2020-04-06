@@ -12,13 +12,16 @@
     const bookmarkKeyHeader = '__browserObject-bookmark'
     return `${bookmarkKeyHeader}-${domain}-${novelName}-${authorName}`
   }
+  /** 移动端硬件属性数据存储键 */
   const deviceDataKey = '__browserObject-DeviceData'
+  /** 移动端硬件属性默认数据 */
   const defaultDeviceData = {
     battery: 100,
     brightness: 100,
     browserVersion: 1,
     volumeKeySupport: true
   }
+  /** 用户自定义设置存储键 */
   const userConfigKey = '__browserObject-userConfig'
   const {
     readerModeUpDown,
@@ -26,6 +29,7 @@
     defaultRowSpace,
     defaultBackgroundColor
   } = require('./../utils/consts')
+  /** 用户自定义默认设置 */
   const defultUserConfig = {
     volumeKeyOn: false,
     nightMode: false,
@@ -34,7 +38,9 @@
     rowSpace: defaultRowSpace,
     backgroundColor: defaultBackgroundColor
   }
+  /** 已显示引导存储键 */
   const guideShowedKey = '__browserObject-guideShowed'
+  /** 已加入书架存储键 */
   const bookshelfKey = '__browserObject-bookshelf'
   window.__browserObject = {
     /**
@@ -81,7 +87,7 @@
      * 是否已显示引导
      * @param {Boolean} 结果
      */
-    guideShowed () {
+    isGuideShowed () {
       return localStorage.getItem(guideShowedKey)
     },
     /**

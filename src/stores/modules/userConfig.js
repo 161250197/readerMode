@@ -148,7 +148,7 @@ const store = {
       commit('setBackgroundColor', backgroundColor)
       commit('setVolumeKeyOn', volumeKeyOn)
       commit('setNightMode', nightMode)
-      const guideShowed = window.__browserObject.guideShowed()
+      const guideShowed = window.__browserObject.isGuideShowed()
       commit('setGuideShowed', guideShowed)
       const {
         novelName,
