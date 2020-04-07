@@ -76,6 +76,7 @@ export default {
   },
   computed: {
     ...mapState({
+      fontSize: state => state.userConfig.fontSize,
       rowSpace: state => state.userConfig.rowSpace,
       textIndent: state => state.userConfig.textIndent,
       deviceSize: state => state.deviceData.deviceSize,
@@ -104,6 +105,28 @@ export default {
   },
   watch: {
     /**
+     * 字体大小设置更新时
+     * - 更新章节相关数据
+     * - 页面重新定位至章节首部
+     */
+    fontSize () {
+      this.$nextTick(() => {
+        this.updateChapterInfo()
+        this.scrollToReadingChapterTop()
+      })
+    },
+    /**
+     * 行间距大小设置更新时
+     * - 更新章节相关数据
+     * - 页面重新定位至章节首部
+     */
+    rowSpace () {
+      this.$nextTick(() => {
+        this.updateChapterInfo()
+        this.scrollToReadingChapterTop()
+      })
+    },
+    /**
      * 章节数据更新时
      * - 更新章节相关数据
      */
@@ -112,6 +135,7 @@ export default {
     },
     /**
      * 设备尺寸更新时
+     * - 更新设备尺寸相关数据
      * - 更新章节相关数据
      * - 页面重新定位至章节首部
      */
