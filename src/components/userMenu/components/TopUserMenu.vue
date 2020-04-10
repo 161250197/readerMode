@@ -129,8 +129,8 @@ export default {
     return {
       jumpToBookMallFailMessage: '跳转小说书城失败，请稍后重试',
       jumpToBookshelfFailMessage: '跳转小说书架失败，请稍后重试',
-      addBookshelfSuccessMessage: '添加小说书架成功',
-      addBookshelfFailMessage: '添加小说书架失败了，请稍后重试',
+      addBookshelfSuccessMessage: '加入小说书架成功',
+      addBookshelfFailMessage: '加入小说书架失败了，请稍后重试',
       addBookmarkFailMessage,
       addBookmarkSuccessMessage
     }

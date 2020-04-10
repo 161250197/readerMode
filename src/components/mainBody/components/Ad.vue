@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'MainBody.Ad',
@@ -40,11 +40,14 @@ export default {
   },
   data () {
     return {
-      loadingPrompt: '广告加载中……',
+      jumpToAdFailMessage: '跳转广告页面失败，请稍后重试',
       adTag: '广告'
     }
   },
   methods: {
+    ...mapMutations([
+      'setPromptMessage'
+    ]),
     ...mapActions([
       'loadAd'
     ]),
@@ -56,7 +59,7 @@ export default {
       if (result) {
         console.log('[INFO] jumpToAdPage success')
       } else {
-        console.log('[INFO] jumpToAdPage fail')
+        this.setPromptMessage(this.jumpToAdFailMessage)
       }
     }
   },
