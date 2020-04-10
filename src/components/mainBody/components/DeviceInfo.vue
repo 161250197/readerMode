@@ -6,7 +6,10 @@
     <div class="time">
       {{ timeStr }}
     </div>
-    <div class="battery">
+    <div
+      v-if="battery"
+      class="battery"
+    >
       <div class="battery-border-icon"></div>
       <div
         class="battery-info-icon"
@@ -48,7 +51,7 @@ export default {
   }
   .time {
     position: fixed;
-    right: 1.95rem;
+    right: 0.75rem;
   }
   .battery {
     .battery-info-icon {
@@ -59,7 +62,7 @@ export default {
     .battery-info-icon {
       position: fixed;
       top: 0.3rem;
-      right: 0.81rem;
+      right: 2.21rem;
       width: 0.9rem;
       height: 0.4rem;
       box-sizing: border-box;
@@ -68,7 +71,7 @@ export default {
     .battery-right-icon {
       position: fixed;
       top: 0.35rem;
-      right: 0.75rem;
+      right: 2.15rem;
       width: 0.04rem;
       height: 0.3rem;
       background: @fontColor;

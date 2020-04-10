@@ -11,7 +11,7 @@ const store = {
     },
     updateTimeAndBatteryIntervalId: undefined,
     timeStr: '',
-    battery: 100,
+    battery: 0,
     brightness: 100,
     browserVersion: 1,
     volumeKeySupport: false
